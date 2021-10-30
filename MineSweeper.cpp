@@ -1,10 +1,27 @@
-﻿// MineSweeper.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
+﻿/*
+* MineSweeper.cpp
+* 
+* main 함수가 있는 파일. 
+* 
+* 게임에 필요한 모든 요소들을 종합하여 적절히 배치하고 
+* 게임을 작동시키는 역할을 한다. 
+* 
+* 이 파일에서 정의된 그 어떤 요소도 다른 파일에서 참조해서는 안된다. 
+*/
 
 #include <iostream>
 #include <bangtal>
+#include "Board.h"
+#include "resource.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	setGameOption(GameOption::GAME_OPTION_INVENTORY_BUTTON, false);
+	setGameOption(GameOption::GAME_OPTION_MESSAGE_BOX_BUTTON, false);
+	setGameOption(GameOption::GAME_OPTION_ROOM_TITLE, false);
+
+	ScenePtr background = Scene::create("배경", BoardResource::BACKGROUND);
+	Board board(background);
+
+	startGame(background);
 }
