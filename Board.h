@@ -10,6 +10,7 @@
 #pragma once
 
 #include "Cell.h"
+#include "MineField.h"
 #include <vector>
 #include <bangtal>
 using namespace bangtal;
@@ -26,6 +27,10 @@ private:
 
 	// 칸 객체를 저장하는 2차원 vector
 	std::vector<std::vector<CellPtr>> cells;
+
+	// 지뢰찾기 판 전체의 데이터를 관리하는 객체
+	MineField field;
+
 public:
 
 	Board(ScenePtr bg);

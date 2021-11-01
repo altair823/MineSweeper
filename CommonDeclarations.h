@@ -7,4 +7,15 @@
 
 #pragma once
 
+/*
+* 지뢰와 숫자를 정의하는 enum.
+* 코드 내에서는 직접적으로 상수를 쓰지 않고
+* 정의된 값을 쓰는 것이 좋다.
+*/
+enum CellValue {
+	Mine = -1,
+	None = 0,
+};
+
+// 셀 하나 한 변의 픽셀 길이
 #define CELL_SIZE 20

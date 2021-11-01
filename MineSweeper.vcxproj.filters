@@ -24,6 +24,9 @@
     <ClCompile Include="Cell.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="MineField.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h">
@@ -36,6 +39,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="CommonDeclarations.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MineField.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
