@@ -49,8 +49,8 @@ public:
 class MineField {
 private:
 	// 현재 지뢰찾기의 가로, 세로 길이
-	int row;
-	int col;
+	int row = 0;
+	int col = 0;
 
 	// 지뢰의 개수
 	int mineCount;
