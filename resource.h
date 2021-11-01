@@ -13,6 +13,15 @@ namespace BoardResource {
 }
 
 namespace CellResource {
-	constexpr auto NORMAL = "image/CellNormal.png";
 	constexpr auto MINE = "image/CellMine.png";
+
+	constexpr auto EMPTY = "image/CellEmpty.png";
+	constexpr auto ONE = "image/Cell1.png";
+	constexpr auto TWO = "image/Cell2.png";
+	constexpr auto THREE = "image/Cell3.png";
+	constexpr auto FOUR = "image/Cell4.png";
+	constexpr auto FIVE = "image/Cell5.png";
+	constexpr auto SIX = "image/Cell6.png";
+	constexpr auto SEVEN = "image/Cell7.png";
+	constexpr auto EIGHT = "image/Cell8.png";
 }

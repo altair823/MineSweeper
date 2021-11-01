@@ -20,6 +20,8 @@ int main()
 	setGameOption(GameOption::GAME_OPTION_MESSAGE_BOX_BUTTON, false);
 	setGameOption(GameOption::GAME_OPTION_ROOM_TITLE, false);
 
+
+
 	ScenePtr background = Scene::create("배경", BoardResource::BACKGROUND);
 	Board board(background);
 
