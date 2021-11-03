@@ -15,33 +15,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MineSweeper.cpp">
+    <ClCompile Include="src\Cell.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Board.cpp">
+    <ClCompile Include="src\MineField.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Cell.cpp">
+    <ClCompile Include="src\MineSweeper.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="MineField.cpp">
+    <ClCompile Include="src\Board.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Board.h">
+    <ClInclude Include="src\MineField.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Cell.h">
+    <ClInclude Include="src\resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="src\Board.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CommonDeclarations.h">
+    <ClInclude Include="src\Cell.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="MineField.h">
+    <ClInclude Include="src\CommonDeclarations.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
