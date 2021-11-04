@@ -18,6 +18,19 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Board.cpp" />
+    <ClCompile Include="src\Cell.cpp" />
+    <ClCompile Include="src\MineField.cpp" />
+    <ClCompile Include="src\MineSweeper.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Board.h" />
+    <ClInclude Include="src\Cell.h" />
+    <ClInclude Include="src\CommonDeclarations.h" />
+    <ClInclude Include="src\MineField.h" />
+    <ClInclude Include="src\resource.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -138,19 +151,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Board.cpp" />
-    <ClCompile Include="Cell.cpp" />
-    <ClCompile Include="MineField.cpp" />
-    <ClCompile Include="MineSweeper.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Board.h" />
-    <ClInclude Include="Cell.h" />
-    <ClInclude Include="CommonDeclarations.h" />
-    <ClInclude Include="MineField.h" />
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
