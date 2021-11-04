@@ -19,13 +19,13 @@ class _block;
 * BlockPtr을 반환하는 함수.
 */
 namespace Block {
-	std::shared_ptr<_block> Create(ScenePtr bg, int cellValue, int x, int y);
+	std::shared_ptr<_block> Create(ScenePtr bg, int x, int y);
 }
 
 
 class _block {
 	// Create 함수가 private에 접근 가능하도록 설정
-	friend std::shared_ptr<_block> Block::Create(ScenePtr, int, int, int);
+	friend std::shared_ptr<_block> Block::Create(ScenePtr, int, int);
 
 private:
 	// 깃발 이미지인지 여부
@@ -37,7 +37,7 @@ private:
 	/*
 	* _block의 생성자는 숨겨져 있고 Block::create()를 사용해 생성해야 한다.
 	*/
-	_block(ScenePtr bg, int cellValue, int x, int y);
+	_block(ScenePtr bg, int x, int y);
 
 public:
 	/*

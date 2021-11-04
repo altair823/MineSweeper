@@ -14,6 +14,7 @@ namespace BoardResource {
 
 namespace CellResource {
 	constexpr auto MINE = "image/CellMine.png";
+	constexpr auto ESCAPE = "image/CellEscape.png";
 
 	constexpr auto EMPTY = "image/CellEmpty.png";
 	constexpr auto ONE = "image/Cell1.png";

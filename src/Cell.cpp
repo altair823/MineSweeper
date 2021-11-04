@@ -1,6 +1,6 @@
 #include "Cell.h"
 
-std::shared_ptr<_cell> Cell::Create(ScenePtr bg, int cellValue, int row, int col)
+std::shared_ptr<_cell> Cell::Create(ScenePtr bg, FieldData fieldData, int row, int col)
 {
 	// x, y 좌표 계산. 
 	// 스테이지 구현을 위해서는 보드의 크기에 따라 맨 뒤의 상수가 바뀌어야 한다. 
@@ -9,32 +9,38 @@ std::shared_ptr<_cell> Cell::Create(ScenePtr bg, int cellValue, int row, int col
 
 
 	// 새로운 칸 객체 생성
-	std::shared_ptr<_cell> newCell(new _cell(bg, cellValue, x, y));
+	std::shared_ptr<_cell> newCell(new _cell(bg, fieldData, x, y));
 	return newCell;
 }
 
-_cell::_cell(ScenePtr bg, int cellValue, int x, int y) {
+_cell::_cell(ScenePtr bg, FieldData fieldData, int x, int y) {
 	cellObject = Object::create(CellResource::EMPTY, bg, x, y);
 	// 지뢰 또는 숫자에 따라 이미지 변경
-	ChangeNumImage(cellValue);
+	ChangeNumImage(fieldData);
 
 	//각각의 칸의 위를 덮을 블럭 객체 생성
-	BlockPtr block = Block::Create(bg, cellValue, x, y);
+	BlockPtr block = Block::Create(bg, x, y);
 
 	//블럭객체에 대한 MouseCallback 함수 정의
 	MakeBlockCallback(block);
 }
 
-void _cell::ChangeNumImage(int num) {
-	if (isThisMine == true) {
-		return;
-	}
+void _cell::ChangeNumImage(FieldData fieldData) {
 
-	switch (num) {
-	// 지뢰칸일 경우
+	switch (fieldData.cellValue){
+		// 지뢰칸일 경우
 	case CellValue::Mine:
 		cellObject->setImage(CellResource::MINE);
+		return;
+		// 탈출구일 경우
+	case CellValue::Escape:
+		cellObject->setImage(CellResource::ESCAPE);
+		return;
+	default:
 		break;
+	}
+
+	switch (fieldData.num) {
 
 	// 숫자일 경우
 	case 1:
