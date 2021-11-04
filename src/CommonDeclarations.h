@@ -18,4 +18,4 @@ enum CellValue {
 };
 
 // 셀 하나 한 변의 픽셀 길이
-#define CELL_SIZE 20
+constexpr auto CELL_SIZE = 30;

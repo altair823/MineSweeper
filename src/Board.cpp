@@ -20,4 +20,9 @@ Board::Board(ScenePtr bg) {
 		cells.push_back(cellRow);
 	}
 
+	// Minefield resizing Å×½ºÆ®
+	field.Resize(row+10, col+10);
+	field.MountMine();
+	field.setAdjacentNum();
+	field.Print();
 }
