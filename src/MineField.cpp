@@ -54,11 +54,18 @@ void MineField::Clear() {
 }
 
 void MineField::Resize(int newRow, int newCol) {
+    // 초기화
+    for (int i = 0; i < row; i++) {
+        fieldData[i].Clear();
+    }
+    fieldData.clear();
+
+    // resize
     row = newRow;
     col = newCol;
     for (int i = 0; i < newRow; i++) {
         // col 크기의 새 벡터를 동적으로 생성하고 이를 fieldData에 삽입
-        auto rowData(newCol);
+        _intArray rowData(newCol);
         fieldData.push_back(rowData);
     }
 
@@ -81,15 +88,6 @@ void MineField::MountMine() {
         }
         fieldData[curRow][curCol] = CellValue::Mine;
         i++;
-    }
-}
-
-void MineField::setRandomValue() {
-    srand((unsigned int)time(NULL));
-    for (int i = 0; i < row; i++) {
-        for (int j = 0; j < col; j++) {
-            fieldData[i][j] = rand() % 10;
-        }
     }
 }
 

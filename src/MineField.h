@@ -86,11 +86,6 @@ public:
 	void setAdjacentNum();
 
 	/*
-	* ##디버그용## 배열의 값을 무작위로 설정하는 함수
-	*/
-	void setRandomValue();
-
-	/*
 	* ##디버그용## 출력 함수
 	*/
 	void Print();
