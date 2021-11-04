@@ -25,3 +25,8 @@ namespace CellResource {
 	constexpr auto SEVEN = "image/Cell7.png";
 	constexpr auto EIGHT = "image/Cell8.png";
 }
+
+namespace BlockResource {
+	constexpr auto BLOCK = "image/BlockEmpty.png";
+	constexpr auto FLAG = "image/BlockFlag.png";
+}
