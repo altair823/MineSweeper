@@ -19,12 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Block.cpp" />
     <ClCompile Include="src\Board.cpp" />
     <ClCompile Include="src\Cell.cpp" />
     <ClCompile Include="src\MineField.cpp" />
     <ClCompile Include="src\MineSweeper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Block.h" />
     <ClInclude Include="src\Board.h" />
     <ClInclude Include="src\Cell.h" />
     <ClInclude Include="src\CommonDeclarations.h" />

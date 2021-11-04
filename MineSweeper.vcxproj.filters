@@ -24,6 +24,9 @@
     <ClCompile Include="src\MineSweeper.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="src\Block.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="src\Board.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -35,13 +38,16 @@
     <ClInclude Include="src\resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="src\Board.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="src\Cell.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="src\CommonDeclarations.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Block.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Board.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

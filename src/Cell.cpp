@@ -2,8 +2,6 @@
 
 std::shared_ptr<_cell> Cell::Create(ScenePtr bg, int cellValue, int row, int col)
 {
-	std::string imageName;
-
 	// x, y 좌표 계산. 
 	// 스테이지 구현을 위해서는 보드의 크기에 따라 맨 뒤의 상수가 바뀌어야 한다. 
 	int x = (col + 1) * CELL_SIZE + 100;
@@ -19,6 +17,12 @@ _cell::_cell(ScenePtr bg, int cellValue, int x, int y) {
 	cellObject = Object::create(CellResource::EMPTY, bg, x, y);
 	// 지뢰 또는 숫자에 따라 이미지 변경
 	ChangeNumImage(cellValue);
+
+	//각각의 칸의 위를 덮을 블럭 객체 생성
+	BlockPtr block = Block::Create(bg, cellValue, x, y);
+
+	//블럭객체에 대한 MouseCallback 함수 정의
+	MakeBlockCallback(block);
 }
 
 void _cell::ChangeNumImage(int num) {
@@ -62,4 +66,12 @@ void _cell::ChangeNumImage(int num) {
 	default:
 		break;
 	}
+}
+
+void _cell::MakeBlockCallback(BlockPtr block) {
+	block->setClickCallback([=](auto object, int x, int y, auto action)->bool {
+		block->hideBlock();
+
+		return true;
+	});
 }

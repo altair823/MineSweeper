@@ -12,6 +12,7 @@
 #include "CommonDeclarations.h"
 #include "resource.h"
 #include <bangtal>
+#include "Block.h"
 using namespace bangtal;
 
 class _cell;
@@ -45,6 +46,12 @@ public:
 	* 주어진 숫자로 셀 이미지를 바꾸는 함수
 	*/
 	void ChangeNumImage(int num);
+
+
+	/*
+	* block객체의 blockObject에 대한 Mousecallback을 만드는 함수
+	*/
+	void MakeBlockCallback(BlockPtr block);
 };
 
 // _cell에 대한 shared_ptr를 CellPtr로 정한다. 
