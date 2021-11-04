@@ -16,25 +16,24 @@
 #include "CommonDeclarations.h"
 
 
-
 /*
 * 2차원 배열에서 한 행에 해당하는 클래스.
 * 연산자 오버로딩을 위해 필요하다. 
 * MineField 클래스 밖에서는 사용하지 않는다. 
 */
-class _FieldDataArray {
+class _intArray {
 private:
 	// 한 행에 들어있는 위치 데이터 벡터
-	std::vector<FieldData> data;
+	std::vector<int> data;
 
 public:
-	_FieldDataArray(int size);
+	_intArray(int size);
 
 public:
 	/*
 	* 배열 연산자 오버로딩
 	*/
-	FieldData& const operator[](const int index);
+	int& const operator[](const int index);
 
 	/*
 	* 초기화 함수
@@ -57,14 +56,14 @@ private:
 	int mineCount;
 
 	// 모든 위치 데이터가 들어있는 2차원 벡터
-	std::vector<_FieldDataArray> fieldData;
+	std::vector<_intArray> fieldData;
 
 public:
 
 	/*
 	* 배열 연산자 오버로딩
 	*/
-	_FieldDataArray& const operator[](const int index);
+	_intArray& const operator[](const int index);
 
 	/*
 	* 2차원 벡터를 모두 초기화하는 함수

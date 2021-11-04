@@ -1,6 +1,6 @@
 #include "MineField.h"
 
-_FieldDataArray::_FieldDataArray(int size) {
+_intArray::_intArray(int size) {
     // 데이터 배열이 비어있다면 새로 생성
     if (data.size() == 0) {
         data.resize(size);
@@ -12,7 +12,7 @@ _FieldDataArray::_FieldDataArray(int size) {
     }
 }
 
-FieldData& const _FieldDataArray::operator[](const int index) {
+int& const _intArray::operator[](const int index) {
     if (index >= data.size()) {
         std::cout << "data 행에서 범위 초과 오류가 발생했습니다. \ngiven index: " << index << ", current vector size: " << data.size() << std::endl;
         exit(1);
@@ -22,18 +22,18 @@ FieldData& const _FieldDataArray::operator[](const int index) {
     }
 }
 
-void _FieldDataArray::Clear() {
+void _intArray::Clear() {
     data.clear();
 }
 
-void _FieldDataArray::Resize(int size) {
+void _intArray::Resize(int size) {
     this->Clear();
     data.resize(size);
 }
 
 
 
-_FieldDataArray& const MineField::operator[](const int index) {
+_intArray& const MineField::operator[](const int index) {
     if (index >= fieldData.size()) {
         std::cout << "data 행에서 범위 초과 오류가 발생했습니다. \ngiven index: " << index << ", current vector size: " << fieldData.size() << std::endl;
         exit(1);
@@ -64,8 +64,8 @@ void MineField::Resize(int newRow, int newCol) {
     row = newRow;
     col = newCol;
     for (int i = 0; i < newRow; i++) {
-        // col 크기의 새 벡터를 생성하고 이를 fieldData에 삽입
-        _FieldDataArray rowData(newCol);
+        // col 크기의 새 벡터를 동적으로 생성하고 이를 fieldData에 삽입
+        _intArray rowData(newCol);
         fieldData.push_back(rowData);
     }
 
@@ -83,23 +83,10 @@ void MineField::MountMine() {
         int curRow = rand() % row;
         int curCol = rand() % col;
         // 만약 이미 지뢰가 깔린 자리가 선택된다면 다시 선택한다. 
-        if (fieldData[curRow][curCol].cellValue == CellValue::Mine) {
+        if (fieldData[curRow][curCol] == CellValue::Mine) {
             continue;
         }
-        fieldData[curRow][curCol].cellValue = CellValue::Mine;
-        i++;
-    }
-
-    // 탈출구의 개수만큼 반복한다. 
-    // 현재는 1개이지만 바뀔 경우 수정할 것.
-    int escapeCount = 1;
-    for (int i = 0; i < escapeCount;) {
-        int curRow = rand() % row;
-        int curCol = rand() % col;
-        if (fieldData[curRow][curCol].cellValue != CellValue::None) {
-            continue;
-        }
-        fieldData[curRow][curCol].cellValue = CellValue::Escape;
+        fieldData[curRow][curCol] = CellValue::Mine;
         i++;
     }
 }
@@ -107,11 +94,11 @@ void MineField::MountMine() {
 void MineField::Print() {
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
-            if (fieldData[i][j].cellValue == CellValue::Mine) {
+            if (fieldData[i][j] == CellValue::Mine) {
                 std::cout << "* ";
             }
             else {
-                std::cout << fieldData[i][j].cellValue << " ";
+                std::cout << fieldData[i][j] << " ";
             }
         }
         std::cout << std::endl;
@@ -123,7 +110,7 @@ void MineField::setAdjacentNum() {
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
             // 지뢰칸은 건너 뜀
-            if (fieldData[i][j].cellValue == CellValue::Mine) {
+            if (fieldData[i][j] == CellValue::Mine) {
                 continue;
             }
             // 인접한 지뢰의 개수
@@ -138,14 +125,14 @@ void MineField::setAdjacentNum() {
                         continue;
                     }
                     // 인접한 셀에 지뢰가 있다면 개수 +1
-                    if (fieldData[adjacentRow][adjacentCol].cellValue == CellValue::Mine) {
+                    if (fieldData[adjacentRow][adjacentCol] == CellValue::Mine) {
                         adjacentMineCount++;
                     }
                 }
             }
 
             // 인접한 지뢰의 개수로 값을 바꾼다.
-            fieldData[i][j].num = adjacentMineCount;
+            fieldData[i][j] = adjacentMineCount;
         }
     }
 }
