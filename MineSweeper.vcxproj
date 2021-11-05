@@ -22,6 +22,7 @@
     <ClCompile Include="src\Block.cpp" />
     <ClCompile Include="src\Board.cpp" />
     <ClCompile Include="src\Cell.cpp" />
+    <ClCompile Include="src\Combats\RockPaperScissor.cpp" />
     <ClCompile Include="src\MineField.cpp" />
     <ClCompile Include="src\MineSweeper.cpp" />
   </ItemGroup>
@@ -29,6 +30,8 @@
     <ClInclude Include="src\Block.h" />
     <ClInclude Include="src\Board.h" />
     <ClInclude Include="src\Cell.h" />
+    <ClInclude Include="src\Combat.h" />
+    <ClInclude Include="src\Combats\RockPaperScissor.h" />
     <ClInclude Include="src\CommonDeclarations.h" />
     <ClInclude Include="src\MineField.h" />
     <ClInclude Include="src\resource.h" />

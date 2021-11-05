@@ -31,3 +31,23 @@ namespace BlockResource {
 	constexpr auto BLOCK = "image/BlockEmpty.png";
 	constexpr auto FLAG = "image/BlockFlag.png";
 }
+
+namespace CombatResource {
+	constexpr auto BACKGROUND1 = "image/CombatBackground1.jpg";
+	constexpr auto BACKGROUND2 = "image/CombatBackground2.jpg";
+	constexpr auto BACKGROUND3 = "image/CombatBackground3.jpg";
+
+	constexpr auto MONSTER1 = "image/Monster1.png";
+	constexpr auto MONSTER2 = "image/Monster2.png";
+	constexpr auto MONSTER3 = "image/Monster3.png";
+	constexpr auto MONSTER4 = "image/Monster4.png";
+	constexpr auto MONSTER5 = "image/Monster5.png";
+	constexpr auto MONSTER6 = "image/Monster6.png";
+
+	namespace RockPaperScissor {
+		constexpr auto Rock = "image/Rock.png";
+		constexpr auto Paper = "image/Paper.png";
+		constexpr auto Scissor = "image/Scissors.png";
+		constexpr auto Opportunity = "image/Heart.png";
+	}
+}

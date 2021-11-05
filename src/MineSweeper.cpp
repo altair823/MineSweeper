@@ -25,6 +25,6 @@ int main()
 	ScenePtr background = Scene::create("배경", BoardResource::BACKGROUND);
 	Board board(background);
 
-
 	startGame(background);
+
 }

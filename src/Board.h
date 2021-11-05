@@ -13,6 +13,8 @@
 #include "MineField.h"
 #include <vector>
 #include <bangtal>
+#include "Combat.h"
+#include "Combats/RockPaperScissor.h"
 using namespace bangtal;
 
 static int boardCount = 0;

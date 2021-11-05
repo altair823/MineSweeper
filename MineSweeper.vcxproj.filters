@@ -30,6 +30,9 @@
     <ClCompile Include="src\Board.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="src\Combats\RockPaperScissor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MineField.h">
@@ -48,6 +51,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="src\Board.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Combat.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Combats\RockPaperScissor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
