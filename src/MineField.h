@@ -21,19 +21,19 @@
 * 연산자 오버로딩을 위해 필요하다. 
 * MineField 클래스 밖에서는 사용하지 않는다. 
 */
-class _intArray {
+class _fieldDataArray {
 private:
 	// 한 행에 들어있는 위치 데이터 벡터
-	std::vector<int> data;
+	std::vector<FieldData> data;
 
 public:
-	_intArray(int size);
+	_fieldDataArray(int size);
 
 public:
 	/*
 	* 배열 연산자 오버로딩
 	*/
-	int& const operator[](const int index);
+	FieldData& const operator[](const int index);
 
 	/*
 	* 초기화 함수
@@ -56,14 +56,14 @@ private:
 	int mineCount;
 
 	// 모든 위치 데이터가 들어있는 2차원 벡터
-	std::vector<_intArray> fieldData;
+	std::vector<_fieldDataArray> fieldData;
 
 public:
 
 	/*
 	* 배열 연산자 오버로딩
 	*/
-	_intArray& const operator[](const int index);
+	_fieldDataArray& const operator[](const int index);
 
 	/*
 	* 2차원 벡터를 모두 초기화하는 함수
