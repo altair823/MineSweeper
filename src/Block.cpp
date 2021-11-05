@@ -14,7 +14,7 @@ std::shared_ptr<_block> Block::Create(ScenePtr bg, int x, int y)
 
 _block::_block(ScenePtr bg, int x, int y) {
 	blockObject = Object::create(BlockResource::BLOCK, bg, x, y);
-	blockObject->hide(); //디버그용
+	//blockObject->hide(); //디버그용
 	isFlagImage = true;
 }
 

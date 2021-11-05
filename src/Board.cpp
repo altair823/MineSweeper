@@ -1,6 +1,7 @@
 #include "Board.h"
 
 Board::Board(ScenePtr bg) {
+	background = bg;
 	// 행, 열 테스트 값
 	int row = 10, col = 10;
 
@@ -20,9 +21,18 @@ Board::Board(ScenePtr bg) {
 		cells.push_back(cellRow);
 	}
 
-	// Minefield resizing 테스트
-	field.Resize(row+10, col+10);
-	field.MountMine();
-	field.setAdjacentNum();
-	field.Print();
+	/*
+	* 전투 상황 테스트를 위한 코드.
+	*/
+	/*
+	ObjectPtr testObject = Object::create(CombatResource::MONSTER1, background, 30, 30);
+	testObject->show();
+	testObject->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
+
+		Combat* testCombat = new RockPaperScissor(background);
+		testCombat->EnterBattle();
+		return true;
+		});
+		*/
+
 }
