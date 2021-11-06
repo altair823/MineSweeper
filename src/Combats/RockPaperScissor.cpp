@@ -1,14 +1,22 @@
 #include "RockPaperScissor.h"
-std::string BattleBackground[] = {
+
+std::string RPSBattleBackground[] = {
 	CombatResource::BACKGROUND1,
 	CombatResource::BACKGROUND2,
 	CombatResource::BACKGROUND3
 };
+
 RockPaperScissor::RockPaperScissor(ScenePtr previousScene) {
+
 	this->previousScene = previousScene;
 
+	// 난수 생성 엔진 초기화
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dis(0, 2);
+
 	// 전투 배경은 무작위로 생성하지만 몬스터는 정해져 있다. 
-	background = Scene::create("전투 배경", BattleBackground[rand() % 3]);
+	background = Scene::create("전투 배경", RPSBattleBackground[dis(gen) % 3]);
 	monsters.resize(3);
 	for (int i = 0; i < 3; i++) {
 		monsters[i] = Object::create(CombatResource::MONSTER1, background, 200 * i + 30, 250);
@@ -16,15 +24,15 @@ RockPaperScissor::RockPaperScissor(ScenePtr previousScene) {
 	}
 
 	// 기회 표시
-	opportunity.resize(ROCK_SCISSORS_PAPER_OPPORTUNITY);
-	for (int i = 0; i < ROCK_SCISSORS_PAPER_OPPORTUNITY; i++) {
+	opportunity.resize(RockPaperScissorConfig::OPPORTUNITY);
+	for (int i = 0; i < RockPaperScissorConfig::OPPORTUNITY; i++) {
 		opportunity[i] = Object::create(CombatResource::RockPaperScissor::Opportunity, background, 650, 0 + (80 * i));
 	}
 }
 
 void RockPaperScissor::EnterBattle() {
 	background->enter();
-	showMessage("몬스터가 등장했습니다!\n가위바위보를 세 번 이겨야 탈출할 수 있습니다.\n기회는 "+std::to_string(ROCK_SCISSORS_PAPER_OPPORTUNITY)+"번 뿐입니다!");
+	showMessage("몬스터가 등장했습니다!\n가위바위보를 세 번 이겨야 탈출할 수 있습니다.\n기회는 "+std::to_string(RockPaperScissorConfig::OPPORTUNITY)+"번 뿐입니다!");
 
 	rock = Object::create(CombatResource::RockPaperScissor::Rock, background, 100, -100);
 	rock->setScale(0.2f);
@@ -38,7 +46,7 @@ void RockPaperScissor::EnterBattle() {
 		playerChoice = HandType::Rock;
 		computerChoice = MakeComputerChoice();
 		ShowChoices(playerChoice, computerChoice);
-		CompareChoices(playerChoice, computerChoice);
+		CompareChoices();
 		return true;
 		});
 
@@ -47,7 +55,7 @@ void RockPaperScissor::EnterBattle() {
 		playerChoice = HandType::Paper;
 		computerChoice = MakeComputerChoice();
 		ShowChoices(playerChoice, computerChoice);
-		CompareChoices(playerChoice, computerChoice);
+		CompareChoices();
 		return true;
 	});
 
@@ -56,7 +64,7 @@ void RockPaperScissor::EnterBattle() {
 		playerChoice = HandType::Scissors;
 		computerChoice = MakeComputerChoice();
 		ShowChoices(playerChoice, computerChoice);
-		CompareChoices(playerChoice, computerChoice);
+		CompareChoices();
 		return true;
 		});
 }
@@ -85,14 +93,13 @@ HandType RockPaperScissor::MakeComputerChoice(){
 	return result;
 }
 
-void RockPaperScissor::CompareChoices(HandType playerChoice, HandType computerChoice) {
+void RockPaperScissor::CompareChoices() {
 	// 플레이어가 이겼다면
 	if ((playerChoice == HandType::Rock && computerChoice == HandType::Scissors)
 		|| (playerChoice == HandType::Scissors && computerChoice == HandType::Paper)
 		|| (playerChoice == HandType::Paper && computerChoice == HandType::Rock)) {
 		monsters.back()->hide();
 		monsters.pop_back();
-		winCount++;
 		// 남은 몬스터가 없다면
 		if (monsters.size() == 0) {
 			showMessage("몬스터들을 물리쳤습니다!");
@@ -110,7 +117,6 @@ void RockPaperScissor::CompareChoices(HandType playerChoice, HandType computerCh
 	else {
 		opportunity.back()->hide();
 		opportunity.pop_back();
-		looseCount++;
 		// 남은 기회가 없다면 게임 오버
 		if (opportunity.size() == 0) {
 			showMessage("게임 오버!");
@@ -167,7 +173,7 @@ void RockPaperScissor::ShowChoices(HandType playerChoice, HandType computerChoic
 	playerHand->setScale(0.2f);
 
 	// 플레이어와 컴퓨터의 선택을 다시 지우는 타이머
-	TimerPtr choicesHideTimer = Timer::create(VISIBLE_TIME);
+	TimerPtr choicesHideTimer = Timer::create(RockPaperScissorConfig::VISIBLE_TIME);
 	choicesHideTimer->setOnTimerCallback([=](auto)->bool {
 		computerHand->hide();
 		playerHand->hide();

@@ -55,4 +55,15 @@ namespace CombatResource {
 		constexpr auto Scissor = "image/Scissors.png";
 		constexpr auto Opportunity = "image/Heart.png";
 	}
+
+	namespace DiceRolling {
+		constexpr auto Button = "image/DiceRollButton.png";
+
+		constexpr auto One = "image/Dice1.png";
+		constexpr auto Two = "image/Dice2.png";
+		constexpr auto Three = "image/Dice3.png";
+		constexpr auto Four = "image/Dice4.png";
+		constexpr auto Five = "image/Dice5.png";
+		constexpr auto Six = "image/Dice6.png";
+	}
 }

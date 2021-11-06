@@ -15,6 +15,7 @@
 #include <bangtal>
 #include "Combat.h"
 #include "Combats/RockPaperScissor.h"
+#include "Combats/DiceRolling.h"
 using namespace bangtal;
 
 static int boardCount = 0;

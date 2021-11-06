@@ -29,11 +29,11 @@ Board::Board(ScenePtr bg) {
 	testObject->show();
 	testObject->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
 
-		Combat* testCombat = new RockPaperScissor(background);
+		Combat* testCombat = new DiceRolling(background);
 		testCombat->EnterBattle();
 		return true;
 		});
-		*/
+	*/
 
 	// 핸드 컨트롤 객체
 	handObject = Object::create(HandResource::PICKAX, background, 430, 430);
