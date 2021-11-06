@@ -33,8 +33,17 @@ private:
 	// 지뢰찾기 판 전체의 데이터를 관리하는 객체
 	MineField field;
 
+	// 현재 사용중인 도구
+	Hand hand = Hand::Pickax;
+
+	// 현재 사용중인 도구의 상태를 표시하기 위한 객체
+	ObjectPtr handObject;
+
 public:
 
 	Board(ScenePtr bg);
+
+	// 핸드컨트롤 객체의 상태를 바꾸는 함수
+	void HandChange();
 };
 

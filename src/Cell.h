@@ -22,21 +22,27 @@ class _cell;
 * CellPtr을 반환하는 함수. 
 */
 namespace Cell {
-	std::shared_ptr<_cell> Create(ScenePtr bg, FieldData fieldData, int row, int col);
+	std::shared_ptr<_cell> Create(ScenePtr bg, FieldData fieldData, int row, int col, Hand* handPtr);
 }
 
 class _cell {
 	// Create 함수가 private에 접근 가능하도록 설정
-	friend std::shared_ptr<_cell> Cell::Create(ScenePtr, FieldData, int, int);
+	friend std::shared_ptr<_cell> Cell::Create(ScenePtr, FieldData, int, int, Hand*);
 
 private:
 	// 방탈 오브젝트 객체
 	ObjectPtr cellObject;
 
+	// 셀이 드러난 상태인지를 나타내는 플래그
+	bool isOpened = false;
+
+	// 현재 핸드의 상태를 가리키는 포인터
+	Hand* handPtr;
+
 	/*
 	* _cell의 생성자는 숨겨져 있고 Cell::create()를 사용해 생성해야 한다. 
 	*/
-	_cell(ScenePtr bg, FieldData fieldData, int x, int y);
+	_cell(ScenePtr bg, FieldData fieldData, int x, int y, Hand* handPtr);
 
 public:
 	/*
@@ -49,6 +55,12 @@ public:
 	* block객체의 blockObject에 대한 Mousecallback을 만드는 함수
 	*/
 	void MakeBlockCallback(BlockPtr block);
+
+
+	/*
+	* 블럭을 부수는 함수
+	*/
+	void BreakBlock(BlockPtr block);
 };
 
 // _cell에 대한 shared_ptr를 CellPtr로 정한다. 
