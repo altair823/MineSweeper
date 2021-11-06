@@ -27,6 +27,17 @@ enum ItemValue {
 };
 
 /*
+* 핸드에 사용하는 enum
+*/
+enum class Hand {
+	//곡괭이
+	Pickax,
+	//깃발
+	Flag,
+};
+
+
+/*
 * 한 cell에 담긴 정보를 전달할 때 사용할 클래스. 
 * 여러 정보를 동시에 전달할 때 사용한다. 
 */

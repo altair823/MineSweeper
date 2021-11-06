@@ -12,6 +12,11 @@ namespace BoardResource {
 	constexpr auto BACKGROUND = "image/BackgroundTest.png";
 }
 
+namespace HandResource {
+	constexpr auto PICKAX = "image/Pickax.png";
+	constexpr auto FLAG = "image/Flag.png";
+}
+
 namespace CellResource {
 	constexpr auto MINE = "image/CellMine.png";
 	constexpr auto ESCAPE = "image/CellEscape.png";

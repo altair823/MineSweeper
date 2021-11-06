@@ -51,6 +51,11 @@ public:
 	void ChangeEmptyBlockImage();
 
 	/*
+	* 빈 블럭은 깃발블럭으로 깃발블럭은 빈 블럭으로 바꾸는 함수
+	*/
+	void ChangeBlockImage();
+
+	/*
 	* blockObject를 숨기는 함수
 	*/
 	void hideBlock();
