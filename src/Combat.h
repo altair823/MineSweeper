@@ -12,7 +12,6 @@
 #include "resource.h"
 
 
-
 class Combat {
 public:
 

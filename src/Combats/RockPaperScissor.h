@@ -14,11 +14,13 @@
 #include <random>
 using namespace bangtal;
 
-// 가위바위보 전투의 기회
-constexpr auto ROCK_SCISSORS_PAPER_OPPORTUNITY = 5;
+namespace RockPaperScissorConfig {
+	// 가위바위보 전투의 기회
+	constexpr auto OPPORTUNITY = 5;
 
-// 컴퓨터와 플레이어의 선택을 화면에 표시할 시간
-constexpr auto VISIBLE_TIME = 1;
+	// 컴퓨터와 플레이어의 선택을 화면에 표시할 시간
+	constexpr auto VISIBLE_TIME = 1;
+}
 
 /*
 * 가위바위보 게임의 선택 종류. 
@@ -45,12 +47,6 @@ private:
 
 	// 기회 오브젝트 배열
 	std::vector<ObjectPtr> opportunity;
-
-	// 이긴 횟수
-	int winCount = 0;
-
-	// 진 횟수
-	int looseCount = 0;
 
 	// 화면에 출력할 플레이어의 선택지
 	ObjectPtr rock;
@@ -82,7 +78,7 @@ public:
 	* 몬스터가 남아있지 않다면 다시 보드로 돌아가고, 
 	* 기회가 남아있지 않다면 게임 오버.
 	*/
-	void CompareChoices(HandType playerChoice, HandType computerChoice);
+	void CompareChoices();
 
 	/*
 	* 플레이어와 컴퓨터의 선택을 화면에 출력하는 함수
