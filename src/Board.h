@@ -16,6 +16,7 @@
 #include "Combat.h"
 #include "Combats/RockPaperScissor.h"
 #include "Combats/DiceRolling.h"
+#include "Combats/ShootTheMonster.h"
 using namespace bangtal;
 
 static int boardCount = 0;
