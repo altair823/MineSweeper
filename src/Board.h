@@ -29,6 +29,9 @@ private:
 	// 배경
 	ScenePtr background;
 
+	// 보드의 가로 세로 크기
+	int row, col;
+
 	// 칸 객체를 저장하는 2차원 vector
 	std::vector<std::vector<CellPtr>> cells;
 
@@ -55,5 +58,5 @@ public:
 	void HandChange();
 
 	// 보드를 초기화하는 함수
-	void RefreshBoard(Status stat, ScenePtr ch);
+	void RefreshBoard();
 };
