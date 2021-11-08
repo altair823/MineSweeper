@@ -66,3 +66,6 @@ constexpr auto CELL_SIZE = 30;
 
 // 보드의 가로 세로 크기
 constexpr auto BOARD_SIZE = 10;
+
+// 이벤트 핸들러의 갱신 간격
+constexpr auto REFRESH_TIME = 0.1f;

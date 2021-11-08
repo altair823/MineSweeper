@@ -45,6 +45,12 @@
     <ClCompile Include="src\Combats\OddOrEven.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="src\Combats\DiceMatching.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BlockBreakHandler.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MineField.h">
@@ -81,6 +87,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="src\Combats\OddOrEven.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Combats\DiceMatching.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BlockBreakHandler.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

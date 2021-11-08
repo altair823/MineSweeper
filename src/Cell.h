@@ -53,17 +53,20 @@ public:
 	*/
 	void ChangeNumImage(FieldData fieldData);
 
-
 	/*
 	* block객체의 blockObject에 대한 Mousecallback을 만드는 함수
 	*/
 	void MakeBlockCallback(BlockPtr block);
 
-
 	/*
 	* 블럭을 부수는 함수
 	*/
 	void BreakBlock(BlockPtr block);
+
+	/*
+	* 현재 cell이 보이는지 여부를 반환하는 함수
+	*/
+	bool getIsOpened();
 };
 
 // _cell에 대한 shared_ptr를 CellPtr로 정한다. 

@@ -8,6 +8,9 @@ using namespace bangtal;
 
 namespace DiceMatchingConfig {
 
+	// 몬스터의 숫자
+	constexpr auto MONSTER_COUNT = 3;
+
 	//전투의 기회
 	constexpr auto OPPORTUNITY = 5;
 
@@ -62,5 +65,20 @@ public:
 	* 전투에 진입하는 함수
 	*/
 	void EnterBattle();
+
+	/*
+	* 주사위의 값과 이미지를 무작위로 바꾸는 함수
+	*/
+	void ChangeDiceNumRandomly();
+
+	/*
+	* 사용자의 입력을 결과 결정 함수에 넘겨주는 함수
+	*/
+	bool InputPlayerChoice(int num);
+
+	/*
+	* 결과를 비교하여 승패를 결정하는 함수
+	*/
+	void CompareChoice();
 
 };
