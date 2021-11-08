@@ -26,16 +26,16 @@ Board::Board(ScenePtr bg) {
 	/*
 	* 전투 상황 테스트를 위한 코드.
 	*/
-	/*
+	
 	ObjectPtr testObject = Object::create(CombatResource::MONSTER1, background, 30, 30);
 	testObject->show();
 	testObject->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
 
-		Combat* testCombat = new DiceRolling(background);
+		Combat* testCombat = new DiceMatching(background);
 		testCombat->EnterBattle();
 		return true;
 		});
-	*/
+
 
 	// 핸드 컨트롤 객체
 	handObject = Object::create(HandResource::PICKAX, background, 430, 430);
