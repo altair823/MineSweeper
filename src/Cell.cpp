@@ -19,7 +19,7 @@ _cell::_cell(ScenePtr bg, FieldData fieldData, int x, int y, Hand* handPtr) {
 	ChangeNumImage(fieldData);
 
 	//°¢°¢ÀÇ Ä­ÀÇ À§¸¦ µ¤À» ºí·° °´Ã¼ »ý¼º
-	BlockPtr block = Block::Create(bg, x, y);
+	block = Block::Create(bg, x, y);
 
 	//ºí·°°´Ã¼¿¡ ´ëÇÑ MouseCallback ÇÔ¼ö Á¤ÀÇ
 	MakeBlockCallback(block);
@@ -30,7 +30,7 @@ _cell::_cell(ScenePtr bg, FieldData fieldData, int x, int y, Hand* handPtr) {
 
 void _cell::ChangeNumImage(FieldData fieldData) {
 
-	switch (fieldData.cellValue){
+	switch (fieldData.cellValue) {
 		// Áö·ÚÄ­ÀÏ °æ¿ì
 	case CellValue::Mine:
 		cellObject->setImage(CellResource::MINE);
@@ -45,7 +45,7 @@ void _cell::ChangeNumImage(FieldData fieldData) {
 
 	switch (fieldData.num) {
 
-	// ¼ýÀÚÀÏ °æ¿ì
+		// ¼ýÀÚÀÏ °æ¿ì
 	case 1:
 		cellObject->setImage(CellResource::ONE);
 		break;
@@ -71,7 +71,7 @@ void _cell::ChangeNumImage(FieldData fieldData) {
 		cellObject->setImage(CellResource::EIGHT);
 		break;
 
-	// ºóÄ­ÀÏ °æ¿ì
+		// ºóÄ­ÀÏ °æ¿ì
 	default:
 		break;
 	}
@@ -86,7 +86,7 @@ void _cell::MakeBlockCallback(BlockPtr block) {
 			block->ChangeBlockImage();
 		}
 		return true;
-	});
+		});
 }
 
 void _cell::BreakBlock(BlockPtr block) {
