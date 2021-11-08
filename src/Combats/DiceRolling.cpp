@@ -14,7 +14,19 @@ DiceRolling::DiceRolling(ScenePtr previousScene) {
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<int> dis(0, 2);
 
-	background = Scene::create("전투 배경", RDBattleBackground[dis(gen) % 3]);
+	switch (dis(gen)) {
+	case 0:
+		background = Scene::create("전투 배경", CombatResource::BACKGROUND1);
+		break;
+	case 1:
+		background = Scene::create("전투 배경", CombatResource::BACKGROUND2);
+		break;
+	case 2:
+		background = Scene::create("전투 배경", CombatResource::BACKGROUND3);
+		break;
+	default:
+		break;
+	}
 
 	// 몬스터 표시
 	monsters.resize(3);
@@ -26,7 +38,7 @@ DiceRolling::DiceRolling(ScenePtr previousScene) {
 	// 기회 표시
 	opportunity.resize(DiceRollingConfig::OPPORTUNITY);
 	for (int i = 0; i < DiceRollingConfig::OPPORTUNITY; i++) {
-		opportunity[i] = Object::create(CombatResource::RockPaperScissor::Opportunity, background, 650, 0 + (80 * i));
+		opportunity[i] = Object::create(CombatResource::DiceRolling::Opportunity, background, 650, 0 + (80 * i));
 	}
 }
 

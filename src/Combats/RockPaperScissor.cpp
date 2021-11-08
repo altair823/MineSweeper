@@ -16,7 +16,19 @@ RockPaperScissor::RockPaperScissor(ScenePtr previousScene) {
 	std::uniform_int_distribution<int> dis(0, 2);
 
 	// 전투 배경은 무작위로 생성하지만 몬스터는 정해져 있다. 
-	background = Scene::create("전투 배경", RPSBattleBackground[dis(gen) % 3]);
+	switch (dis(gen)) {
+	case 0:
+		background = Scene::create("전투 배경", CombatResource::BACKGROUND1);
+		break;
+	case 1:
+		background = Scene::create("전투 배경", CombatResource::BACKGROUND2);
+		break;
+	case 2:
+		background = Scene::create("전투 배경", CombatResource::BACKGROUND3);
+		break;
+	default:
+		break;
+	}
 	monsters.resize(3);
 	for (int i = 0; i < 3; i++) {
 		monsters[i] = Object::create(CombatResource::MONSTER1, background, 200 * i + 30, 250);
