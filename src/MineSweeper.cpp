@@ -24,7 +24,7 @@ int main()
 
 	ScenePtr background = Scene::create("배경", BoardResource::BACKGROUND);
 	Board board(background);
-	board.GenerateNewBoard(10, 10);
+	board.GenerateNewBoard(INIT_BOARD_SIZE, INIT_BOARD_SIZE);
 
 	startGame(background);
 

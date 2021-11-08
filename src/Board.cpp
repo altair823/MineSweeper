@@ -11,22 +11,6 @@ Board::Board(ScenePtr bg) {
 	background = bg;
 	row = 0, col = 0;
 
-	
-
-	/*
-	* 전투 상황 테스트를 위한 코드.
-	*/
-	/*
-	ObjectPtr testObject = Object::create(CombatResource::MONSTER1, background, 30, 30);
-	testObject->show();
-	testObject->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
-
-		Combat* testCombat = new DiceMatching(background);
-		testCombat->EnterBattle();
-		return true;
-		});
-		*/
-
 	// 핸드 컨트롤 객체
 	handObject = Object::create(HandResource::PICKAX, background, 430, 430);
 	handObject->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
@@ -92,13 +76,12 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 		std::cout << "보드에 이미 데이터가 존재합니다!" << std::endl;
 		exit(1);
 	}
-	// int, row는 게임 클리어 시에 갱신된다.
-	if (status == Status::Clear) {
-		row = newRow;
-		col = newCol;
-		// 보드가 새로 생성될 때마다 새로운 이벤트 핸들러 객체 생성
-		OnBlockBreak = std::make_shared<BlockBreakHandler>(row, col, field, cells);
-	}
+
+	row = newRow;
+	col = newCol;
+
+	// 보드가 새로 생성될 때마다 새로운 이벤트 핸들러 객체 생성
+	OnBlockBreak = std::make_shared<BlockBreakHandler>(row, col, field, cells);
 
 	// field 초기화
 	field.Resize(row, col);
@@ -119,6 +102,7 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 	// 새로 생성된 보드는 플레이 상태로 전환됨.
 	status = Status::Playing;
 
+	// 새 보드 생성이 완료되면 이벤트 핸들러의 루프 시작
 	OnBlockBreak->CheckNewCellOpened();
 }
 
