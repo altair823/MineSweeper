@@ -83,7 +83,7 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 	// 보드가 새로 생성될 때마다 새로운 이벤트 핸들러 객체 생성
 	OnBlockBreak = std::make_shared<BlockBreakHandler>(row, col, field, cells);
 
-	// field 초기화
+	// field 재생성
 	field.Resize(row, col);
 	field.MountMine();
 	field.setAdjacentNum();
