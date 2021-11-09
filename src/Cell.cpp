@@ -22,7 +22,7 @@ _cell::_cell(ScenePtr bg, FieldData fieldData, int x, int y, Hand* handPtr) {
 	block = Block::Create(bg, x, y);
 
 	//블럭객체에 대한 MouseCallback 함수 정의
-	MakeBlockCallback(block);
+	MakeBlockCallback();
 
 	//핸드포인터
 	this->handPtr = handPtr;
@@ -76,10 +76,10 @@ void _cell::ChangeNumImage(FieldData fieldData) {
 	}
 }
 
-void _cell::MakeBlockCallback(BlockPtr block) {
-	block->setClickCallback([=](auto object, int x, int y, auto action)->bool {
+void _cell::MakeBlockCallback() {
+	this->block->setClickCallback([=](auto object, int x, int y, auto action)->bool {
 		if (*handPtr == Hand::Pickax) {
-			BreakBlock(block);
+			BreakBlock();
 		}
 		else if (*handPtr == Hand::Flag) {
 			block->ChangeBlockImage();
@@ -88,15 +88,11 @@ void _cell::MakeBlockCallback(BlockPtr block) {
 		});
 }
 
-void _cell::BreakBlock(BlockPtr block) {
-	block->hideBlock();
+void _cell::BreakBlock() {
+	this->block->hideBlock();
 	isOpened = true;
 }
 
 bool _cell::getIsOpened(){
 	return isOpened;
-}
-
-BlockPtr _cell::getBlock() {
-	return block;
 }
