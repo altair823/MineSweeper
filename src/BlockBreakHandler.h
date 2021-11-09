@@ -51,6 +51,11 @@ public:
 	void CheckNewCellOpened();
 
 	/*
+	* 빈 칸의 경계에 있는 cell들을 열어 확장하는 함수
+	*/
+	void ExpandBorder(int i, int j);
+
+	/*
 	* cell 확인을 중단하는 함수
 	* Timer를 초기화하기 위해 필요함.
 	*/
