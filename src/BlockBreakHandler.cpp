@@ -28,6 +28,30 @@ void BlockBreakHandler::CheckNewCellOpened() {
 					std::cout << "row: " << i << ", col: " << j << 
 						"\ncellValue: " << field[i][j].cellValue << ", num: " << field[i][j].num << ", itemValue: " << field[i][j].itemValue << std::endl;
 					isCellOpen[i][j] = true;
+					//  빈 칸 확장 메서드
+					// 새로 열린 칸이 빈칸이라면 이하의 빈칸 확장 과정을 진행한다.
+					if (field[i][j].cellValue == CellValue::Empty && field[i][j].num == 0) { // itemValue와 관련된 조건 추가 필요!
+						// k는 확장될 칸의 row 위치이다.
+						for (int k = i - 1; k <= i + 1; k++) {
+							// 위치가 범위를 벗어나면 진행하지 않는다.
+							if (k < 0 || k >= row) {
+								continue;
+							}
+							else {
+								// l은 확장될 칸의 col 위치이다.
+								for (int l = j - 1; l <= j + 1; l++) {
+									// 위치가 범위를 벗어나면 진행하지 않는다.
+									if (l < 0 || l >= col) {
+										continue;
+									}
+									// 아직 열리지 않은 칸이고 숫자 칸이라면 연다.
+									else if (cells[k][l]->getIsOpened() == false && field[k][l].cellValue == CellValue::Empty) {
+										cells[k][l]->BreakBlock(cells[k][l]->getBlock());
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		}
