@@ -96,3 +96,7 @@ void _cell::BreakBlock(BlockPtr block) {
 bool _cell::getIsOpened(){
 	return isOpened;
 }
+
+BlockPtr _cell::getBlock() {
+	return block;
+}
