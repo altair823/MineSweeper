@@ -63,7 +63,7 @@ void BlockBreakHandler::ExpandBorder(int i, int j) {
 					}
 					// 아직 열리지 않은 칸이고 숫자 칸이라면 연다.
 					else if (cells[k][l]->getIsOpened() == false && field[k][l].cellValue == CellValue::Empty) {
-						cells[k][l]->BreakBlock(cells[k][l]->getBlock());
+						cells[k][l]->BreakBlock();
 					}
 				}
 			}
