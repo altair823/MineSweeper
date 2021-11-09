@@ -13,10 +13,8 @@
 #include "MineField.h"
 #include <vector>
 #include <bangtal>
-#include "Combat.h"
-#include "Combats/RockPaperScissor.h"
-#include "Combats/DiceRolling.h"
-#include "Combats/ShootTheMonster.h"
+#include "BlockBreakHandler.h"
+
 using namespace bangtal;
 
 static int boardCount = 0;
@@ -47,6 +45,9 @@ private:
 	// 현재 보드의 상황을 나타내는 변수
 	Status status;
 
+	// 이벤트 핸들러
+	std::shared_ptr<BlockBreakHandler> OnBlockBreak;
+
 	// **디버그용** 보드를 초기화 하기 위한 버튼 객체
 	ObjectPtr resetButton;
 
@@ -57,6 +58,12 @@ public:
 	// 핸드컨트롤 객체의 상태를 바꾸는 함수
 	void HandChange();
 
-	// 보드를 초기화하는 함수
-	void RefreshBoard();
+	// 보드를 주어진 크기로 초기화하고 생성하는 함수
+	void RefreshBoard(int newRow, int newCol);
+
+	// 현재 보드를 초기화하는 함수
+	void Clear();
+
+	// 보드를 주어진 크기로 새로 생성하는 함수
+	void GenerateNewBoard(int newRow, int newCol);
 };

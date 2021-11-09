@@ -20,9 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Block.cpp" />
+    <ClCompile Include="src\BlockBreakHandler.cpp" />
     <ClCompile Include="src\Board.cpp" />
     <ClCompile Include="src\Cell.cpp" />
+    <ClCompile Include="src\Combats\DiceMatching.cpp" />
     <ClCompile Include="src\Combats\DiceRolling.cpp" />
+    <ClCompile Include="src\Combats\OddOrEven.cpp" />
     <ClCompile Include="src\Combats\RockPaperScissor.cpp" />
     <ClCompile Include="src\Combats\ShootTheMonster.cpp" />
     <ClCompile Include="src\MineField.cpp" />
@@ -31,10 +34,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Block.h" />
+    <ClInclude Include="src\BlockBreakHandler.h" />
     <ClInclude Include="src\Board.h" />
     <ClInclude Include="src\Cell.h" />
     <ClInclude Include="src\Combat.h" />
+    <ClInclude Include="src\Combats\DiceMatching.h" />
     <ClInclude Include="src\Combats\DiceRolling.h" />
+    <ClInclude Include="src\Combats\OddOrEven.h" />
     <ClInclude Include="src\Combats\RockPaperScissor.h" />
     <ClInclude Include="src\Combats\ShootTheMonster.h" />
     <ClInclude Include="src\CommonDeclarations.h" />

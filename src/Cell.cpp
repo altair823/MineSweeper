@@ -29,20 +29,6 @@ _cell::_cell(ScenePtr bg, FieldData fieldData, int x, int y, Hand* handPtr) {
 }
 
 void _cell::ChangeNumImage(FieldData fieldData) {
-
-	switch (fieldData.cellValue) {
-		// 瘤汾沫老 版快
-	case CellValue::Mine:
-		cellObject->setImage(CellResource::MINE);
-		return;
-		// 呕免备老 版快
-	case CellValue::Escape:
-		cellObject->setImage(CellResource::ESCAPE);
-		return;
-	default:
-		break;
-	}
-
 	switch (fieldData.num) {
 
 		// 箭磊老 版快
@@ -75,6 +61,19 @@ void _cell::ChangeNumImage(FieldData fieldData) {
 	default:
 		break;
 	}
+
+	switch (fieldData.cellValue) {
+		// 瘤汾沫老 版快
+	case CellValue::Mine:
+		cellObject->setImage(CellResource::MINE);
+		return;
+		// 呕免备老 版快
+	case CellValue::Escape:
+		cellObject->setImage(CellResource::ESCAPE);
+		return;
+	default:
+		break;
+	}
 }
 
 void _cell::MakeBlockCallback(BlockPtr block) {
@@ -92,4 +91,8 @@ void _cell::MakeBlockCallback(BlockPtr block) {
 void _cell::BreakBlock(BlockPtr block) {
 	block->hideBlock();
 	isOpened = true;
+}
+
+bool _cell::getIsOpened(){
+	return isOpened;
 }

@@ -67,10 +67,34 @@ namespace CombatResource {
 		constexpr auto Five = "image/Dice5.png";
 		constexpr auto Six = "image/Dice6.png";
 	}
+	namespace OddOrEven {
+		constexpr auto Opportunity = "image/Heart.png";
+
+		constexpr auto One = "image/Dice1.png";
+		constexpr auto Two = "image/Dice2.png";
+		constexpr auto Three = "image/Dice3.png";
+		constexpr auto Four = "image/Dice4.png";
+		constexpr auto Five = "image/Dice5.png";
+		constexpr auto Six = "image/Dice6.png";
+
+		constexpr auto OddButton = "image/OddButton.png";
+		constexpr auto EvenButton = "image/EvenButton.png";
+	}
 
 	namespace ShootTheMonster {
 		constexpr auto Pistol = "image/Pistol.png";
 		constexpr auto Opportunity = "image/Bullet.png";
 		constexpr auto Explode = "image/Explode.png";
+	}
+
+	namespace DiceMatching {
+		constexpr auto Opportunity = "image/Heart.png";
+
+		constexpr auto One = "image/Dice1.png";
+		constexpr auto Two = "image/Dice2.png";
+		constexpr auto Three = "image/Dice3.png";
+		constexpr auto Four = "image/Dice4.png";
+		constexpr auto Five = "image/Dice5.png";
+		constexpr auto Six = "image/Dice6.png";
 	}
 }

@@ -81,13 +81,17 @@ void MineField::Resize(int newRow, int newCol) {
 }
 
 void MineField::MountMine() {
-    srand((unsigned int)time(NULL));
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> randRow(0, row - 1);
+    std::uniform_int_distribution<int> randCol(0, col - 1);
+
 
     // 깔아야할 지뢰 개수만큼 반복한다. 
     for (int i = 0; i < mineCount;) {
         // 무작위로 위치 선택
-        int curRow = rand() % row;
-        int curCol = rand() % col;
+        int curRow = randRow(gen);
+        int curCol = randCol(gen);
         // 만약 이미 지뢰가 깔린 자리가 선택된다면 다시 선택한다. 
         if (fieldData[curRow][curCol].cellValue == CellValue::Mine) {
             continue;
@@ -97,9 +101,9 @@ void MineField::MountMine() {
     }
 
     // 탈출구의 개수만큼 반복한다. 
-    for (int i = 0; i < 1; i++) {
-        int curRow = rand() % row;
-        int curCol = rand() % col;
+    for (int i = 0; i < 1;) {
+        int curRow = randRow(gen);
+        int curCol = randCol(gen);
         if (fieldData[curRow][curCol].cellValue != CellValue::Empty) {
             continue;
         }
@@ -113,6 +117,9 @@ void MineField::Print() {
         for (int j = 0; j < col; j++) {
             if (fieldData[i][j].cellValue == CellValue::Mine) {
                 std::cout << "* ";
+            }
+            else if (fieldData[i][j].cellValue == CellValue::Escape) {
+                std::cout << "E ";
             }
             else {
                 std::cout << fieldData[i][j].num << " ";
