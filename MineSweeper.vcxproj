@@ -30,7 +30,6 @@
     <ClCompile Include="src\Combats\ShootTheMonster.cpp" />
     <ClCompile Include="src\MineField.cpp" />
     <ClCompile Include="src\MineSweeper.cpp" />
-    <ClCompile Include="src\PRtest.cpp" />
     <ClCompile Include="src\Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
