@@ -22,7 +22,7 @@ class _cell;
 * CellPtr을 반환하는 함수.
 */
 namespace Cell {
-	std::shared_ptr<_cell> Create(ScenePtr bg, FieldData fieldData, int row, int col, Hand* handPtr);
+	std::shared_ptr<_cell> Create(ScenePtr bg, FieldData fieldData, int x, int y, Hand* handPtr);
 }
 
 class _cell {

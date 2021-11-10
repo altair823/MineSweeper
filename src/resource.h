@@ -9,7 +9,8 @@
 #pragma once
 
 namespace BoardResource {
-	constexpr auto BACKGROUND = "image/BackgroundTest.png";
+	// 1280*720 화면 크기 테스트용 배경 화면
+	constexpr auto BACKGROUND = "image/BackgroundTest1280.png";
 }
 
 namespace HandResource {

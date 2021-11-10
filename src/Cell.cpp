@@ -1,13 +1,6 @@
 #include "Cell.h"
 
-std::shared_ptr<_cell> Cell::Create(ScenePtr bg, FieldData fieldData, int row, int col, Hand* handPtr)
-{
-	// x, y 좌표 계산. 
-	// 스테이지 구현을 위해서는 보드의 크기에 따라 맨 뒤의 상수가 바뀌어야 한다. 
-	int x = (col + 1) * CELL_SIZE + 100;
-	int y = -(row + 1) * CELL_SIZE + 420;
-
-
+std::shared_ptr<_cell> Cell::Create(ScenePtr bg, FieldData fieldData, int x, int y, Hand* handPtr) {
 	// 새로운 칸 객체 생성
 	std::shared_ptr<_cell> newCell(new _cell(bg, fieldData, x, y, handPtr));
 	return newCell;

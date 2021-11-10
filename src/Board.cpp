@@ -12,7 +12,7 @@ Board::Board(ScenePtr bg) {
 	row = 0, col = 0;
 
 	// 핸드 컨트롤 객체
-	handObject = Object::create(HandResource::PICKAX, background, 430, 430);
+	handObject = Object::create(HandResource::PICKAX, background, 1000, 600);
 	handObject->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		HandChange();
 		return true;
@@ -22,7 +22,7 @@ Board::Board(ScenePtr bg) {
 	resetButton = Object::create(BlockResource::BLOCK, background, 0, 0);
 	resetButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		status = Status::Clear;
-		RefreshBoard(row + 3, col + 3);
+		RefreshBoard(row + 4, col + 4);
 		return true;
 		});
 }
@@ -93,7 +93,10 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 	for (int i = 0; i < row; i++) {
 		std::vector<CellPtr> cellRow;
 		for (int j = 0; j < col; j++) {
-			CellPtr cell = Cell::Create(background, field[i][j], i, j, &hand);
+			// cell의 x, y 좌표 계산. 
+			int x = (640 - row / 2 * CELL_SIZE) + j * CELL_SIZE;
+			int y = (360 + col / 2 * CELL_SIZE) - (i + 1) * CELL_SIZE;
+			CellPtr cell = Cell::Create(background, field[i][j], x, y, &hand);
 			cellRow.push_back(cell);
 		}
 		cells.push_back(cellRow);
