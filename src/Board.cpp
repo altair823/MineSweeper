@@ -22,7 +22,7 @@ Board::Board(ScenePtr bg) {
 	resetButton = Object::create(BlockResource::BLOCK, background, 0, 0);
 	resetButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		status = Status::Clear;
-		RefreshBoard(row + 4, col + 4);
+		RefreshBoard(row + 2, col + 4);
 		return true;
 		});
 }
@@ -94,8 +94,8 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 		std::vector<CellPtr> cellRow;
 		for (int j = 0; j < col; j++) {
 			// cellÀÇ x, y ÁÂÇ¥ °è»ê. 
-			int x = (640 - row / 2 * CELL_SIZE) + j * CELL_SIZE;
-			int y = (360 + col / 2 * CELL_SIZE) - (i + 1) * CELL_SIZE;
+			int x = (640 - col / 2 * CELL_SIZE) + j * CELL_SIZE;
+			int y = (360 + row / 2 * CELL_SIZE) - (i + 1) * CELL_SIZE;
 			CellPtr cell = Cell::Create(background, field[i][j], x, y, &hand);
 			cellRow.push_back(cell);
 		}
