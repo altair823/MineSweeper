@@ -117,9 +117,6 @@ void BlockBreakHandler::RefreshBoardStatus(int i, int j) {
 				break;
 			}
 		}
-		if (isCleared == 0) {
-			break;
-		}
 	}
 	// 순회가 끝난 후에도 보드가 Clear조건을 만족하면 보드의 상태를 갱신한다.
 	if (isCleared == 1) {

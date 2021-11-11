@@ -42,7 +42,7 @@ void Stage::EventHandler() {
 	boardStatusChecker->start();
 
 	// 디버그용 타이머 생성 메세지
-	std::cout << ". . . Now Board Status Chaecker is working . . ." << std::endl;
+	std::cout << ". . . Now Board Status Checker is working . . ." << std::endl;
 }
 
 void Stage::NextStage() {
