@@ -25,9 +25,14 @@ using namespace bangtal;
 
 class BlockBreakHandler {
 private:
-
 	// 보드의 크기
 	int row, col;
+
+	// 보드의 상태
+	Status status;
+
+	// 남은 목숨, 보드의 목숨 값을 복사한 것이다. (Board.cpp의 GenerateNewBoard 함수 참고)
+	int life;
 
 	// 셀들이 열렸는지를 체크하는 2차원 벡터
 	std::vector<std::vector<bool>> isCellOpen;
@@ -46,6 +51,21 @@ public:
 	~BlockBreakHandler();
 
 	/*
+	* 보드의 상태를 반환하는 함수
+	*/
+	Status getStatus();
+
+	/*
+	* 보드의 상태를 갱신하는 함수
+	*/
+	void setStatus(Status stat);
+
+	/*
+	* 남은 목숨을 갱신하는 함수
+	*/
+	void setLife(int num);
+
+	/*
 	* 새로 열린 cell이 있는지 확인하는 함수
 	*/
 	void CheckNewCellOpened();
@@ -54,6 +74,11 @@ public:
 	* 빈 칸의 경계에 있는 cell들을 열어 확장하는 함수
 	*/
 	void ExpandBorder(int i, int j);
+
+	/*
+	* 조건을 만족하면 보드의 상태를 갱신하는 함수
+	*/
+	void RefreshBoardStatus(int i, int j);
 
 	/*
 	* cell 확인을 중단하는 함수

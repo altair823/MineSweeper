@@ -11,7 +11,7 @@
 
 #include <iostream>
 #include <bangtal>
-#include "Board.h"
+#include "Stage.h"
 #include "resource.h"
 
 int main()
@@ -20,12 +20,11 @@ int main()
 	setGameOption(GameOption::GAME_OPTION_MESSAGE_BOX_BUTTON, false);
 	setGameOption(GameOption::GAME_OPTION_ROOM_TITLE, false);
 
-
-
+	// 게임 타이틀 및 스테이지 별 스크립트를 보이기 위한 방탈 장면
+	ScenePtr frontground = Scene::create("시작 화면", CombatResource::BACKGROUND1);
+	// 게임이 실행되는 방탈 장면
 	ScenePtr background = Scene::create("배경", BoardResource::BACKGROUND);
-	Board board(background);
-	board.GenerateNewBoard(INIT_BOARD_SIZE, INIT_BOARD_SIZE);
+	Stage stage(background, frontground);
 
-	startGame(background);
-
+	startGame(frontground);
 }
