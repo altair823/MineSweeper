@@ -10,9 +10,10 @@
 /*
 * 스테이지 진행 상황을 정의하는 enum.
 */
-enum Status {
+enum class Status {
 	Playing,
 	GameOver,
+	Escape,
 	Clear
 };
 

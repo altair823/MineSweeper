@@ -18,6 +18,8 @@
 using namespace bangtal;
 
 static int boardCount = 0;
+// ** 디버그를 위해 100으로 초기화 됨 **
+constexpr auto LIFE_COUNT = 100;
 
 /*
 * 지뢰찾기를 진행할 판 클래스
@@ -42,14 +44,11 @@ private:
 	// 현재 사용중인 도구의 상태를 표시하기 위한 객체
 	ObjectPtr handObject;
 
-	// 현재 보드의 상황을 나타내는 변수
-	Status status;
+	// 남은 목숨
+	int life = LIFE_COUNT;
 
 	// 이벤트 핸들러
 	std::shared_ptr<BlockBreakHandler> OnBlockBreak;
-
-	// **디버그용** 보드를 초기화 하기 위한 버튼 객체
-	ObjectPtr resetButton;
 
 public:
 
@@ -66,4 +65,13 @@ public:
 
 	// 보드를 주어진 크기로 새로 생성하는 함수
 	void GenerateNewBoard(int newRow, int newCol);
+
+	// 보드의 상태를 반환하는 함수
+	Status getBoardStatus();
+
+	// 보드의 가로 크기를 반환하는 함수
+	int getRow();
+
+	// 보드의 세로 크기를 반환하는 함수
+	int getCol();
 };

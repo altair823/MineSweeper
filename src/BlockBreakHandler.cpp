@@ -13,6 +13,18 @@ BlockBreakHandler::BlockBreakHandler(int newRow, int newCol, MineField& newField
 	}
 }
 
+Status BlockBreakHandler::getStatus() {
+	return status;
+}
+
+void BlockBreakHandler::setStatus(Status stat) {
+	status = stat;
+}
+
+void BlockBreakHandler::setLife(int num) {
+	life = num;
+}
+
 void BlockBreakHandler::CheckNewCellOpened() {
 	// 이 타이머가 돌면서 새로 열린 칸이 존재하는지 체크한다. 
 	// REFRESH_TIME을 너무 길게하면 반응성이 떨어지고, 
@@ -26,10 +38,18 @@ void BlockBreakHandler::CheckNewCellOpened() {
 					// 디버그용 출력
 					// 이 부분에 Combat, 또는 빈칸 확장 메서드를 연결할 것
 					std::cout << "row: " << i << ", col: " << j << 
-						"\ncellValue: " << field[i][j].cellValue << ", num: " << field[i][j].num << ", itemValue: " << field[i][j].itemValue << std::endl;
+						"\ncellValue: " << field[i][j].cellValue << ", num: " << field[i][j].num << ", itemValue: " << field[i][j].itemValue << ", life: " << life << std::endl;
 					isCellOpen[i][j] = true;
-					//  빈 칸 확장 메서드
-					// 새로 열린 칸이 빈칸이라면 이하의 빈칸 확장 과정을 진행한다.
+
+					// ** 디버그 용 ** 지뢰 칸이면 목숨을 차감한다.
+					if (field[i][j].cellValue == CellValue::Mine) {
+						life -= 1;
+					}
+
+					// 필요하다면 보드의 상태를 갱신한다.
+					RefreshBoardStatus(i, j);
+					
+					// 필요하다면 빈 칸을 확장해 칸을 연다.
 					ExpandBorder(i, j);
 				}
 			}
@@ -68,6 +88,39 @@ void BlockBreakHandler::ExpandBorder(int i, int j) {
 				}
 			}
 		}
+	}
+}
+
+void BlockBreakHandler::RefreshBoardStatus(int i, int j) {
+	// GameOver
+	// 남은 목숨이 없다면 보드의 상태를 GameOver로 바꾼다.
+	if (life == 0) {
+		status = Status::GameOver;
+	}
+
+	// Escape
+	// 새로 열린 칸이 탈출구이면 보드 상태를 Escape로 바꾼다.
+	if (field[i][j].cellValue == CellValue::Escape) {
+		status = Status::Escape;
+	}
+
+	// Clear
+	// 지뢰 칸을 제외한 모든 칸이 열렸으면 보드 상태를 Clear로 바꾼다.
+	// isCleared는 보드가 Clear조건을 만족함을 나타내는 변수이다. (1 -> 만족, 0 -> 불만족)
+	int isCleared = 1;
+	// 모든 칸을 for loop으로 순회한다.
+	for (int k = 0; (k < row) && (isCleared == 1); k++) {
+		for (int l = 0; (l < col) && (isCleared == 1); l++) {
+			// 지뢰 칸을 제외한 칸 중 열리지 않은 칸이 있다면 순회를 멈춘다.
+			if (field[k][l].cellValue != CellValue::Mine && isCellOpen[k][l] == false) {
+				isCleared = 0;
+				break;
+			}
+		}
+	}
+	// 순회가 끝난 후에도 보드가 Clear조건을 만족하면 보드의 상태를 갱신한다.
+	if (isCleared == 1) {
+		status = Status::Clear;
 	}
 }
 
