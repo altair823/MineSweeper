@@ -18,8 +18,15 @@
 using namespace bangtal;
 
 static int boardCount = 0;
+
 // ** 디버그를 위해 100으로 초기화 됨 **
 constexpr auto LIFE_COUNT = 100;
+
+// 셀 하나 한 변의 픽셀 길이
+constexpr auto CELL_SIZE = 30;
+
+// 보드의 가로 세로 크기
+constexpr auto INIT_BOARD_SIZE = 10;
 
 /*
 * 지뢰찾기를 진행할 판 클래스

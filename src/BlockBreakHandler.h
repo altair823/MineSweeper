@@ -23,6 +23,19 @@
 
 using namespace bangtal;
 
+// 이벤트 핸들러의 갱신 간격
+constexpr auto REFRESH_TIME = 0.1f;
+
+/*
+* 스테이지 진행 상황을 정의하는 enum.
+*/
+enum class Status {
+	Playing,
+	GameOver,
+	Escape,
+	Clear
+};
+
 class BlockBreakHandler {
 private:
 	// 보드의 크기

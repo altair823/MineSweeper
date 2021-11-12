@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include "CommonDeclarations.h"
 #include "resource.h"
 #include <bangtal>
 using namespace bangtal;

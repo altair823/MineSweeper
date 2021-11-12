@@ -12,8 +12,40 @@
 #include <iostream>
 #include <vector>
 #include <random>
-#include "CommonDeclarations.h"
 
+
+
+/*
+* 지뢰와 숫자, 탈출구를 정의하는 enum.
+*/
+enum CellValue {
+	Escape,
+	Mine,
+	Empty,
+};
+
+/*
+* 아이템을 정의하는 enum.
+*/
+enum ItemValue {
+	AddLife,
+	MineDetector,
+	AvoidCombat,
+	None,
+};
+
+/*
+* 한 cell에 담긴 정보를 전달할 때 사용할 클래스.
+* 여러 정보를 동시에 전달할 때 사용한다.
+*/
+struct FieldData {
+	// 지뢰, 탈출구, 빈칸 여부
+	CellValue cellValue;
+	// 숫자 값
+	int num;
+	// 아이템 값
+	ItemValue itemValue;
+};
 
 /*
 * 2차원 배열에서 한 행에 해당하는 클래스.

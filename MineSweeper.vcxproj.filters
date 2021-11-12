@@ -62,9 +62,6 @@
     <ClInclude Include="src\Cell.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="src\CommonDeclarations.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="src\Block.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>

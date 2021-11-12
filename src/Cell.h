@@ -9,11 +9,21 @@
 
 #pragma once
 
-#include "CommonDeclarations.h"
 #include "resource.h"
 #include <bangtal>
 #include "Block.h"
+#include "MineField.h"
 using namespace bangtal;
+
+/*
+* ÇÚµå¿¡ »ç¿ëÇÏ´Â enum
+*/
+enum class Hand {
+	//°î±ªÀÌ
+	Pickax,
+	//±ê¹ß
+	Flag,
+};
 
 class _cell;
 
