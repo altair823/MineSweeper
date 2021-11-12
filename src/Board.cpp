@@ -7,7 +7,6 @@ Board::Board(ScenePtr bg) {
 		exit(1);
 	}
 	boardCount++;
-	status = Status::Clear;
 	background = bg;
 	row = 0, col = 0;
 
@@ -15,14 +14,6 @@ Board::Board(ScenePtr bg) {
 	handObject = Object::create(HandResource::PICKAX, background, 1000, 600);
 	handObject->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		HandChange();
-		return true;
-		});
-
-	// ** 디버그용 ** 리셋 버튼 생성 및 마우스 콜백 등록
-	resetButton = Object::create(BlockResource::BLOCK, background, 0, 0);
-	resetButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
-		status = Status::Clear;
-		RefreshBoard(row + 4, col + 4);
 		return true;
 		});
 }
@@ -41,11 +32,11 @@ void Board::HandChange() {
 
 void Board::RefreshBoard(int newRow, int newCol) {
 	// 반드시 클리어 시에만 이 함수를 호출할 것!
-	if (status == Status::Playing) {
+	if (OnBlockBreak->getStatus() == Status::Playing) {
 		std::cout << "클리어되지 못한 보드의 초기화가 발생했습니다." << std::endl;
 		exit(1);
 	}
-	else if (status == Status::GameOver) {
+	else if (OnBlockBreak->getStatus() == Status::GameOver) {
 		std::cout << "게임오버된 보드의 초기화가 발생했습니다." << std::endl;
 		exit(1);
 	}
@@ -54,7 +45,6 @@ void Board::RefreshBoard(int newRow, int newCol) {
 }
 
 void Board::Clear() {
-
 	// cell 초기화
 	// cells 초기화
 	for (int i = 0; i < row; i++) {
@@ -94,8 +84,8 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 		std::vector<CellPtr> cellRow;
 		for (int j = 0; j < col; j++) {
 			// cell의 x, y 좌표 계산. 
-			int x = (640 - row / 2 * CELL_SIZE) + j * CELL_SIZE;
-			int y = (360 + col / 2 * CELL_SIZE) - (i + 1) * CELL_SIZE;
+			int x = (640 - col / 2 * CELL_SIZE) + j * CELL_SIZE;
+			int y = (360 + row / 2 * CELL_SIZE) - (i + 1) * CELL_SIZE;
 			CellPtr cell = Cell::Create(background, field[i][j], x, y, &hand);
 			cellRow.push_back(cell);
 		}
@@ -103,9 +93,24 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 	}
 
 	// 새로 생성된 보드는 플레이 상태로 전환됨.
-	status = Status::Playing;
+	OnBlockBreak->setStatus(Status::Playing);
+
+	// 새로 생성된 보드는 이전의 목숨 갯수를 이어 받음
+	OnBlockBreak->setLife(life);
 
 	// 새 보드 생성이 완료되면 이벤트 핸들러의 루프 시작
 	OnBlockBreak->CheckNewCellOpened();
+}
+
+Status Board::getBoardStatus() {
+	return OnBlockBreak->getStatus();
+}
+
+int Board::getRow() {
+	return row;
+}
+
+int Board::getCol() {
+	return col;
 }
 

@@ -1,35 +1,63 @@
 #include "Stage.h"
 
-Stage::Stage(ScenePtr ch, Status stat) {
-	// 스테이지는 시작 화면과 게임 화면을 가진다
-	// ch.시작화면
-	// 마우스 콜백 -> ch.배경화면
-	// 보드는 ch.배경화면으로 변경될 때 보인다.
-	// 보드가 초기화되면 스테이지 진행 상황은 Playing으로 초기화된다.
+Stage::Stage(ScenePtr bg, ScenePtr fg) {
+	background = bg;
+	frontground = fg;
+
+	// 지뢰찾기 보드 생성
+	board = new Board(background);
+	board->GenerateNewBoard(INIT_BOARD_SIZE, INIT_BOARD_SIZE);
+
+	// frontground에서 보여줄 게임 타이틀 및 스테이지 별 스크립트
+	// frontground가 보여줄 스크립트가 끝나면 backround로 입장한다.
+	script = Object::create(CombatResource::MONSTER1, frontground, 0, 0);
+	script->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
+		background->enter();
+		return true;
+	});
+
+	// 스테이지의 이벤트 핸들러가 동작한다.
+	EventHandler();
 }
 
 void Stage::EventHandler() {
-	// Playing -> 이벤트 없음
-	// GameOver -> 보드 초기화
-	// Claer -> 다음 스테이지
-}
+	// 타이머가 돌면서 board의 status를 체크한다.
+	boardStatusChecker = Timer::create(REFRESH_TIME);
+	boardStatusChecker->setOnTimerCallback([&](auto)->bool {
+		// Playing -> 이벤트 없음
+		// Claer -> 다음 스테이지
+		if (board->getBoardStatus() == Status::Clear) {
+			NextStage();
+		}
+		// GameOver -> 보드 초기화?
+		if (board->getBoardStatus() == Status::GameOver) {
+			// ** 디버그용 ** 게임 종료
+			endGame();
+		}
+		boardStatusChecker->set(REFRESH_TIME);
+		boardStatusChecker->start();
+		return true;
+		});
 
-void Stage::setChapterStatus() {
-	// 스테이지 진행 상태 변경
-	// 보드 생성, 초기화 -> Playing
-	// 게임 오버 조건 (목숨이 다한 경우, 지뢰를 밟은 경우 -> 차이 없지 않나?) -> GameOver
-	// 게임 클리어 조건 (지뢰를 제외한 모든 칸을 열고 목숨이 남은 경우) -> Clear 
-}
+	boardStatusChecker->start();
 
-void Stage::getChapterStatus() {
-	// 스테이지 진행 상태 확인
-}
-
-void Stage::RestartStage() {
-	// 씬 초기화 -> 보드 초기화
+	// 디버그용 타이머 생성 메세지
+	std::cout << ". . . Now Board Status Checker is working . . ." << std::endl;
 }
 
 void Stage::NextStage() {
-	// 씬 변경 -> 씬 생성? 배경 사진만 바꾸고 보드 초기화? (후자가 나은 듯)
+	// 다음 스테이지로 넘어갈 때 보여줄 스크립트를 갱신한다.
+	// script->setImage();
+
+	// 스크립트를 가지고 있는 front 장면으로 입장한다.
+	frontground->enter();
+
+	// 스테이지 레벨을 갱신한다.
+	currentStageLevel++;
+
+	// 다음 지뢰찾기 보드로 갱신한다.
+	int row = board->getRow();
+	int col = board->getCol();
+	board->RefreshBoard(row + 2, col + 4);
 }
 
