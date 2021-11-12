@@ -9,7 +9,6 @@
 
 #include <iostream>
 #include <bangtal>
-#include "CommonDeclarations.h"
 #include "Board.h"
 
 using namespace bangtal;
