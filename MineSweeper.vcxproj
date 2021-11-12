@@ -28,6 +28,7 @@
     <ClCompile Include="src\Combats\OddOrEven.cpp" />
     <ClCompile Include="src\Combats\RockPaperScissor.cpp" />
     <ClCompile Include="src\Combats\ShootTheMonster.cpp" />
+    <ClCompile Include="src\Item.cpp" />
     <ClCompile Include="src\MineField.cpp" />
     <ClCompile Include="src\MineSweeper.cpp" />
     <ClCompile Include="src\Stage.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="src\Combats\OddOrEven.h" />
     <ClInclude Include="src\Combats\RockPaperScissor.h" />
     <ClInclude Include="src\Combats\ShootTheMonster.h" />
+    <ClInclude Include="src\Item.h" />
     <ClInclude Include="src\MineField.h" />
     <ClInclude Include="src\resource.h" />
     <ClInclude Include="src\Stage.h" />

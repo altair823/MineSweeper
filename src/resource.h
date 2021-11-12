@@ -10,12 +10,14 @@
 
 namespace BoardResource {
 	// 1280*720 화면 크기 테스트용 배경 화면
-	constexpr auto BACKGROUND = "image/BackgroundTest1280.png";
+	constexpr auto BACKGROUND = "image/Background_example3.png";
 }
 
 namespace HandResource {
 	constexpr auto PICKAX = "image/Pickax.png";
 	constexpr auto FLAG = "image/Flag.png";
+	constexpr auto ITEMBAR = "image/ItemBox_example.png";
+	constexpr auto USING = "image/ItemBox_using.png";
 }
 
 namespace CellResource {
@@ -34,9 +36,10 @@ namespace CellResource {
 }
 
 namespace BlockResource {
-	constexpr auto BLOCK = "image/BlockEmpty.png";
-	constexpr auto FLAG = "image/BlockFlag.png";
+	constexpr auto BLOCK = "image/BlockEmpty_2.png";
+	constexpr auto FLAG = "image/BlockFlag_2.png";
 }
+
 
 namespace CombatResource {
 	constexpr auto BACKGROUND1 = "image/CombatBackground1.jpg";
