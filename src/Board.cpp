@@ -13,17 +13,12 @@ Board::Board(ScenePtr bg) {
 	// 아이템 클래스의 아이템 객체
 	itemObject = new Item(background);
 
-	// 핸드 컨트롤 객체
-	handObject = Object::create(HandResource::PICKAX, background, 1000, 600);
-
-	// 핸드 컨트롤 객체에 대한 키보드 콜백
+	// 아이템 객체에 대한 키보드 콜백
 	bg -> setOnKeyboardCallback([&](auto bg, auto KeyCode, auto pressed)->bool {
 		if (KeyCode == KeyCode::KEY_1 && pressed == true) {
-			HandChange(Hand::Pickax);
 			itemObject->ChangeHand(0);
 		}
 		if (KeyCode == KeyCode::KEY_2 && pressed == true) {
-			HandChange(Hand::Flag);
 			itemObject->ChangeHand(1);
 		}
 		if (KeyCode == KeyCode::KEY_3 && pressed == true) {
@@ -42,17 +37,6 @@ Board::Board(ScenePtr bg) {
 		});
 }
 
-
-void Board::HandChange(Hand toHand) {
-	if (toHand == Hand::Flag) {
-		handObject->setImage(HandResource::FLAG);
-		hand = Hand::Flag;
-	}
-	else if (toHand == Hand::Pickax) {
-		handObject->setImage(HandResource::PICKAX);
-		hand = Hand::Pickax;
-	}
-}
 
 void Board::RefreshBoard(int newRow, int newCol) {
 	// 반드시 클리어 시에만 이 함수를 호출할 것!
@@ -110,7 +94,21 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 			// cell의 x, y 좌표 계산. 
 			int x = (640 - col / 2 * CELL_SIZE) + j * CELL_SIZE;
 			int y = (360 + row / 2 * CELL_SIZE) - (i + 1) * CELL_SIZE;
-			CellPtr cell = Cell::Create(background, field[i][j], x, y, &hand);
+			CellPtr cell = Cell::Create(background, field[i][j], x, y);
+			
+
+			// Item의 정보를 셀이 참조하려면 셀을 생성함과 동시에 그 셀의 블록에 대한 마우스 콜백도 함께 생성해야함
+			cell->getBlock()->setClickCallback([=](auto object, int x, int y, auto action)->bool {
+				if (itemObject->getHand() == Hand::Pickax) {
+					cell->BreakBlock();
+				}
+				else if (itemObject->getHand() == Hand::Flag) {
+					cell->getBlock()->ChangeBlockImage();
+				}
+				return true;
+				});
+
+
 			cellRow.push_back(cell);
 		}
 		cells.push_back(cellRow);

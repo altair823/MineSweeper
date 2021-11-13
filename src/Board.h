@@ -46,9 +46,6 @@ private:
 	// 지뢰찾기 판 전체의 데이터를 관리하는 객체
 	MineField field;
 
-	// 현재 사용중인 도구
-	Hand hand = Hand::Pickax;
-
 	// 아이템 객체
 	Item* itemObject;
 
@@ -62,11 +59,7 @@ private:
 	std::shared_ptr<BlockBreakHandler> OnBlockBreak;
 
 public:
-
 	Board(ScenePtr bg);
-
-	// 핸드컨트롤 객체의 상태를 바꾸는 함수
-	void HandChange(Hand toHand);
 
 	// 보드를 주어진 크기로 초기화하고 생성하는 함수
 	void RefreshBoard(int newRow, int newCol);

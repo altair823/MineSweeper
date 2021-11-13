@@ -15,15 +15,6 @@
 #include "MineField.h"
 using namespace bangtal;
 
-/*
-* 핸드에 사용하는 enum
-*/
-enum class Hand {
-	//곡괭이
-	Pickax,
-	//깃발
-	Flag,
-};
 
 class _cell;
 
@@ -32,12 +23,12 @@ class _cell;
 * CellPtr을 반환하는 함수.
 */
 namespace Cell {
-	std::shared_ptr<_cell> Create(ScenePtr bg, FieldData fieldData, int x, int y, Hand* handPtr);
+	std::shared_ptr<_cell> Create(ScenePtr bg, FieldData fieldData, int x, int y);
 }
 
 class _cell {
 	// Create 함수가 private에 접근 가능하도록 설정
-	friend std::shared_ptr<_cell> Cell::Create(ScenePtr, FieldData, int, int, Hand*);
+	friend std::shared_ptr<_cell> Cell::Create(ScenePtr, FieldData, int, int);
 
 private:
 	// 방탈 오브젝트 객체
@@ -49,24 +40,16 @@ private:
 	// 셀이 드러난 상태인지를 나타내는 플래그
 	bool isOpened = false;
 
-	// 현재 핸드의 상태를 가리키는 포인터
-	Hand* handPtr;
-
 	/*
 	* _cell의 생성자는 숨겨져 있고 Cell::create()를 사용해 생성해야 한다.
 	*/
-	_cell(ScenePtr bg, FieldData fieldData, int x, int y, Hand* handPtr);
+	_cell(ScenePtr bg, FieldData fieldData, int x, int y);
 
 public:
 	/*
 	* 주어진 숫자로 셀 이미지를 바꾸는 함수
 	*/
 	void ChangeNumImage(FieldData fieldData);
-
-	/*
-	* block객체의 blockObject에 대한 Mousecallback을 만드는 함수
-	*/
-	void MakeBlockCallback();
 
 	/*
 	* 블럭을 부수는 함수
@@ -77,6 +60,11 @@ public:
 	* 현재 cell이 보이는지 여부를 반환하는 함수
 	*/
 	bool getIsOpened();
+
+	/*
+	* 현재 cell과 연결된 블럭을 반환하는 함수
+	*/
+	BlockPtr getBlock();
 };
 
 // _cell에 대한 shared_ptr를 CellPtr로 정한다. 
