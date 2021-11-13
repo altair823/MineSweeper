@@ -26,9 +26,27 @@ Board::Board(ScenePtr bg) {
 		}
 		if (KeyCode == KeyCode::KEY_4 && pressed == true) {
 			itemObject->ChangeHand(3);
+			if (itemObject->getItemNumber(Hand::Heart) > 0) {
+				// 이곳에서 Heart 아이템의 효과를 호출한다.
+
+				// Heart의 아이템 개수를 1개 줄인다.
+				itemObject->ReduceItem(Hand::Heart);
+			}
+			else {
+				showMessage("아이템이 없습니다.");
+			}
 		}
 		if (KeyCode == KeyCode::KEY_5 && pressed == true) {
 			itemObject->ChangeHand(4);
+			if (itemObject->getItemNumber(Hand::Spray) > 0) {
+				// 이곳에서 Spray 아이템의 효과를 호출한다.
+
+				// Spray의 아이템 개수를 1개 줄인다.
+				itemObject->ReduceItem(Hand::Spray);
+			}
+			else {
+				showMessage("아이템이 없습니다.");
+			}
 		}
 		if (KeyCode == KeyCode::KEY_6 && pressed == true) {
 			itemObject->ChangeHand(5);
@@ -99,11 +117,25 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 
 			// Item의 정보를 셀이 참조하려면 셀을 생성함과 동시에 그 셀의 블록에 대한 마우스 콜백도 함께 생성해야함
 			cell->getBlock()->setClickCallback([=](auto object, int x, int y, auto action)->bool {
+				// 핸드가 곡괭이일 경우
 				if (itemObject->getHand() == Hand::Pickax) {
 					cell->BreakBlock();
 				}
+				// 핸드가 깃발일경우
 				else if (itemObject->getHand() == Hand::Flag) {
 					cell->getBlock()->ChangeBlockImage();
+				}
+				// 핸드가 TNT일 경우
+				else if (itemObject->getHand() == Hand::Tnt) {
+					if (itemObject->getItemNumber(Hand::Tnt) > 0) {
+						// 이곳에서 아이템의 효과를 호출한다.
+
+						// TNT의 아이템 개수를 1개 줄인다.
+						itemObject->ReduceItem(Hand::Tnt);
+					}
+					else {
+						showMessage("아이템이 없습니다.");
+					}
 				}
 				return true;
 				});
