@@ -1,24 +1,18 @@
 #include "Cell.h"
 
-std::shared_ptr<_cell> Cell::Create(ScenePtr bg, FieldData fieldData, int x, int y, Hand* handPtr) {
+std::shared_ptr<_cell> Cell::Create(ScenePtr bg, FieldData fieldData, int x, int y) {
 	// 새로운 칸 객체 생성
-	std::shared_ptr<_cell> newCell(new _cell(bg, fieldData, x, y, handPtr));
+	std::shared_ptr<_cell> newCell(new _cell(bg, fieldData, x, y));
 	return newCell;
 }
 
-_cell::_cell(ScenePtr bg, FieldData fieldData, int x, int y, Hand* handPtr) {
+_cell::_cell(ScenePtr bg, FieldData fieldData, int x, int y) {
 	cellObject = Object::create(CellResource::EMPTY, bg, x, y);
 	// 지뢰 또는 숫자에 따라 이미지 변경
 	ChangeNumImage(fieldData);
 
 	//각각의 칸의 위를 덮을 블럭 객체 생성
 	block = Block::Create(bg, x, y);
-
-	//블럭객체에 대한 MouseCallback 함수 정의
-	MakeBlockCallback();
-
-	//핸드포인터
-	this->handPtr = handPtr;
 }
 
 void _cell::ChangeNumImage(FieldData fieldData) {
@@ -69,23 +63,16 @@ void _cell::ChangeNumImage(FieldData fieldData) {
 	}
 }
 
-void _cell::MakeBlockCallback() {
-	this->block->setClickCallback([=](auto object, int x, int y, auto action)->bool {
-		if (*handPtr == Hand::Pickax) {
-			BreakBlock();
-		}
-		else if (*handPtr == Hand::Flag) {
-			block->ChangeBlockImage();
-		}
-		return true;
-		});
-}
-
 void _cell::BreakBlock() {
-	this->block->hideBlock();
-	isOpened = true;
+	if (this->block->HideBlock()) {
+		isOpened = true;
+	}
 }
 
 bool _cell::getIsOpened(){
 	return isOpened;
+}
+
+BlockPtr _cell::getBlock() {
+	return block;
 }

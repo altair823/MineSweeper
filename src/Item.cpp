@@ -29,6 +29,16 @@ Item::Item(ScenePtr bg) {
 	nowUsing = Object::create(HandResource::USING, bg, 340, 0);
 }
 
+Hand Item::getHand() {
+	return hand;
+}
+
 void Item::ChangeHand(int n) {
 	nowUsing->locate(background, 340 + (100 * n), 0);
+	if (n == 0) {
+		hand = Hand::Pickax;
+	}
+	if (n == 1) {
+		hand = Hand::Flag;
+	}
 }

@@ -57,7 +57,7 @@ public:
 	/*
 	* blockObject를 숨기는 함수
 	*/
-	void hideBlock();
+	bool HideBlock();
 
 	/*
 	* 블럭을 클릭 했을 때를 위한 콜백 함수

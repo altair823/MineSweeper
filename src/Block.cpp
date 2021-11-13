@@ -40,11 +40,12 @@ void _block::ChangeBlockImage() {
 	}
 }
 
-void _block::hideBlock() {
+bool _block::HideBlock() {
 	if (isFlagImage) {
-		return;
+		return false;
 	}
 	blockObject->hide();
+	return true;
 }
 
 void _block::setClickCallback(std::function<bool(ObjectPtr, int, int, MouseAction)> callback) {

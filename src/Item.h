@@ -15,12 +15,12 @@
 
 using namespace bangtal;
 
-//enum class Hand {
-//	//곡괭이
-//	Pickax,
-//	//깃발
-//	Flag,
-//};
+enum class Hand {
+	//곡괭이
+	Pickax,
+	//깃발
+	Flag,
+};
 
 class Item {
 private:
@@ -28,16 +28,18 @@ private:
 	ScenePtr background;
 
 	// 현재 핸드 상황
-	//Hand hand = Hand::Pickax;
+	Hand hand = Hand::Pickax;
 
 	// 아이템의 종류를 표현해줄 아이템바 방탈오브젝트
 	ObjectPtr itemBar;
 
 	// 각 아이템의 개수를 확인하기 위한 배열(-1은 무한으로 한다.)
-	int itemNumber[6] = { -1,-1,0,1,2,3 };
+	//int itemNumber[6] = { -1,-1,0,1,2,3 };
+	int itemNumber[2] = { -1,-1 };	//디버그용
 
 	// 각 아이템의 개수를 나타내기 위한 방탈 오브젝트 배열
-	ObjectPtr numObject[6];
+	//ObjectPtr numObject[6];
+	ObjectPtr numObject[2];	//디버그용
 
 	// 현재 사용중인 아이템을 표현해줄 테두리 방탈오브젝트
 	ObjectPtr nowUsing;
@@ -46,7 +48,7 @@ public:
 	Item(ScenePtr bg);
 
 	// 현재 핸드를 확인하는 함수
-	//Hand getHand();
+	Hand getHand();
 
 	// 현재 아이템의 개수를 확인하는 함수
 	//int* getItemNumber();
