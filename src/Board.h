@@ -14,6 +14,7 @@
 #include <vector>
 #include <bangtal>
 #include "BlockBreakHandler.h"
+#include "Item.h"
 
 using namespace bangtal;
 
@@ -48,6 +49,9 @@ private:
 	// 현재 사용중인 도구
 	Hand hand = Hand::Pickax;
 
+	// 아이템 객체
+	Item* itemObject;
+
 	// 현재 사용중인 도구의 상태를 표시하기 위한 객체
 	ObjectPtr handObject;
 
@@ -62,7 +66,7 @@ public:
 	Board(ScenePtr bg);
 
 	// 핸드컨트롤 객체의 상태를 바꾸는 함수
-	void HandChange();
+	void HandChange(Hand toHand);
 
 	// 보드를 주어진 크기로 초기화하고 생성하는 함수
 	void RefreshBoard(int newRow, int newCol);

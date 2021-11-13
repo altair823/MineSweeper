@@ -10,21 +10,45 @@ Board::Board(ScenePtr bg) {
 	background = bg;
 	row = 0, col = 0;
 
+	// 아이템 클래스의 아이템 객체
+	itemObject = new Item(background);
+
 	// 핸드 컨트롤 객체
 	handObject = Object::create(HandResource::PICKAX, background, 1000, 600);
-	handObject->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
-		HandChange();
+
+	// 핸드 컨트롤 객체에 대한 키보드 콜백
+	bg -> setOnKeyboardCallback([&](auto bg, auto KeyCode, auto pressed)->bool {
+		if (KeyCode == KeyCode::KEY_1 && pressed == true) {
+			HandChange(Hand::Pickax);
+			itemObject->ChangeHand(0);
+		}
+		if (KeyCode == KeyCode::KEY_2 && pressed == true) {
+			HandChange(Hand::Flag);
+			itemObject->ChangeHand(1);
+		}
+		if (KeyCode == KeyCode::KEY_3 && pressed == true) {
+			itemObject->ChangeHand(2);
+		}
+		if (KeyCode == KeyCode::KEY_4 && pressed == true) {
+			itemObject->ChangeHand(3);
+		}
+		if (KeyCode == KeyCode::KEY_5 && pressed == true) {
+			itemObject->ChangeHand(4);
+		}
+		if (KeyCode == KeyCode::KEY_6 && pressed == true) {
+			itemObject->ChangeHand(5);
+		}
 		return true;
 		});
 }
 
 
-void Board::HandChange() {
-	if (hand == Hand::Pickax) {
+void Board::HandChange(Hand toHand) {
+	if (toHand == Hand::Flag) {
 		handObject->setImage(HandResource::FLAG);
 		hand = Hand::Flag;
 	}
-	else if (hand == Hand::Flag) {
+	else if (toHand == Hand::Pickax) {
 		handObject->setImage(HandResource::PICKAX);
 		hand = Hand::Pickax;
 	}
