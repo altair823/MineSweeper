@@ -58,11 +58,11 @@ Board::Board(ScenePtr bg) {
 
 void Board::RefreshBoard(int newRow, int newCol) {
 	// 반드시 클리어 시에만 이 함수를 호출할 것!
-	if (OnBlockBreak->getStatus() == Status::Playing) {
+	if (OnBlockBreak->getStatus() == BoardStatus::Playing) {
 		std::cout << "클리어되지 못한 보드의 초기화가 발생했습니다." << std::endl;
 		exit(1);
 	}
-	else if (OnBlockBreak->getStatus() == Status::GameOver) {
+	else if (OnBlockBreak->getStatus() == BoardStatus::GameOver) {
 		std::cout << "게임오버된 보드의 초기화가 발생했습니다." << std::endl;
 		exit(1);
 	}
@@ -97,7 +97,7 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 	col = newCol;
 
 	// 보드가 새로 생성될 때마다 새로운 이벤트 핸들러 객체 생성
-	OnBlockBreak = std::make_shared<BlockBreakHandler>(row, col, field, cells);
+	OnBlockBreak = std::make_shared<BlockBreakHandler>(row, col, field, cells, background);
 
 	// field 재생성
 	field.Resize(row, col);
@@ -147,16 +147,13 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 	}
 
 	// 새로 생성된 보드는 플레이 상태로 전환됨.
-	OnBlockBreak->setStatus(Status::Playing);
-
-	// 새로 생성된 보드는 이전의 목숨 갯수를 이어 받음
-	OnBlockBreak->setLife(life);
+	OnBlockBreak->setStatus(BoardStatus::Playing);
 
 	// 새 보드 생성이 완료되면 이벤트 핸들러의 루프 시작
 	OnBlockBreak->CheckNewCellOpened();
 }
 
-Status Board::getBoardStatus() {
+BoardStatus Board::getBoardStatus() {
 	return OnBlockBreak->getStatus();
 }
 

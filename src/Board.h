@@ -71,7 +71,7 @@ public:
 	void GenerateNewBoard(int newRow, int newCol);
 
 	// 보드의 상태를 반환하는 함수
-	Status getBoardStatus();
+	BoardStatus getBoardStatus();
 
 	// 보드의 가로 크기를 반환하는 함수
 	int getRow();
