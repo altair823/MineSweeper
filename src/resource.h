@@ -16,7 +16,7 @@ namespace BoardResource {
 namespace HandResource {
 	constexpr auto PICKAX = "image/Pickax.png";
 	constexpr auto FLAG = "image/Flag.png";
-	constexpr auto ITEMBAR = "image/ItemBox_example.png";
+	constexpr auto ITEMBAR = "image/ItemBox_example_3.png";
 	constexpr auto USING = "image/ItemBox_using.png";
 }
 

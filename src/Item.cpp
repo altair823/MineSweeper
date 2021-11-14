@@ -33,12 +33,89 @@ Hand Item::getHand() {
 	return hand;
 }
 
-void Item::ChangeHand(int n) {
-	nowUsing->locate(background, 340 + (100 * n), 0);
-	if (n == 0) {
+int Item::getHandIndex(Hand hand) {
+	if (hand == Hand::Pickax) {
+		return 0;
+	}
+	else if (hand == Hand::Flag) {
+		return 1;
+	}
+	else if (hand == Hand::Tnt) {
+		return 2;
+	}
+	else if (hand == Hand::Heart) {
+		return 3;
+	}
+	else if (hand == Hand::Spray) {
+		return 4;
+	}
+	// 빈손이면 5을 반환한다.
+	return 5;
+}
+
+void Item::ChangeHand(int index) {
+	nowUsing->locate(background, 340 + (100 * index), 0);
+	if (index == 0) {
 		hand = Hand::Pickax;
 	}
-	if (n == 1) {
+	if (index == 1) {
 		hand = Hand::Flag;
 	}
+	if (index == 2) {
+		hand = Hand::Tnt;
+	}
+	if (index == 3) {
+		hand = Hand::Heart;
+	}
+	if (index == 4) {
+		hand = Hand::Spray;
+	}
+	if (index == 5) {
+		hand = Hand::None;
+	}
+}
+
+int Item::getItemNumber(Hand hand) {
+	int index = getHandIndex(hand);
+
+	return itemNumber[index];
+}
+
+void Item::ChangeNumberImage(int index) {
+	if (itemNumber[index] == 0) {
+		numObject[index]->setImage(CellResource::EMPTY);
+	}
+	else if (itemNumber[index] == 1) {
+		numObject[index]->setImage(CellResource::ONE);
+	}
+	else if (itemNumber[index] == 2) {
+		numObject[index]->setImage(CellResource::TWO);
+	}
+	else if (itemNumber[index] == 3) {
+		numObject[index]->setImage(CellResource::THREE);
+	}
+}
+
+void Item::ReduceItem(Hand hand) {
+	int index = getHandIndex(hand);
+
+	if (itemNumber[index] > 0) {
+		itemNumber[index]--;
+		ChangeNumberImage(index);
+	}
+
+	// 디버그용
+	std::cout << "Number of Item: " << itemNumber[index] << std::endl;
+}
+
+void Item::AddItem(Hand hand) {
+	int index = getHandIndex(hand);
+
+	if (itemNumber[index] >= 0 && itemNumber[index] < 3) {
+		itemNumber[index]++;
+		ChangeNumberImage(index);
+	}
+
+	// 디버그용
+	std::cout << "Number of Item: " << itemNumber[index] << std::endl;
 }
