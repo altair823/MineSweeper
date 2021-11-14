@@ -42,17 +42,17 @@ public:
 	/*
 	* 깃발로 블럭 이미지를 바꾸는 함수
 	*/
-	void ChangeFlagImage();
+	void ChangeToFlagImage();
 
 	/*
 	* 빈 블럭으로 블럭 이미지를 바꾸는 함수
 	*/
-	void ChangeEmptyBlockImage();
+	void ChangeToEmptyBlockImage();
 
 	/*
 	* 빈 블럭은 깃발블럭으로 깃발블럭은 빈 블럭으로 바꾸는 함수
 	*/
-	void ChangeBlockImage();
+	void SwapBlockImage();
 
 	/*
 	* blockObject를 숨기는 함수

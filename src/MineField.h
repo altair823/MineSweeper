@@ -18,7 +18,7 @@
 /*
 * 지뢰와 숫자, 탈출구를 정의하는 enum.
 */
-enum CellValue {
+enum class CellValue {
 	Escape,
 	Mine,
 	Empty,
@@ -27,7 +27,7 @@ enum CellValue {
 /*
 * 아이템을 정의하는 enum.
 */
-enum ItemValue {
+enum class ItemValue {
 	AddLife,
 	MineDetector,
 	AvoidCombat,
@@ -35,8 +35,8 @@ enum ItemValue {
 };
 
 constexpr auto ADDLIFE_COUNT = 1;
-constexpr auto MINE_DETECTOR_COUNT = 1;
-constexpr auto AVOID_COMBAT_COUNT = 1;
+constexpr auto MINE_DETECTOR_COUNT = 3;
+constexpr auto AVOID_COMBAT_COUNT = 2;
 
 /*
 * 한 cell에 담긴 정보를 전달할 때 사용할 클래스.

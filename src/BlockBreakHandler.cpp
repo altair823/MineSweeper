@@ -55,6 +55,7 @@ void BlockBreakHandler::CheckNewCellOpened() {
 void BlockBreakHandler::CheckIsItemExist(int curRow, int curCol) {
 	if (field[curRow][curCol].itemValue != ItemValue::None) {
 		item->AddItem(field[curRow][curCol].itemValue);
+		field[curRow][curCol].itemValue = ItemValue::None;
 	}
 }
 

@@ -29,6 +29,7 @@ _cell::_cell(ScenePtr bg, FieldData fieldData, int x, int y) {
 		itemObject->setScale(0.02f);
 		break;
 	default:
+		itemValue = ItemValue::None;
 		break;
 	}
 
@@ -88,6 +89,17 @@ void _cell::ChangeNumImage(FieldData fieldData) {
 void _cell::BreakBlock() {
 	if (this->block->HideBlock()) {
 		isOpened = true;
+	}
+	// ¾ÆÀÌÅÛÀ» È¹µæÇÏ¸é ¼¿ À§¿¡ ÀÖ´Â ¾ÆÀÌÅÛ ÀÌ¹ÌÁö¸¦ 
+	// ÀÏÁ¤ ½Ã°£ µÚ¿¡ ¾ø¾Ø´Ù. 
+	if (this->itemValue != ItemValue::None) {
+		showMessage("¾ÆÀÌÅÛÀ» È¹µæÇß½À´Ï´Ù!");
+		TimerPtr itemHideTimer = Timer::create(0.5f);
+		itemHideTimer->setOnTimerCallback([&](auto)->bool {
+			this->itemObject->hide();
+			return true;
+			});
+		itemHideTimer->start();
 	}
 }
 
