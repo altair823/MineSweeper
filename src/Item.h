@@ -11,7 +11,9 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 #include "resource.h"
+#include "MineField.h"
 #include <bangtal>
 
 using namespace bangtal;
@@ -21,14 +23,10 @@ enum class Hand {
 	Pickax,
 	//깃발
 	Flag,
-	//폭탄 (근처 9칸을 부수는 아이템)
-	Tnt,
-	//하트 (생명을 1 더해주는 아이템)
-	Heart,
-	//스프레이 (몬스터와의 전투를 1번 회피하게 하는 아이템
+	//지뢰 탐지기
+	Detector,
+	//스프레이 (몬스터와의 전투를 1번 회피)
 	Spray,
-	//빈손
-	None,
 };
 
 class Item {
@@ -36,44 +34,51 @@ private:
 	// 현재 플레이되고 있는 배경
 	ScenePtr background;
 
+	// 남은 목숨 개수
+	int lifeCount;
+
 	// 현재 핸드 상황
 	Hand hand = Hand::Pickax;
 
-	// 아이템의 종류를 표현해줄 아이템바 방탈오브젝트
+	// 아이템바 방탈 오브젝트
 	ObjectPtr itemBar;
 
-	// 각 아이템의 개수를 확인하기 위한 배열(-1은 무한으로 한다.)
-	// 각 index 별로 아이템의 초기 개수를 설정할 수 있다.
-	int itemNumber[6] = { -1,-1,1,2,3,-1 };
+	// 아이템 오브젝트 벡터
+	std::vector<ObjectPtr> itemObject;
+
+	// 각 아이템의 개수를 확인하기 위한 배열
+	std::vector<int> itemCount;
 
 	// 각 아이템의 개수를 화면에 표시하기 위한 방탈 오브젝트 배열
-	ObjectPtr numObject[6];
+	std::vector<ObjectPtr> itemCountOnject;
 
 	// 현재 사용중인 아이템을 표시해줄 테두리 방탈오브젝트
-	ObjectPtr nowUsing;
+	ObjectPtr currentItemIndicator;
 
 public:
-	Item(ScenePtr bg);
+	Item(ScenePtr bg, int initLifeCount);
 
 	// 현재 핸드를 확인하는 함수
 	Hand getHand();
 
 	// Hand에 해당하는 아이템 index를 반환하는 함수
-	int getHandIndex(Hand hand);
+	int getItemIndex(Hand hand);
 
 	// Hand를 바꾸는 함수 - KeyboardCallback에 따라 다른 index를 인자로 받는다.
 	void ChangeHand(int index);
 
 	// 현재 아이템의 개수를 확인하는 함수
-	int getItemNumber(Hand hand);
+	int getItemCount(Hand hand);
 
-	// Item 개수에 따라 Item개수 이미지를 변경하는 함수
-	// 멤버함수 ReduceItem 혹은 AddItem에 의해서만 불린다.
-	void ChangeNumberImage(int index);
+	// 해당 아이템의 itemCount 값에 따라 Item개수 이미지를 변경하는 함수
+	void refreshCountImage(int itemIndex);
+
+	// 목숨 이미지를 새로고치는 함수
+	void refreshLifeCountImage();
 
 	// 아이템의 개수를 줄이는 함수
 	void ReduceItem(Hand hand);
 
 	// 아이템의 개수를 늘리는 함수
-	void AddItem(Hand hand);
+	void AddItem(ItemValue itemValue);
 };

@@ -11,6 +11,7 @@
 #include <vector>
 #include "MineField.h"
 #include "Cell.h"
+#include "Item.h"
 #include <bangtal>
 
 #include "Combat.h"
@@ -20,6 +21,8 @@
 #include "Combats/RockPaperScissor.h"
 #include "Combats/RockPaperScissor.h"
 #include "Combats/ShootTheMonster.h"
+
+#define DEBUG
 
 using namespace bangtal;
 
@@ -51,6 +54,9 @@ private:
 	// 현재 보드의 배경
 	ScenePtr boardBackground;
 
+	// 현재 보드의 아이템 상태
+	std::shared_ptr<Item> item;
+
 	// 셀들이 열렸는지를 체크하는 2차원 벡터
 	std::vector<std::vector<bool>> isCellOpen;
 
@@ -67,7 +73,8 @@ private:
 	Combat* newCombat = nullptr;
 
 public:
-	BlockBreakHandler(int& newRow, int& newCol, MineField& newField, std::vector<std::vector<CellPtr>>& newCells, ScenePtr boardBackground);
+	BlockBreakHandler(int& newRow, int& newCol, MineField& newField, std::vector<std::vector<CellPtr>>& newCells, 
+		std::shared_ptr<Item> item, ScenePtr boardBackground);
 	~BlockBreakHandler();
 
 
@@ -75,6 +82,12 @@ public:
 	* 새로 열린 cell이 있는지 확인하는 함수
 	*/
 	void CheckNewCellOpened();
+
+	/*
+	* 새로 열린 cell의 아이템 여부를 검사하하는 함수
+	* 아이템이 있다면 Item 클래스에 이를 전달한다. 
+	*/
+	void CheckIsItemExist(int curRow, int curCol);
 
 	/*
 	* 무작위적 전투 상황으로 진입하는 함수

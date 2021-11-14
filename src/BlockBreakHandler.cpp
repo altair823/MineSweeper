@@ -1,7 +1,8 @@
 #include "BlockBreakHandler.h"
 
-BlockBreakHandler::BlockBreakHandler(int& newRow, int& newCol, MineField& newField, std::vector<std::vector<CellPtr>>& newCells, ScenePtr boardBackground)
-	: row(newRow), col(newCol), field(newField), cells(newCells), boardBackground(boardBackground) {
+BlockBreakHandler::BlockBreakHandler(int& newRow, int& newCol, MineField& newField, std::vector<std::vector<CellPtr>>& newCells, 
+	std::shared_ptr<Item> item, ScenePtr boardBackground)
+	: row(newRow), col(newCol), field(newField), cells(newCells), item(item), boardBackground(boardBackground) {
 
 	// 모든 isCellOpen을 닫힘(false)로 초기화
 	isCellOpen.resize(row);
@@ -30,8 +31,10 @@ void BlockBreakHandler::CheckNewCellOpened() {
 				if (cells[i][j]->getIsOpened() != isCellOpen[i][j]) {
 
 					isCellOpen[i][j] = true;
-
+#ifndef DEBUG
 					EnterRandomCombat(i, j);
+#endif // !DEBUG
+					CheckIsItemExist(i, j);
 
 					RefreshBoardStatus(i, j);
 					
@@ -47,6 +50,12 @@ void BlockBreakHandler::CheckNewCellOpened() {
 	refreshTimer->start();
 	// 디버그용 타이머 생성 메세지
 	std::cout << "Successfully maked a new handler loop" << std::endl;
+}
+
+void BlockBreakHandler::CheckIsItemExist(int curRow, int curCol) {
+	if (field[curRow][curCol].itemValue != ItemValue::None) {
+		item->AddItem(field[curRow][curCol].itemValue);
+	}
 }
 
 void BlockBreakHandler::EnterRandomCombat(int curRow, int curCol) {
@@ -97,6 +106,7 @@ void BlockBreakHandler::ExpandBorder(int curRow, int curCol) {
 					// 아직 열리지 않은 칸이고 빈칸 또는 숫자 칸이라면 연다.
 					else if (cells[i][j]->getIsOpened() == false && field[i][j].cellValue == CellValue::Empty) {
 						cells[i][j]->BreakBlock();
+						CheckIsItemExist(i, j);
 					}
 				}
 			}

@@ -13,13 +13,6 @@ namespace BoardResource {
 	constexpr auto BACKGROUND = "image/Background_example3.png";
 }
 
-namespace HandResource {
-	constexpr auto PICKAX = "image/Pickax.png";
-	constexpr auto FLAG = "image/Flag.png";
-	constexpr auto ITEMBAR = "image/ItemBox_example_3.png";
-	constexpr auto USING = "image/ItemBox_using.png";
-}
-
 namespace CellResource {
 	constexpr auto MINE = "image/CellMine.png";
 	constexpr auto ESCAPE = "image/CellEscape.png";
@@ -38,6 +31,26 @@ namespace CellResource {
 namespace BlockResource {
 	constexpr auto BLOCK = "image/BlockEmpty_2.png";
 	constexpr auto FLAG = "image/BlockFlag_2.png";
+}
+
+namespace ItemResource {
+	constexpr auto INDICATOR = "image/ItemBox_using.png";
+	constexpr auto ITEM_BAR = "image/ItemBox.png";
+	constexpr auto PICKAX = "image/Item_Pickax.png";
+	constexpr auto FLAG = "image/Item_Flag.png";
+	constexpr auto DETECTOR = "image/MineDetector.png";
+	constexpr auto SPRAY = "image/Item_Spray.png";
+	constexpr auto ADD_LIFE = "image/Item_Heartplus.png";
+
+	constexpr auto EMPTY = "image/CellEmpty.png";
+	constexpr auto ONE = "image/Cell1.png";
+	constexpr auto TWO = "image/Cell2.png";
+	constexpr auto THREE = "image/Cell3.png";
+	constexpr auto FOUR = "image/Cell4.png";
+	constexpr auto FIVE = "image/Cell5.png";
+	constexpr auto SIX = "image/Cell6.png";
+	constexpr auto SEVEN = "image/Cell7.png";
+	constexpr auto EIGHT = "image/Cell8.png";
 }
 
 
