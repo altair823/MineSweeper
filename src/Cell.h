@@ -31,11 +31,20 @@ class _cell {
 	friend std::shared_ptr<_cell> Cell::Create(ScenePtr, FieldData, int, int);
 
 private:
-	// 방탈 오브젝트 객체
+	// 셀의 방탈 오브젝트 객체
 	ObjectPtr cellObject;
 
 	// 셀을 덮고 있는 Block 객체
 	BlockPtr block;
+
+	// 셀의 아이템 값
+	ItemValue itemValue;
+
+	// 셀의 아이템 이미지를 보여줄 오브젝트
+	ObjectPtr itemObject;
+
+	// 아이템 이미지를 보여주고 제거할 타이머
+	TimerPtr itemShowTimer;
 
 	// 셀이 드러난 상태인지를 나타내는 플래그
 	bool isOpened = false;
@@ -65,6 +74,11 @@ public:
 	* 현재 cell과 연결된 블럭을 반환하는 함수
 	*/
 	BlockPtr getBlock();
+
+	/*
+	* 현재 cell의 ItemValue 값 반환
+	*/
+	ItemValue getItemValue();
 };
 
 // _cell에 대한 shared_ptr를 CellPtr로 정한다. 

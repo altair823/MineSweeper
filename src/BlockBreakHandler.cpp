@@ -1,7 +1,8 @@
 #include "BlockBreakHandler.h"
 
-BlockBreakHandler::BlockBreakHandler(int newRow, int newCol, MineField& newField, std::vector<std::vector<CellPtr>>& newCells)
-	: row(newRow), col(newCol), field(newField), cells(newCells) {
+BlockBreakHandler::BlockBreakHandler(int& newRow, int& newCol, MineField& newField, std::vector<std::vector<CellPtr>>& newCells, 
+	std::shared_ptr<Item> item, ScenePtr boardBackground)
+	: row(newRow), col(newCol), field(newField), cells(newCells), item(item), boardBackground(boardBackground) {
 
 	// 모든 isCellOpen을 닫힘(false)로 초기화
 	isCellOpen.resize(row);
@@ -13,43 +14,30 @@ BlockBreakHandler::BlockBreakHandler(int newRow, int newCol, MineField& newField
 	}
 }
 
-Status BlockBreakHandler::getStatus() {
+BoardStatus BlockBreakHandler::getStatus() {
 	return status;
 }
 
-void BlockBreakHandler::setStatus(Status stat) {
+void BlockBreakHandler::setStatus(BoardStatus stat) {
 	status = stat;
-}
-
-void BlockBreakHandler::setLife(int num) {
-	life = num;
 }
 
 void BlockBreakHandler::CheckNewCellOpened() {
 	// 이 타이머가 돌면서 새로 열린 칸이 존재하는지 체크한다. 
-	// REFRESH_TIME을 너무 길게하면 반응성이 떨어지고, 
-	// 너무 짧게하면 리소스를 지나치게 잡아먹을 수 있다. 
 	refreshTimer = Timer::create(REFRESH_TIME);
 	refreshTimer->setOnTimerCallback([&](auto)->bool {
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				if (cells[i][j]->getIsOpened() != isCellOpen[i][j]) {
 
-					// 디버그용 출력
-					// 이 부분에 Combat, 또는 빈칸 확장 메서드를 연결할 것
-					std::cout << "row: " << i << ", col: " << j << 
-						"\ncellValue: " << field[i][j].cellValue << ", num: " << field[i][j].num << ", itemValue: " << field[i][j].itemValue << ", life: " << life << std::endl;
 					isCellOpen[i][j] = true;
+#ifndef DEBUG
+					EnterRandomCombat(i, j);
+#endif // !DEBUG
+					CheckIsItemExist(i, j);
 
-					// ** 디버그 용 ** 지뢰 칸이면 목숨을 차감한다.
-					if (field[i][j].cellValue == CellValue::Mine) {
-						life -= 1;
-					}
-
-					// 필요하다면 보드의 상태를 갱신한다.
 					RefreshBoardStatus(i, j);
 					
-					// 필요하다면 빈 칸을 확장해 칸을 연다.
 					ExpandBorder(i, j);
 				}
 			}
@@ -64,26 +52,61 @@ void BlockBreakHandler::CheckNewCellOpened() {
 	std::cout << "Successfully maked a new handler loop" << std::endl;
 }
 
-void BlockBreakHandler::ExpandBorder(int i, int j) {
+void BlockBreakHandler::CheckIsItemExist(int curRow, int curCol) {
+	if (field[curRow][curCol].itemValue != ItemValue::None) {
+		item->AddItem(field[curRow][curCol].itemValue);
+	}
+}
+
+void BlockBreakHandler::EnterRandomCombat(int curRow, int curCol) {
+	if (field[curRow][curCol].cellValue != CellValue::Mine) {
+		return;
+	}
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dis(0, 4);
+
+	// 동적 바인딩을 이용해 무작위적으로 전투상황 진입
+	switch (dis(gen)) {
+	case 0:
+		newCombat = new RockPaperScissor(boardBackground);
+		break;
+	case 1:
+		newCombat = new OddOrEven(boardBackground);
+		break;
+	case 2:
+		newCombat = new DiceRolling(boardBackground);
+		break;
+	case 3:
+		newCombat = new ShootTheMonster(boardBackground);
+		break;
+	case 4:
+		newCombat = new DiceMatching(boardBackground);
+		break;
+	default:
+		break;
+	}
+	if (newCombat != nullptr) {
+		newCombat->EnterBattle();
+	}
+}
+void BlockBreakHandler::ExpandBorder(int curRow, int curCol) {
 	// itemValue와 관련된 조건 추가 필요!
-	// 새로 열린 칸이 빈칸이면 이하의 과정이 진행된다.
-	if (field[i][j].cellValue == CellValue::Empty && field[i][j].num == 0) {
-		// k는 확장될 칸의 row 위치이다.
-		for (int k = i - 1; k <= i + 1; k++) {
-			// 위치가 범위를 벗어나면 진행하지 않는다.
-			if (k < 0 || k >= row) {
+	// 새로 열린 칸이 빈칸이라면, 그 주위 칸이 빈칸 또는 숫자칸인지 확인한다. 
+	if (field[curRow][curCol].cellValue == CellValue::Empty && field[curRow][curCol].num == 0) {
+		for (int i = curRow - 1; i <= curRow + 1; i++) {
+			if (i < 0 || i >= row) {
 				continue;
 			}
 			else {
-				// l은 확장될 칸의 col 위치이다.
-				for (int l = j - 1; l <= j + 1; l++) {
-					// 위치가 범위를 벗어나면 진행하지 않는다.
-					if (l < 0 || l >= col) {
+				for (int j = curCol - 1; j <= curCol + 1; j++) {
+					if (j < 0 || j >= col) {
 						continue;
 					}
-					// 아직 열리지 않은 칸이고 숫자 칸이라면 연다.
-					else if (cells[k][l]->getIsOpened() == false && field[k][l].cellValue == CellValue::Empty) {
-						cells[k][l]->BreakBlock();
+					// 아직 열리지 않은 칸이고 빈칸 또는 숫자 칸이라면 연다.
+					else if (cells[i][j]->getIsOpened() == false && field[i][j].cellValue == CellValue::Empty) {
+						cells[i][j]->BreakBlock();
+						CheckIsItemExist(i, j);
 					}
 				}
 			}
@@ -91,36 +114,33 @@ void BlockBreakHandler::ExpandBorder(int i, int j) {
 	}
 }
 
-void BlockBreakHandler::RefreshBoardStatus(int i, int j) {
+void BlockBreakHandler::RefreshBoardStatus(int curRow, int curCol) {
 	// GameOver
 	// 남은 목숨이 없다면 보드의 상태를 GameOver로 바꾼다.
-	if (life == 0) {
-		status = Status::GameOver;
-	}
+
 
 	// Escape
 	// 새로 열린 칸이 탈출구이면 보드 상태를 Escape로 바꾼다.
-	if (field[i][j].cellValue == CellValue::Escape) {
-		status = Status::Escape;
+	if (field[curRow][curCol].cellValue == CellValue::Escape) {
+		status = BoardStatus::Escape;
 	}
 
 	// Clear
 	// 지뢰 칸을 제외한 모든 칸이 열렸으면 보드 상태를 Clear로 바꾼다.
-	// isCleared는 보드가 Clear조건을 만족함을 나타내는 변수이다. (1 -> 만족, 0 -> 불만족)
-	int isCleared = 1;
-	// 모든 칸을 for loop으로 순회한다.
-	for (int k = 0; (k < row) && (isCleared == 1); k++) {
-		for (int l = 0; (l < col) && (isCleared == 1); l++) {
-			// 지뢰 칸을 제외한 칸 중 열리지 않은 칸이 있다면 순회를 멈춘다.
-			if (field[k][l].cellValue != CellValue::Mine && isCellOpen[k][l] == false) {
-				isCleared = 0;
+	bool isCleared = true;
+	for (int i = 0; (i < row) && (isCleared == true); i++) {
+		for (int j = 0; (j < col) && (isCleared == true); j++) {
+			// 지뢰 칸을 제외한 칸 중 열리지 않은 칸이 있다면 
+			// 아직 Clear 상태가 아니다. 
+			if (field[i][j].cellValue != CellValue::Mine && isCellOpen[i][j] == false) {
+				isCleared = false;
 				break;
 			}
 		}
 	}
 	// 순회가 끝난 후에도 보드가 Clear조건을 만족하면 보드의 상태를 갱신한다.
-	if (isCleared == 1) {
-		status = Status::Clear;
+	if (isCleared == true) {
+		status = BoardStatus::Clear;
 	}
 }
 
@@ -134,4 +154,5 @@ BlockBreakHandler::~BlockBreakHandler() {
 		i.clear();
 	}
 	isCellOpen.clear();
+	delete newCombat;
 }

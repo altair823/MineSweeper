@@ -6,6 +6,7 @@ _fieldDataArray::_fieldDataArray(int size) {
         data.resize(size);
         for (auto& i : data) {
             i.cellValue = CellValue::Empty;
+            i.itemValue = ItemValue::None;
         }
     }
     // 데이터 배열이 비어있지 않다면 오류. 먼저 초기화를 해야함. 
@@ -87,7 +88,7 @@ void MineField::MountMine() {
     std::uniform_int_distribution<int> randCol(0, col - 1);
 
 
-    // 깔아야할 지뢰 개수만큼 반복한다. 
+    // 지뢰 생성
     for (int i = 0; i < mineCount;) {
         // 무작위로 위치 선택
         int curRow = randRow(gen);
@@ -100,7 +101,7 @@ void MineField::MountMine() {
         i++;
     }
 
-    // 탈출구의 개수만큼 반복한다. 
+    // 탈출구 생성
     for (int i = 0; i < 1;) {
         int curRow = randRow(gen);
         int curCol = randCol(gen);
@@ -108,6 +109,41 @@ void MineField::MountMine() {
             continue;
         }
         fieldData[curRow][curCol].cellValue = CellValue::Escape;
+        i++;
+    }
+
+    // 아이템 생성
+    // 지뢰 탐지기
+    for (int i = 0; i < MINE_DETECTOR_COUNT;) {
+        int curRow = randRow(gen);
+        int curCol = randCol(gen);
+        if (fieldData[curRow][curCol].cellValue != CellValue::Empty
+            || fieldData[curRow][curCol].itemValue != ItemValue::None) {
+            continue;
+        }
+        fieldData[curRow][curCol].itemValue = ItemValue::MineDetector;
+        i++;
+    }
+    // 전투 회피
+    for (int i = 0; i < AVOID_COMBAT_COUNT;) {
+        int curRow = randRow(gen);
+        int curCol = randCol(gen);
+        if (fieldData[curRow][curCol].cellValue != CellValue::Empty
+            || fieldData[curRow][curCol].itemValue != ItemValue::None) {
+            continue;
+        }
+        fieldData[curRow][curCol].itemValue = ItemValue::AvoidCombat;
+        i++;
+    }
+    // 목숨 +1 
+    for (int i = 0; i < ADDLIFE_COUNT;) {
+        int curRow = randRow(gen);
+        int curCol = randCol(gen);
+        if (fieldData[curRow][curCol].cellValue != CellValue::Empty
+            || fieldData[curRow][curCol].itemValue != ItemValue::None) {
+            continue;
+        }
+        fieldData[curRow][curCol].itemValue = ItemValue::AddLife;
         i++;
     }
 }

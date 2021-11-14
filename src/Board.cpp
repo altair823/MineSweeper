@@ -11,58 +11,19 @@ Board::Board(ScenePtr bg) {
 	row = 0, col = 0;
 
 	// 아이템 클래스의 아이템 객체
-	itemObject = new Item(background);
+	item = std::make_shared<Item>(background, 3);
 
-	// 아이템 객체에 대한 키보드 콜백
-	bg -> setOnKeyboardCallback([&](auto bg, auto KeyCode, auto pressed)->bool {
-		if (KeyCode == KeyCode::KEY_1 && pressed == true) {
-			itemObject->ChangeHand(0);
-		}
-		if (KeyCode == KeyCode::KEY_2 && pressed == true) {
-			itemObject->ChangeHand(1);
-		}
-		if (KeyCode == KeyCode::KEY_3 && pressed == true) {
-			itemObject->ChangeHand(2);
-		}
-		if (KeyCode == KeyCode::KEY_4 && pressed == true) {
-			itemObject->ChangeHand(3);
-			if (itemObject->getItemNumber(Hand::Heart) > 0) {
-				// 이곳에서 Heart 아이템의 효과를 호출한다.
-
-				// Heart의 아이템 개수를 1개 줄인다.
-				itemObject->ReduceItem(Hand::Heart);
-			}
-			else {
-				showMessage("아이템이 없습니다.");
-			}
-		}
-		if (KeyCode == KeyCode::KEY_5 && pressed == true) {
-			itemObject->ChangeHand(4);
-			if (itemObject->getItemNumber(Hand::Spray) > 0) {
-				// 이곳에서 Spray 아이템의 효과를 호출한다.
-
-				// Spray의 아이템 개수를 1개 줄인다.
-				itemObject->ReduceItem(Hand::Spray);
-			}
-			else {
-				showMessage("아이템이 없습니다.");
-			}
-		}
-		if (KeyCode == KeyCode::KEY_6 && pressed == true) {
-			itemObject->ChangeHand(5);
-		}
-		return true;
-		});
+	
 }
 
 
 void Board::RefreshBoard(int newRow, int newCol) {
 	// 반드시 클리어 시에만 이 함수를 호출할 것!
-	if (OnBlockBreak->getStatus() == Status::Playing) {
+	if (OnBlockBreak->getStatus() == BoardStatus::Playing) {
 		std::cout << "클리어되지 못한 보드의 초기화가 발생했습니다." << std::endl;
 		exit(1);
 	}
-	else if (OnBlockBreak->getStatus() == Status::GameOver) {
+	else if (OnBlockBreak->getStatus() == BoardStatus::GameOver) {
 		std::cout << "게임오버된 보드의 초기화가 발생했습니다." << std::endl;
 		exit(1);
 	}
@@ -97,7 +58,7 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 	col = newCol;
 
 	// 보드가 새로 생성될 때마다 새로운 이벤트 핸들러 객체 생성
-	OnBlockBreak = std::make_shared<BlockBreakHandler>(row, col, field, cells);
+	OnBlockBreak = std::make_shared<BlockBreakHandler>(row, col, field, cells, item, background);
 
 	// field 재생성
 	field.Resize(row, col);
@@ -118,20 +79,20 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 			// Item의 정보를 셀이 참조하려면 셀을 생성함과 동시에 그 셀의 블록에 대한 마우스 콜백도 함께 생성해야함
 			cell->getBlock()->setClickCallback([=](auto object, int x, int y, auto action)->bool {
 				// 핸드가 곡괭이일 경우
-				if (itemObject->getHand() == Hand::Pickax) {
+				if (item->getHand() == Hand::Pickax) {
 					cell->BreakBlock();
 				}
 				// 핸드가 깃발일경우
-				else if (itemObject->getHand() == Hand::Flag) {
+				else if (item->getHand() == Hand::Flag) {
 					cell->getBlock()->ChangeBlockImage();
 				}
 				// 핸드가 TNT일 경우
-				else if (itemObject->getHand() == Hand::Tnt) {
-					if (itemObject->getItemNumber(Hand::Tnt) > 0) {
+				else if (item->getHand() == Hand::Detector) {
+					if (item->getItemCount(Hand::Detector) > 0) {
 						// 이곳에서 아이템의 효과를 호출한다.
 
 						// TNT의 아이템 개수를 1개 줄인다.
-						itemObject->ReduceItem(Hand::Tnt);
+						item->ReduceItem(Hand::Detector);
 					}
 					else {
 						showMessage("아이템이 없습니다.");
@@ -147,16 +108,13 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 	}
 
 	// 새로 생성된 보드는 플레이 상태로 전환됨.
-	OnBlockBreak->setStatus(Status::Playing);
-
-	// 새로 생성된 보드는 이전의 목숨 갯수를 이어 받음
-	OnBlockBreak->setLife(life);
+	OnBlockBreak->setStatus(BoardStatus::Playing);
 
 	// 새 보드 생성이 완료되면 이벤트 핸들러의 루프 시작
 	OnBlockBreak->CheckNewCellOpened();
 }
 
-Status Board::getBoardStatus() {
+BoardStatus Board::getBoardStatus() {
 	return OnBlockBreak->getStatus();
 }
 

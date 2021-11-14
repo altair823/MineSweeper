@@ -34,6 +34,10 @@ enum ItemValue {
 	None,
 };
 
+constexpr auto ADDLIFE_COUNT = 1;
+constexpr auto MINE_DETECTOR_COUNT = 1;
+constexpr auto AVOID_COMBAT_COUNT = 1;
+
 /*
 * 한 cell에 담긴 정보를 전달할 때 사용할 클래스.
 * 여러 정보를 동시에 전달할 때 사용한다.

@@ -26,11 +26,11 @@ void Stage::EventHandler() {
 	boardStatusChecker->setOnTimerCallback([&](auto)->bool {
 		// Playing -> 이벤트 없음
 		// Claer -> 다음 스테이지
-		if (board->getBoardStatus() == Status::Clear) {
+		if (board->getBoardStatus() == BoardStatus::Clear) {
 			NextStage();
 		}
 		// GameOver -> 보드 초기화?
-		if (board->getBoardStatus() == Status::GameOver) {
+		if (board->getBoardStatus() == BoardStatus::GameOver) {
 			// ** 디버그용 ** 게임 종료
 			endGame();
 		}

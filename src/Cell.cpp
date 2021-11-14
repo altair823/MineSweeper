@@ -11,6 +11,27 @@ _cell::_cell(ScenePtr bg, FieldData fieldData, int x, int y) {
 	// 지뢰 또는 숫자에 따라 이미지 변경
 	ChangeNumImage(fieldData);
 
+	// 아이템 이미지 생성
+	switch (fieldData.itemValue) {
+	case ItemValue::MineDetector:
+		itemValue = ItemValue::MineDetector;
+		itemObject = Object::create(ItemResource::DETECTOR, bg, x, y);
+		itemObject->setScale(0.35f);
+		break;
+	case ItemValue::AvoidCombat:
+		itemValue = ItemValue::AvoidCombat;
+		itemObject = Object::create(ItemResource::SPRAY, bg, x+6, y);
+		itemObject->setScale(0.35f);
+		break;
+	case ItemValue::AddLife:
+		itemValue = ItemValue::AddLife;
+		itemObject = Object::create(ItemResource::ADD_LIFE, bg, x+4, y);
+		itemObject->setScale(0.02f);
+		break;
+	default:
+		break;
+	}
+
 	//각각의 칸의 위를 덮을 블럭 객체 생성
 	block = Block::Create(bg, x, y);
 }
@@ -61,6 +82,7 @@ void _cell::ChangeNumImage(FieldData fieldData) {
 	default:
 		break;
 	}
+
 }
 
 void _cell::BreakBlock() {
@@ -75,4 +97,8 @@ bool _cell::getIsOpened(){
 
 BlockPtr _cell::getBlock() {
 	return block;
+}
+
+ItemValue _cell::getItemValue() {
+	return itemValue;
 }
