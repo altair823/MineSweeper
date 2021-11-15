@@ -7,20 +7,18 @@ Item::Item(ScenePtr bg, int initLifeCount): background(bg), lifeCount(initLifeCo
 
 	// 현재 사용중인 아이템을 표시
 	currentItemIndicator = Object::create(ItemResource::INDICATOR, bg, 340, 0);
-	
-	ObjectPtr pickax = Object::create(ItemResource::PICKAX, background, 350, 10);
-	ObjectPtr flag = Object::create(ItemResource::FLAG, background, 450, 10);
-	ObjectPtr detector = Object::create(ItemResource::DETECTOR, background, 555, 10, false);
-	ObjectPtr spray = Object::create(ItemResource::SPRAY, background, 670, 10, false);
 
-	itemObject.push_back(pickax);
-	itemObject.push_back(flag);
-	itemObject.push_back(detector);
-	itemObject.push_back(spray);
+	// 아이템 바에서 보여줄 아이템 오브젝트 객체 생성
+	itemObject.resize(4);
+	itemObject[0] = Object::create(ItemResource::PICKAX, background, 350, 10);
+	itemObject[1] = Object::create(ItemResource::FLAG, background, 450, 10);
+	itemObject[2] = Object::create(ItemResource::DETECTOR, background, 555, 10, false);
+	itemObject[3] = Object::create(ItemResource::SPRAY, background, 670, 10, false);
 
+	// 아이템들의 개수 배열 초기화
 	itemCount.resize(4);
-	itemCount[0] = -1;
-	itemCount[1] = -1;
+	itemCount[0] = INFINITE;
+	itemCount[1] = INFINITE;
 	itemCount[2] = 0;
 	itemCount[3] = 0;
 
@@ -32,22 +30,22 @@ Item::Item(ScenePtr bg, int initLifeCount): background(bg), lifeCount(initLifeCo
 	// 아이템 객체에 대한 키보드 콜백
 	background->setOnKeyboardCallback([&](auto bg, auto KeyCode, auto pressed)->bool {
 		if (KeyCode == KeyCode::KEY_1 && pressed == true) {
-			ChangeHand(0);
+			ChangeHand(Hand::Pickax);
 		}
 		else if (KeyCode == KeyCode::KEY_2 && pressed == true) {
-			ChangeHand(1);
+			ChangeHand(Hand::Flag);
 		}
 		else if (KeyCode == KeyCode::KEY_3 && pressed == true) {
-			ChangeHand(2);
+			ChangeHand(Hand::Detector);
 		}
 		else if (KeyCode == KeyCode::KEY_4 && pressed == true) {
-			ChangeHand(3);
+			ChangeHand(Hand::Spray);
 		}
 		else if (KeyCode == KeyCode::KEY_5 && pressed == true) {
-			ChangeHand(4);
+			ChangeHandByIndex(4);
 		}
 		else if (KeyCode == KeyCode::KEY_6 && pressed == true) {
-			ChangeHand(5);
+			ChangeHandByIndex(5);
 		}
 		return true;
 		});
@@ -55,15 +53,16 @@ Item::Item(ScenePtr bg, int initLifeCount): background(bg), lifeCount(initLifeCo
 	// 아이템 객체들에 대한 마우스 콜백
 	for (int i = 0; i < itemObject.size(); i++) {
 		itemObject[i]->setOnMouseCallback([=](auto, auto, auto, auto)->bool {
-			ChangeHand(i);
+			ChangeHandByIndex(i);
 			return true;
 			});
 	}
 }
 
-Hand Item::getHand() {
-	return hand;
+Hand Item::getCurrentHand() {
+	return currentHand;
 }
+
 
 int Item::getItemIndex(Hand hand) {
 	switch (hand) {
@@ -80,24 +79,29 @@ int Item::getItemIndex(Hand hand) {
 	}
 }
 
-void Item::ChangeHand(int index) {
+void Item::ChangeHandByIndex(int index) {
 	currentItemIndicator->locate(background, 340 + (103 * index), 0);
 	switch (index) {
 	case 0:
-		hand = Hand::Pickax;
+		currentHand = Hand::Pickax;
 		break;
 	case 1:
-		hand = Hand::Flag;
+		currentHand = Hand::Flag;
 		break;
 	case 2:
-		hand = Hand::Detector;
+		currentHand = Hand::Detector;
 		break;
 	case 3:
-		hand = Hand::Spray;
+		currentHand = Hand::Spray;
 		break;
 	default:
 		break;
 	}
+}
+
+void Item::ChangeHand(Hand hand) {
+	int index = getItemIndex(hand);
+	ChangeHandByIndex(index);
 }
 
 int Item::getItemCount(Hand hand) {
@@ -105,35 +109,38 @@ int Item::getItemCount(Hand hand) {
 	return itemCount[index];
 }
 
-void Item::refreshCountImage(int index) {
-	itemCountOnject[index]->show();
-	switch (itemCount[index]) {
+void Item::refreshCountImage(int itemIndex) {
+	itemCountOnject[itemIndex]->show();
+	itemObject[itemIndex]->show();
+	switch (itemCount[itemIndex]) {
+	// 해당 아이템의 개수가 0이라면 아이템과 개수 숫자를 숨김
 	case 0:
-		itemCountOnject[index]->hide();
+		itemCountOnject[itemIndex]->hide();
+		itemObject[itemIndex]->hide();
 		break;
 	case 1:
-		itemCountOnject[index]->setImage(ItemResource::ONE);
+		itemCountOnject[itemIndex]->setImage(ItemResource::ONE);
 		break;
 	case 2:
-		itemCountOnject[index]->setImage(ItemResource::TWO);
+		itemCountOnject[itemIndex]->setImage(ItemResource::TWO);
 		break;
 	case 3:
-		itemCountOnject[index]->setImage(ItemResource::THREE);
+		itemCountOnject[itemIndex]->setImage(ItemResource::THREE);
 		break;
 	case 4:
-		itemCountOnject[index]->setImage(ItemResource::FOUR);
+		itemCountOnject[itemIndex]->setImage(ItemResource::FOUR);
 		break;
 	case 5:
-		itemCountOnject[index]->setImage(ItemResource::FIVE);
+		itemCountOnject[itemIndex]->setImage(ItemResource::FIVE);
 		break;
 	case 6:
-		itemCountOnject[index]->setImage(ItemResource::SIX);
+		itemCountOnject[itemIndex]->setImage(ItemResource::SIX);
 		break;
 	case 7:
-		itemCountOnject[index]->setImage(ItemResource::SEVEN);
+		itemCountOnject[itemIndex]->setImage(ItemResource::SEVEN);
 		break;
 	case 8:
-		itemCountOnject[index]->setImage(ItemResource::EIGHT);
+		itemCountOnject[itemIndex]->setImage(ItemResource::EIGHT);
 		break;
 	default:
 		break;
@@ -142,14 +149,15 @@ void Item::refreshCountImage(int index) {
 
 void Item::ReduceItem(Hand hand) {
 	int index = getItemIndex(hand);
-
-	if (itemCount[index] > 0) {
+	// 무한대를 개수로 갖는 아이템
+	if (itemCount[index] == INFINITE) {
+		return;
+	}
+	// 0개 이상의 개수를 갖는 아이템
+	else if (itemCount[index] > 0) {
 		itemCount[index]--;
 		refreshCountImage(index);
 	}
-
-	// 디버그용
-	std::cout << "Number of Item: " << itemCount[index] << std::endl;
 }
 
 void Item::refreshLifeCountImage() {
@@ -160,14 +168,14 @@ void Item::AddItem(ItemValue itemValue) {
 	int index;
 
 	switch (itemValue)	{
-	case AddLife:
+	case ItemValue::AddLife:
 		lifeCount++;
 		refreshLifeCountImage();
 		return;
-	case MineDetector:
+	case ItemValue::MineDetector:
 		index = getItemIndex(Hand::Detector);
 		break;
-	case AvoidCombat:
+	case ItemValue::AvoidCombat:
 		index = getItemIndex(Hand::Spray);
 		break;
 	default:

@@ -13,7 +13,7 @@ _block::_block(ScenePtr bg, int x, int y) {
 	isFlagImage = false;
 }
 
-void _block::ChangeFlagImage() {
+void _block::ChangeToFlagImage() {
 	if (isFlagImage) {
 		return;
 	}
@@ -21,7 +21,7 @@ void _block::ChangeFlagImage() {
 	isFlagImage = true;
 }
 
-void _block::ChangeEmptyBlockImage() {
+void _block::ChangeToEmptyBlockImage() {
 	if (~isFlagImage) {
 		return;
 	}
@@ -29,7 +29,7 @@ void _block::ChangeEmptyBlockImage() {
 	isFlagImage = false;
 }
 
-void _block::ChangeBlockImage() {
+void _block::SwapBlockImage() {
 	if (isFlagImage) {
 		blockObject->setImage(BlockResource::BLOCK);
 		isFlagImage = false;

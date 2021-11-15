@@ -49,33 +49,44 @@ private:
 	// 아이템 객체
 	std::shared_ptr<Item> item;
 
-	// 현재 사용중인 도구의 상태를 표시하기 위한 객체
-	ObjectPtr handObject;
-
-	// 남은 목숨
-	int life = LIFE_COUNT;
-
-	// 이벤트 핸들러
+	// 블럭 제거 이벤트 핸들러
 	std::shared_ptr<BlockBreakHandler> OnBlockBreak;
+
+	/*
+	* detector 아이템을 선택한 상태로 셀을 클릭할 경우를 처리할 함수
+	*/
+	void UseDetector(int clickedCellRow, int clickedCellCol);
 
 public:
 	Board(ScenePtr bg);
 
-	// 보드를 주어진 크기로 초기화하고 생성하는 함수
+	/*
+	* 보드를 주어진 크기로 초기화하고 생성하는 함수
+	*/ 
 	void RefreshBoard(int newRow, int newCol);
 
-	// 현재 보드를 초기화하는 함수
+	/*
+	* 현재 보드를 초기화하는 함수
+	*/ 
 	void Clear();
 
-	// 보드를 주어진 크기로 새로 생성하는 함수
+	/*
+	* 보드를 주어진 크기로 새로 생성하는 함수
+	*/ 
 	void GenerateNewBoard(int newRow, int newCol);
 
-	// 보드의 상태를 반환하는 함수
+	/*
+	* 보드의 상태를 반환하는 함수
+	*/ 
 	BoardStatus getBoardStatus();
 
-	// 보드의 가로 크기를 반환하는 함수
+	/*
+	* 보드의 가로 크기를 반환하는 함수
+	*/ 
 	int getRow();
 
-	// 보드의 세로 크기를 반환하는 함수
+	/*
+	* 보드의 세로 크기를 반환하는 함수
+	*/ 
 	int getCol();
 };
