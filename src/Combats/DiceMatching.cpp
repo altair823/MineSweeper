@@ -1,6 +1,7 @@
 #include "DiceMatching.h"
 
-DiceMatching::DiceMatching(ScenePtr previousScene){
+DiceMatching::DiceMatching(ScenePtr previousScene, BlockBreakHandler& blockBreakHandler, std::function<void(BlockBreakHandler&)> gameOverFunc)
+	: blockBreakHandler(blockBreakHandler), gameOverFunc(gameOverFunc) {
 	this->previousScene = previousScene;
 	// 난수 생성 엔진 초기화
 	std::random_device rd;
@@ -152,12 +153,7 @@ void DiceMatching::CompareChoice() {
 		opportunity.pop_back();
 		// 남은 기회가 없다면 게임 오버
 		if (opportunity.size() == 0) {
-			showMessage("게임 오버!");
-			/*
-			*
-			* 게임오버시 타이틀로 돌아갈 것!
-			*
-			*/
+			gameOverFunc(blockBreakHandler);
 		}
 		else {
 			showMessage("몬스터가 이겼습니다...");

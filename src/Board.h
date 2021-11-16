@@ -52,6 +52,9 @@ private:
 	// 블럭 제거 이벤트 핸들러
 	std::shared_ptr<BlockBreakHandler> OnBlockBreak;
 
+	// 현재 보드의 상태
+	BoardStatus status = BoardStatus::Playing;
+
 	/*
 	* detector 아이템을 선택한 상태로 셀을 클릭할 경우를 처리할 함수
 	*/
@@ -89,4 +92,9 @@ public:
 	* 보드의 세로 크기를 반환하는 함수
 	*/ 
 	int getCol();
+
+	/*
+	* 보드의 상태를 설정하는 함수
+	*/
+	void setBoardStatus(BoardStatus status);
 };

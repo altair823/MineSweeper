@@ -17,11 +17,11 @@ Board::Board(ScenePtr bg) {
 
 void Board::RefreshBoard(int newRow, int newCol) {
 	// 반드시 클리어 시에만 이 함수를 호출할 것!
-	if (OnBlockBreak->getStatus() == BoardStatus::Playing) {
+	if (status == BoardStatus::Playing) {
 		std::cout << "클리어되지 못한 보드의 초기화가 발생했습니다." << std::endl;
 		exit(1);
 	}
-	else if (OnBlockBreak->getStatus() == BoardStatus::GameOver) {
+	else if (status == BoardStatus::GameOver) {
 		std::cout << "게임오버된 보드의 초기화가 발생했습니다." << std::endl;
 		exit(1);
 	}
@@ -56,7 +56,7 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 	col = newCol;
 
 	// 보드가 새로 생성될 때마다 새로운 이벤트 핸들러 객체 생성
-	OnBlockBreak = std::make_shared<BlockBreakHandler>(row, col, field, cells, item, background);
+	OnBlockBreak = std::make_shared<BlockBreakHandler>(row, col, field, cells, item, background, status);
 
 	// field 재생성
 	field.Resize(row, col);
@@ -137,7 +137,7 @@ void Board::UseDetector(int clickedCellRow, int clickedCellCol) {
 }
 
 BoardStatus Board::getBoardStatus() {
-	return OnBlockBreak->getStatus();
+	return status;
 }
 
 int Board::getRow() {
@@ -146,5 +146,9 @@ int Board::getRow() {
 
 int Board::getCol() {
 	return col;
+}
+
+void Board::setBoardStatus(BoardStatus status) {
+	this->status = status;
 }
 

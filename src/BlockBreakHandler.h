@@ -22,7 +22,7 @@
 #include "Combats/RockPaperScissor.h"
 #include "Combats/ShootTheMonster.h"
 
-#define DEBUG
+//#define DEBUG
 
 using namespace bangtal;
 
@@ -48,8 +48,6 @@ private:
 	// 현재 보드의 크기
 	int& row, col;
 
-	// 현재 보드의 상태
-	BoardStatus status = BoardStatus::Playing;
 
 	// 현재 보드의 배경
 	ScenePtr boardBackground;
@@ -66,6 +64,9 @@ private:
 	// 모든 셀의 2차원 벡터를 참조
 	std::vector<std::vector<CellPtr>>& cells;
 
+	// 현재 보드의 상태 참조
+	BoardStatus& status;
+
 	// 새로 열린 cell이 있는지 체크할 타이머
 	TimerPtr refreshTimer;
 
@@ -74,7 +75,7 @@ private:
 
 public:
 	BlockBreakHandler(int& newRow, int& newCol, MineField& newField, std::vector<std::vector<CellPtr>>& newCells, 
-		std::shared_ptr<Item> item, ScenePtr boardBackground);
+		std::shared_ptr<Item> item, ScenePtr boardBackground, BoardStatus& status);
 	~BlockBreakHandler();
 
 
@@ -95,6 +96,11 @@ public:
 	void EnterRandomCombat(int curRow, int curCol);
 
 	/*
+	* 전투에서 패배할 경우를 처리하는 함수
+	*/
+	void looseCombat();
+
+	/*
 	* 빈 칸의 경계에 있는 cell들을 열어 확장하는 함수
 	*/
 	void ExpandBorder(int curRow, int curCol);
@@ -109,11 +115,6 @@ public:
 	* Timer를 초기화하기 위해 필요함.
 	*/
 	void StopCheckNewCellOpened();
-
-	/*
-	* 보드의 상태를 반환하는 함수
-	*/
-	BoardStatus getStatus();
 
 	/*
 	* 보드의 상태를 갱신하는 함수
