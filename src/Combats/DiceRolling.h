@@ -22,6 +22,8 @@ namespace DiceRollingConfig {
 	constexpr auto VISIBLE_TIME = 1;
 }
 
+class BlockBreakHandler;
+
 class DiceRolling : public Combat {
 private:
 
@@ -54,8 +56,12 @@ private:
 	// 클릭하면 주사위를 굴리는 버튼
 	ObjectPtr rollingButton;
 
+	// 게임 오버시 실행할 BlockBreakHandler의 멤버 함수 객체
+	std::function<void(BlockBreakHandler&)> gameOverFunc;
+	BlockBreakHandler& blockBreakHandler;
+
 public:
-	DiceRolling(ScenePtr previousScene);
+	DiceRolling(ScenePtr previousScene, BlockBreakHandler& blockBreakHandler, std::function<void(BlockBreakHandler&)> gameOverFunc);
 
 	/*
 	* 전투에 진입하는 함수

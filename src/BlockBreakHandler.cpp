@@ -1,8 +1,8 @@
 #include "BlockBreakHandler.h"
 
 BlockBreakHandler::BlockBreakHandler(int& newRow, int& newCol, MineField& newField, std::vector<std::vector<CellPtr>>& newCells, 
-	std::shared_ptr<Item> item, ScenePtr boardBackground)
-	: row(newRow), col(newCol), field(newField), cells(newCells), item(item), boardBackground(boardBackground) {
+	std::shared_ptr<Item> item, ScenePtr boardBackground, BoardStatus& status)
+	: row(newRow), col(newCol), field(newField), cells(newCells), item(item), boardBackground(boardBackground), status(status) {
 
 	// 모든 isCellOpen을 닫힘(false)로 초기화
 	isCellOpen.resize(row);
@@ -14,12 +14,8 @@ BlockBreakHandler::BlockBreakHandler(int& newRow, int& newCol, MineField& newFie
 	}
 }
 
-BoardStatus BlockBreakHandler::getStatus() {
-	return status;
-}
-
-void BlockBreakHandler::setStatus(BoardStatus stat) {
-	status = stat;
+void BlockBreakHandler::setStatus(BoardStatus status) {
+	this->status = status;
 }
 
 void BlockBreakHandler::CheckNewCellOpened() {
@@ -48,8 +44,6 @@ void BlockBreakHandler::CheckNewCellOpened() {
 		});
 
 	refreshTimer->start();
-	// 디버그용 타이머 생성 메세지
-	std::cout << "Successfully maked a new handler loop" << std::endl;
 }
 
 void BlockBreakHandler::CheckIsItemExist(int curRow, int curCol) {
@@ -67,28 +61,38 @@ void BlockBreakHandler::EnterRandomCombat(int curRow, int curCol) {
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<int> dis(0, 4);
 
-	// 동적 바인딩을 이용해 무작위적으로 전투상황 진입
+	// 동적 바인딩을 이용해 무작위로 전투상황 진입
 	switch (dis(gen)) {
 	case 0:
-		newCombat = new RockPaperScissor(boardBackground);
+		newCombat = new RockPaperScissor(boardBackground, *this, &BlockBreakHandler::looseCombat);
 		break;
 	case 1:
-		newCombat = new OddOrEven(boardBackground);
+		newCombat = new OddOrEven(boardBackground, *this, &BlockBreakHandler::looseCombat);
 		break;
 	case 2:
-		newCombat = new DiceRolling(boardBackground);
+		newCombat = new DiceRolling(boardBackground, *this, &BlockBreakHandler::looseCombat);
 		break;
 	case 3:
-		newCombat = new ShootTheMonster(boardBackground);
+		newCombat = new ShootTheMonster(boardBackground, *this, &BlockBreakHandler::looseCombat);
 		break;
 	case 4:
-		newCombat = new DiceMatching(boardBackground);
+		newCombat = new DiceMatching(boardBackground, *this, &BlockBreakHandler::looseCombat);
 		break;
 	default:
 		break;
 	}
 	if (newCombat != nullptr) {
 		newCombat->EnterBattle();
+	}
+}
+void BlockBreakHandler::looseCombat() {
+	item->ReduceLifeCount();
+	if (item->getLifeCount() > 0) {
+		boardBackground->enter();
+		showMessage("전투에서 패배하여 목숨이 하나 줄었습니다...");
+	}
+	else {
+		setStatus(BoardStatus::GameOver);
 	}
 }
 void BlockBreakHandler::ExpandBorder(int curRow, int curCol) {
@@ -118,12 +122,14 @@ void BlockBreakHandler::ExpandBorder(int curRow, int curCol) {
 void BlockBreakHandler::RefreshBoardStatus(int curRow, int curCol) {
 	// GameOver
 	// 남은 목숨이 없다면 보드의 상태를 GameOver로 바꾼다.
-
+	if (item->getLifeCount() == 0) {
+		setStatus(BoardStatus::GameOver);
+	}
 
 	// Escape
 	// 새로 열린 칸이 탈출구이면 보드 상태를 Escape로 바꾼다.
 	if (field[curRow][curCol].cellValue == CellValue::Escape) {
-		status = BoardStatus::Escape;
+		setStatus(BoardStatus::Escape);
 	}
 
 	// Clear
@@ -141,7 +147,7 @@ void BlockBreakHandler::RefreshBoardStatus(int curRow, int curCol) {
 	}
 	// 순회가 끝난 후에도 보드가 Clear조건을 만족하면 보드의 상태를 갱신한다.
 	if (isCleared == true) {
-		status = BoardStatus::Clear;
+		setStatus(BoardStatus::Clear);
 	}
 }
 

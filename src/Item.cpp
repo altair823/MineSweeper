@@ -1,6 +1,13 @@
 #include "Item.h"
 
-Item::Item(ScenePtr bg, int initLifeCount): background(bg), lifeCount(initLifeCount) {
+Item::Item(ScenePtr bg, int initLifeCount): background(bg) {
+
+	// 목숨 이미지 생성
+	lifeObject.resize(initLifeCount);
+	for (int i = 0; i < lifeObject.size(); i++) {
+		lifeObject[i] = Object::create(ItemResource::LIFE, background, 1200 - i * 65, 650);
+		lifeObject[i]->setScale(0.05f);
+	}
 
 	//아이템바 위치 생성
 	itemBar = Object::create(ItemResource::ITEM_BAR, background, 340, 0);
@@ -21,7 +28,6 @@ Item::Item(ScenePtr bg, int initLifeCount): background(bg), lifeCount(initLifeCo
 	itemCount[1] = INFINITE;
 	itemCount[2] = 0;
 	itemCount[3] = 0;
-
 	itemCountOnject.resize(4);
 	for (int i = 0; i < itemCount.size(); i++) {
 		itemCountOnject[i] = Object::create(ItemResource::EMPTY, background, 400 + (103 * i), 7, false);
@@ -160,17 +166,12 @@ void Item::ReduceItem(Hand hand) {
 	}
 }
 
-void Item::refreshLifeCountImage() {
-
-}
-
 void Item::AddItem(ItemValue itemValue) {
 	int index;
 
 	switch (itemValue)	{
 	case ItemValue::AddLife:
-		lifeCount++;
-		refreshLifeCountImage();
+		AddLifeCount();
 		return;
 	case ItemValue::MineDetector:
 		index = getItemIndex(Hand::Detector);
@@ -196,4 +197,22 @@ void Item::AddItem(ItemValue itemValue) {
 	itemCount[index]++;
 
 	refreshCountImage(index);
+}
+
+void Item::ReduceLifeCount() {
+	if (lifeObject.size() > 0) {
+		lifeObject.back()->hide();
+		lifeObject.pop_back();
+	}
+}
+
+void Item::AddLifeCount() {
+	if (lifeObject.size() < 19) {
+		lifeObject.push_back(Object::create(ItemResource::LIFE, background, 1200 - lifeObject.size() * 65, 650));
+		lifeObject.back()->setScale(0.05f);
+	}
+}
+
+int Item::getLifeCount() {
+	return lifeObject.size();
 }

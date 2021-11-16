@@ -34,6 +34,7 @@ namespace BlockResource {
 }
 
 namespace ItemResource {
+	constexpr auto LIFE = "image/Item_Heart.png";
 	constexpr auto INDICATOR = "image/ItemBox_using.png";
 	constexpr auto ITEM_BAR = "image/ItemBox.png";
 	constexpr auto PICKAX = "image/Item_Pickax.png";

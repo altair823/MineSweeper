@@ -34,6 +34,8 @@ namespace ShootTheMonsterConfig {
 	constexpr auto VISIBLE_TIME = 0.5;
 }
 
+class BlockBreakHandler;
+
 class ShootTheMonster : public Combat {
 
 private:
@@ -69,9 +71,12 @@ private:
 	// 플레이어가 쏜 방향
 	Direction playerShootDir;
 
+	// 게임 오버시 실행할 BlockBreakHandler의 멤버 함수 객체
+	std::function<void(BlockBreakHandler&)> gameOverFunc;
+	BlockBreakHandler& blockBreakHandler;
 
 public:
-	ShootTheMonster(ScenePtr previousScene);
+	ShootTheMonster(ScenePtr previousScene, BlockBreakHandler& blockBreakHandler, std::function<void(BlockBreakHandler&)> gameOverFunc);
 
 	/*
 	* 전투에 진입하는 함수

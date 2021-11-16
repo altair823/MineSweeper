@@ -6,6 +6,8 @@
 #include <bangtal>
 using namespace bangtal;
 
+class BlockBreakHandler;
+
 namespace DiceMatchingConfig {
 
 	// 몬스터의 숫자
@@ -58,8 +60,12 @@ private:
 	// 플레이어의 선택
 	int playerChoice;
 
+	// 게임 오버시 실행할 BlockBreakHandler의 멤버 함수 객체
+	std::function<void(BlockBreakHandler&)> gameOverFunc;
+	BlockBreakHandler& blockBreakHandler;
+
 public:
-	DiceMatching(ScenePtr previousScene);
+	DiceMatching(ScenePtr previousScene, BlockBreakHandler& blockBreakHandler, std::function<void(BlockBreakHandler&)> gameOverFunc);
 
 	/*
 	* 전투에 진입하는 함수

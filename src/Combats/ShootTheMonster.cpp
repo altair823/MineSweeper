@@ -1,6 +1,7 @@
 #include "ShootTheMonster.h"
 
-ShootTheMonster::ShootTheMonster(ScenePtr previousScene) {
+ShootTheMonster::ShootTheMonster(ScenePtr previousScene, BlockBreakHandler& blockBreakHandler, std::function<void(BlockBreakHandler&)> gameOverFunc)
+	: blockBreakHandler(blockBreakHandler), gameOverFunc(gameOverFunc) {
 	this->previousScene = previousScene;
 	// 난수 생성 엔진 초기화
 	std::random_device rd;
@@ -143,23 +144,13 @@ void ShootTheMonster::CompareDirection(Direction playerDir, Direction monsterDir
 		}
 	}
 	else if (opportunity.size() < monsterRemainCount) {
-		showMessage("총알이 부족합니다.\n게임 오버!");
 		monsterShowTimer->stop();
-		/*
-		*
-		* 게임오버시 타이틀로 돌아갈 것!
-		*
-		*/
+		gameOverFunc(blockBreakHandler);
 	}
 	else {
 		if (opportunity.size() == 0) {
-			showMessage("게임 오버!");
 			monsterShowTimer->stop();
-			/*
-			*
-			* 게임오버시 타이틀로 돌아갈 것!
-			*
-			*/
+			gameOverFunc(blockBreakHandler);
 		}
 		else {
 			showMessage("놓쳤습니다!");

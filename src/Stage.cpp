@@ -32,6 +32,7 @@ void Stage::EventHandler() {
 		// GameOver -> 보드 초기화?
 		if (board->getBoardStatus() == BoardStatus::GameOver) {
 			// ** 디버그용 ** 게임 종료
+			std::cout << "게임 오버!";
 			endGame();
 		}
 		boardStatusChecker->set(REFRESH_TIME);
@@ -40,9 +41,6 @@ void Stage::EventHandler() {
 		});
 
 	boardStatusChecker->start();
-
-	// 디버그용 타이머 생성 메세지
-	std::cout << ". . . Now Board Status Checker is working . . ." << std::endl;
 }
 
 void Stage::NextStage() {
