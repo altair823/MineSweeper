@@ -150,6 +150,7 @@ void DiceMatching::CompareChoice() {
 		monsters.pop_back();
 		if (monsters.size() == 0) {
 			showMessage("몬스터들을 물리쳤습니다!");
+			diceAnimation->stop();
 			this->previousScene->enter();
 		}
 		else {

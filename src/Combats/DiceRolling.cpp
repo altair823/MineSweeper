@@ -141,6 +141,8 @@ void DiceRolling::CompareDice() {
 		monsters.pop_back();
 		if (monsters.size() == 0) {
 			showMessage("몬스터들을 물리쳤습니다!");
+			computerDiceAnimation->stop();
+			playerDiceAnimation->stop();
 			this->previousScene->enter();
 		}
 		else {
