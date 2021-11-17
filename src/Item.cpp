@@ -63,6 +63,10 @@ Item::Item(ScenePtr bg, int initLifeCount): background(bg) {
 			return true;
 			});
 	}
+
+	// 스프레이 사용 여부를 표시하는 오브젝트
+	sprayUsedIndicator = Object::create(ItemResource::SPRAY, background, 1210, 570, false);
+	sprayUsedIndicator->setScale(0.8f);
 }
 
 Hand Item::getCurrentHand() {
@@ -99,6 +103,7 @@ void Item::ChangeHandByIndex(int index) {
 		break;
 	case 3:
 		currentHand = Hand::Spray;
+		SelectSpray();
 		break;
 	default:
 		break;
@@ -109,6 +114,57 @@ void Item::ChangeHand(Hand hand) {
 	int index = getItemIndex(hand);
 	ChangeHandByIndex(index);
 }
+
+void Item::UseDetector(int clickedCellRow, int clickedCellCol, std::vector<std::vector<CellPtr>>& cells, MineField& field) {
+	if (getItemCount(Hand::Detector) <= 0) {
+		return;
+	}
+	// 클릭한 칸의 주위 9칸을 확인
+	for (int i = clickedCellRow - 1; i <= clickedCellRow + 1; i++) {
+		if (i < 0 || i >= cells.size()) {
+			continue;
+		}
+		for (int j = clickedCellCol - 1; j <= clickedCellCol + 1; j++) {
+			if (j < 0 || j >= cells[0].size()) {
+				continue;
+			}
+			switch (field[i][j].cellValue) {
+			case CellValue::Mine:
+				cells[i][j]->getBlock()->ChangeToFlagImage();
+				break;
+			default:
+				cells[i][j]->BreakBlock();
+				break;
+			}
+		}
+	}
+	ReduceItem(Hand::Detector);
+	ChangeHand(Hand::Pickax);
+}
+
+void Item::SelectSpray() {
+	// 스프레이는 중복 사용할 수 없다. 
+	if (itemCount[getItemIndex(Hand::Spray)] <= 0 || isSprayUsed == true) {
+		return;
+	}
+	showMessage("스프레이 하나를 사용했습니다!");
+	isSprayUsed = true;
+	sprayUsedIndicator->show();
+	// 사용 즉시 아이템 창에서는 개수 -1
+	ReduceItem(Hand::Spray);
+	ChangeHand(Hand::Pickax);
+}
+
+void Item::UseSpray() {
+	isSprayUsed = false;
+	sprayUsedIndicator->hide();
+}
+
+bool Item::getIsSprayUsed() {
+	return isSprayUsed;
+}
+
+
 
 int Item::getItemCount(Hand hand) {
 	int index = getItemIndex(hand);
