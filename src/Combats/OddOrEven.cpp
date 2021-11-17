@@ -1,7 +1,7 @@
 #include "OddOrEven.h"
 
 OddOrEven::OddOrEven(ScenePtr previousScene, BlockBreakHandler& blockBreakHandler, std::function<void(BlockBreakHandler&)> gameOverFunc)
-	: blockBreakHandler(blockBreakHandler), gameOverFunc(gameOverFunc) {
+	: inputLock(false), blockBreakHandler(blockBreakHandler), gameOverFunc(gameOverFunc) {
 	this->previousScene = previousScene;
 	// 난수 생성 엔진 초기화
 	std::random_device rd;
@@ -54,6 +54,8 @@ void OddOrEven::EnterBattle() {
 	resultDelayTimer = Timer::create(OddOrEvenConfig::VISIBLE_TIME);
 	resultDelayTimer->setOnTimerCallback([&](auto)->bool {
 		diceAnimation->start();
+		// 결과가 나오면 입력 잠금을 푼다. 
+		inputLock = false;
 		return true;
 		});
 
@@ -61,24 +63,31 @@ void OddOrEven::EnterBattle() {
 	EvenButton = Object::create(CombatResource::OddOrEven::EvenButton, background, 380, -100);
 
 	OddButton->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
-		playerChoice = PlayerChoice::Odd;
-		diceAnimation->stop();
-		CompareChoice();
-		resultDelayTimer->set(OddOrEvenConfig::VISIBLE_TIME);
-		resultDelayTimer->start();
-		return true;
+		return InputChoice(PlayerChoice::Odd);
 		});
 
 	EvenButton->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
-		playerChoice = PlayerChoice::Even;
-		diceAnimation->stop();
-		CompareChoice();
-		resultDelayTimer->set(OddOrEvenConfig::VISIBLE_TIME);
-		resultDelayTimer->start();
-		return true;
+		return InputChoice(PlayerChoice::Even);
 		});
 
 	diceAnimation->start();
+}
+
+bool OddOrEven::InputChoice(PlayerChoice choice) {
+#ifndef COMBAT_DEBUG
+	// 입력 불가능 상태라면 입력받지 않는다. 
+	if (inputLock == true) {
+		return true;
+	}
+#endif // !COMBAT_DEBUG
+	playerChoice = choice;
+	diceAnimation->stop();
+	CompareChoice();
+	resultDelayTimer->set(OddOrEvenConfig::VISIBLE_TIME);
+	resultDelayTimer->start();
+	// 결과가 나오는 동안 입력을 잠근다. 
+	inputLock = true;
+	return true;
 }
 
 void OddOrEven::ChangeDiceNumRandomly(int* value, ObjectPtr object) {

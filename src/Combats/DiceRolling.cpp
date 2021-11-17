@@ -7,7 +7,7 @@ std::string RDBattleBackground[] = {
 };
 
 DiceRolling::DiceRolling(ScenePtr previousScene, BlockBreakHandler& blockBreakHandler, std::function<void(BlockBreakHandler&)> gameOverFunc)
-	: blockBreakHandler(blockBreakHandler), gameOverFunc(gameOverFunc) {
+	: inputLock(false), blockBreakHandler(blockBreakHandler), gameOverFunc(gameOverFunc) {
 	this->previousScene = previousScene;
 
 	// 난수 생성 엔진 초기화
@@ -48,7 +48,7 @@ void DiceRolling::EnterBattle() {
 	showMessage("몬스터가 등장했습니다!\n주사위 게임을 세 번 이겨야 탈출할 수 있습니다.\n기회는 " + std::to_string(DiceRollingConfig::OPPORTUNITY) + "번 뿐입니다!");
 
 	// 주사위를 굴리는 버튼 생성
-	rollingButton = Object::create(CombatResource::DiceRolling::Button, background, 260, -120);
+	stopButton = Object::create(CombatResource::DiceRolling::Button, background, 260, -120);
 
 	computerDice = Object::create(CombatResource::DiceRolling::One, background, 270, 150);
 	playerDice = Object::create(CombatResource::DiceRolling::One, background, 270, 30);
@@ -73,10 +73,18 @@ void DiceRolling::EnterBattle() {
 	resultDelayTimer->setOnTimerCallback([&](auto)->bool {
 		computerDiceAnimation->start();
 		playerDiceAnimation->start();
+		// 결과가 나오면 입력 잠금을 푼다. 
+		inputLock = false;
 		return true;
 		});
 
-	rollingButton->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
+	stopButton->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
+#ifndef COMBAT_DEBUG
+		// 입력 불가능 상태라면 입력받지 않는다. 
+		if (inputLock == true) {
+			return true;
+		}
+#endif // !COMBAT_DEBUG
 		computerDiceAnimation->stop();
 		playerDiceAnimation->stop();
 
@@ -84,6 +92,8 @@ void DiceRolling::EnterBattle() {
 
 		resultDelayTimer->set(DiceRollingConfig::VISIBLE_TIME);
 		resultDelayTimer->start();
+		// 결과가 나오는 동안 입력을 잠근다. 
+		inputLock = true;
 		return true;
 		});
 

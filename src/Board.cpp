@@ -74,28 +74,20 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 			CellPtr cell = Cell::Create(background, field[i][j], x, y);
 			
 
-			// Item의 정보를 셀의 콜백 함수가 참조해야 함
+			// 현재 hand에 따라서 다른 작동을 한다. 
 			cell->getBlock()->setClickCallback([=](auto object, int x, int y, auto action)->bool {
-				switch (item->getCurrentHand())
-				{
+				switch (item->getCurrentHand()) {
+				case Hand::Pickax:
+					cell->BreakBlock();
+					break;
+				case Hand::Flag:
+					cell->getBlock()->SwapBlockImage();
+					break;
+				case Hand::Detector:
+					item->UseDetector(i, j, cells, field);
+					break;
 				default:
 					break;
-				}
-				// 핸드가 곡괭이일 경우
-				if (item->getCurrentHand() == Hand::Pickax) {
-					cell->BreakBlock();
-				}
-				// 핸드가 깃발일경우
-				else if (item->getCurrentHand() == Hand::Flag) {
-					cell->getBlock()->SwapBlockImage();
-				}
-				// 현재 선택한 아이템이 detector일 경우
-				else if (item->getCurrentHand() == Hand::Detector) {
-					if (item->getItemCount(Hand::Detector) > 0) {
-						UseDetector(i, j);
-						item->ReduceItem(Hand::Detector);
-						item->ChangeHand(Hand::Pickax);
-					}
 				}
 				
 				return true;
@@ -112,28 +104,6 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 
 	// 새 보드 생성이 완료되면 이벤트 핸들러의 루프 시작
 	OnBlockBreak->CheckNewCellOpened();
-}
-
-void Board::UseDetector(int clickedCellRow, int clickedCellCol) {
-	// 클릭한 칸의 주위 9칸을 확인
-	for (int i = clickedCellRow - 1; i <= clickedCellRow + 1; i++) {
-		if (i < 0 || i >= row) {
-			continue;
-		}
-		for (int j = clickedCellCol - 1; j <= clickedCellCol + 1; j++) {
-			if (j < 0 || j >= col) {
-				continue;
-			}
-			switch (field[i][j].cellValue) {
-			case CellValue::Mine:
-				cells[i][j]->getBlock()->ChangeToFlagImage();
-				break;
-			default:
-				cells[i][j]->BreakBlock();
-				break;
-			}
-		}
-	}
 }
 
 BoardStatus Board::getBoardStatus() {

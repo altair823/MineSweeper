@@ -54,7 +54,14 @@ void BlockBreakHandler::CheckIsItemExist(int curRow, int curCol) {
 }
 
 void BlockBreakHandler::EnterRandomCombat(int curRow, int curCol) {
+	// 빈칸이면
 	if (field[curRow][curCol].cellValue != CellValue::Mine) {
+		return;
+	}
+	// 스프레이를 사용중이면
+	else if (item->getIsSprayUsed()) {
+		item->UseSpray();
+		showMessage("스프레이의 효과로 몬스터를 피했습니다!");
 		return;
 	}
 	std::random_device rd;

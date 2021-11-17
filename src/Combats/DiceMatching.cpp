@@ -1,7 +1,7 @@
 #include "DiceMatching.h"
 
 DiceMatching::DiceMatching(ScenePtr previousScene, BlockBreakHandler& blockBreakHandler, std::function<void(BlockBreakHandler&)> gameOverFunc)
-	: blockBreakHandler(blockBreakHandler), gameOverFunc(gameOverFunc) {
+	: inputLock(false), blockBreakHandler(blockBreakHandler), gameOverFunc(gameOverFunc) {
 	this->previousScene = previousScene;
 	// 난수 생성 엔진 초기화
 	std::random_device rd;
@@ -54,6 +54,8 @@ void DiceMatching::EnterBattle(){
 	resultDelayTimer = Timer::create(DiceMatchingConfig::VISIBLE_TIME);
 	resultDelayTimer->setOnTimerCallback([&](auto)->bool {
 		diceAnimation->start();
+		// 결과가 나오면 입력 잠금을 푼다. 
+		inputLock = false;
 		return true;
 		});
 
@@ -126,11 +128,18 @@ void DiceMatching::ChangeDiceNumRandomly() {
 }
 
 bool DiceMatching::InputPlayerChoice(int num) {
+#ifndef COMBAT_DEBUG
+	// 입력 불가능 상태라면 입력받지 않는다. 
+	if (inputLock == true) {
+		return true;
+	}
+#endif // !COMBAT_DEBUG
 	playerChoice = num;
 	diceAnimation->stop();
 	CompareChoice();
 	resultDelayTimer->set(DiceMatchingConfig::VISIBLE_TIME);
 	resultDelayTimer->start();
+	inputLock = true;
 	return true;
 }
 

@@ -55,10 +55,6 @@ private:
 	// 현재 보드의 상태
 	BoardStatus status = BoardStatus::Playing;
 
-	/*
-	* detector 아이템을 선택한 상태로 셀을 클릭할 경우를 처리할 함수
-	*/
-	void UseDetector(int clickedCellRow, int clickedCellCol);
 
 public:
 	Board(ScenePtr bg);

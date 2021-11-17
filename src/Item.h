@@ -11,6 +11,7 @@
 #include <iostream>
 #include <vector>
 #include "resource.h"
+#include "Cell.h"
 #include "MineField.h"
 #include <bangtal>
 
@@ -64,7 +65,7 @@ private:
 
 	// 스프레이 사용 후 인디케이터
 	ObjectPtr sprayUsedIndicator;
-	bool isSprayUsed;
+	bool isSprayUsed = false;
 
 	/*
 	* 해당 아이템의 itemCount 값에 따라 Item개수 이미지를 변경하는 함수
@@ -89,6 +90,26 @@ public:
 	*/ 
 	void ChangeHandByIndex(int index);
 	void ChangeHand(Hand hand);
+
+	/*
+	* detector 아이템을 선택한 상태로 셀을 클릭할 경우를 처리할 함수
+	*/
+	void UseDetector(int clickedCellRow, int clickedCellCol, std::vector<std::vector<CellPtr>>& cells, MineField& field);
+
+	/*
+	* spray 아이템을 선택할 시에 호출될 함수
+	*/
+	void SelectSpray();
+
+	/*
+	* spray 아이템을 사용할 때 호출되는 함수
+	*/
+	void UseSpray();
+
+	/*
+	* spray 아이템이 사용중인지 여부를 반환하는 함수
+	*/
+	bool getIsSprayUsed();
 
 	/*
 	* 현재 아이템의 개수를 확인하는 함수

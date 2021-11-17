@@ -17,7 +17,7 @@
 #include <bangtal>
 using namespace bangtal;
 
-enum Direction {
+enum class Direction {
 	Left,
 	Center,
 	Right
@@ -71,9 +71,17 @@ private:
 	// 플레이어가 쏜 방향
 	Direction playerShootDir;
 
+	// 결과 표시 중에 플레이어의 입력을 막을 lock
+	bool inputLock;
+
 	// 게임 오버시 실행할 BlockBreakHandler의 멤버 함수 객체
 	std::function<void(BlockBreakHandler&)> gameOverFunc;
 	BlockBreakHandler& blockBreakHandler;
+
+	/*
+	* 플레이어의 선택을 처리하는 함수
+	*/
+	bool InputChoice(Direction direction);
 
 public:
 	ShootTheMonster(ScenePtr previousScene, BlockBreakHandler& blockBreakHandler, std::function<void(BlockBreakHandler&)> gameOverFunc);
