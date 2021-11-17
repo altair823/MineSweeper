@@ -26,6 +26,9 @@ private:
 
 	// 게임 타이틀 및 스테이지 별 스크립트를 나타내는 방탈 오브젝트
 	ObjectPtr script;
+
+	// 탈출하기 버튼을 나타내는 방탈 오브젝트
+	ObjectPtr escapeButton;
 	
 	// 지뢰찾기 보드
 	Board* board;
@@ -37,7 +40,10 @@ private:
 	TimerPtr boardStatusChecker;
 
 public:
-	Stage(ScenePtr background, ScenePtr frontground);
+	Stage();
+
+	// 시작 장면을 반환하는 함수
+	ScenePtr getFrontground();
 
 	// 보드 진행 상황 변경시 적절한 이벤트를 발생하는 함수
 	void EventHandler();
