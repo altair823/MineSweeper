@@ -12,9 +12,6 @@ Item::Item(ScenePtr bg, int initLifeCount): background(bg) {
 	//아이템바 위치 생성
 	itemBar = Object::create(ItemResource::ITEM_BAR, background, 340, 0);
 
-	// 현재 사용중인 아이템을 표시
-	currentItemIndicator = Object::create(ItemResource::INDICATOR, bg, 340, 0);
-
 	// 아이템 바에서 보여줄 아이템 오브젝트 객체 생성
 	itemObject.resize(4);
 	itemObject[0] = Object::create(ItemResource::PICKAX, background, 350, 10);
@@ -32,6 +29,9 @@ Item::Item(ScenePtr bg, int initLifeCount): background(bg) {
 	for (int i = 0; i < itemCount.size(); i++) {
 		itemCountOnject[i] = Object::create(ItemResource::EMPTY, background, 400 + (103 * i), 7, false);
 	}
+
+	// 현재 사용중인 아이템을 표시
+	currentItemIndicator = Object::create(ItemResource::INDICATOR, bg, 340, 0);
 
 	// 아이템 객체에 대한 키보드 콜백
 	background->setOnKeyboardCallback([&](auto bg, auto KeyCode, auto pressed)->bool {
