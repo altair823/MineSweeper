@@ -44,14 +44,14 @@ namespace ItemResource {
 	constexpr auto ADD_LIFE = "image/Item_Heartplus.png";
 
 	constexpr auto EMPTY = "image/CellEmpty.png";
-	constexpr auto ONE = "image/Cell1.png";
-	constexpr auto TWO = "image/Cell2.png";
-	constexpr auto THREE = "image/Cell3.png";
-	constexpr auto FOUR = "image/Cell4.png";
-	constexpr auto FIVE = "image/Cell5.png";
-	constexpr auto SIX = "image/Cell6.png";
-	constexpr auto SEVEN = "image/Cell7.png";
-	constexpr auto EIGHT = "image/Cell8.png";
+	constexpr auto ONE = "image/Item_number/1.png";
+	constexpr auto TWO = "image/Item_number/2.png";
+	constexpr auto THREE = "image/Item_number/3.png";
+	constexpr auto FOUR = "image/Item_number/4.png";
+	constexpr auto FIVE = "image/Item_number/5.png";
+	constexpr auto SIX = "image/Item_number/6.png";
+	constexpr auto SEVEN = "image/Item_number/7.png";
+	constexpr auto EIGHT = "image/Item_number/8.png";
 }
 
 
