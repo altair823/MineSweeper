@@ -71,6 +71,9 @@ private:
 	// 플레이어가 쏜 방향
 	Direction playerShootDir;
 
+	// 결과 표시 중에 플레이어의 입력을 막을 lock
+	bool inputLock;
+
 	// 게임 오버시 실행할 BlockBreakHandler의 멤버 함수 객체
 	std::function<void(BlockBreakHandler&)> gameOverFunc;
 	BlockBreakHandler& blockBreakHandler;

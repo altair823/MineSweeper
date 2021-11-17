@@ -11,6 +11,7 @@
 #pragma once
 #include "resource.h"
 
+//#define COMBAT_DEBUG
 
 class Combat {
 public:
