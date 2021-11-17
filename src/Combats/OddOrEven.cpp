@@ -63,40 +63,31 @@ void OddOrEven::EnterBattle() {
 	EvenButton = Object::create(CombatResource::OddOrEven::EvenButton, background, 380, -100);
 
 	OddButton->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
-#ifndef COMBAT_DEBUG
-		// 입력 불가능 상태라면 입력받지 않는다. 
-		if (inputLock == true) {
-			return true;
-		}
-#endif // !COMBAT_DEBUG
-		playerChoice = PlayerChoice::Odd;
-		diceAnimation->stop();
-		CompareChoice();
-		resultDelayTimer->set(OddOrEvenConfig::VISIBLE_TIME);
-		resultDelayTimer->start();
-		// 결과가 나오는 동안 입력을 잠근다. 
-		inputLock = true;
-		return true;
+		return InputChoice(PlayerChoice::Odd);
 		});
 
 	EvenButton->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
-#ifndef COMBAT_DEBUG
-		// 입력 불가능 상태라면 입력받지 않는다. 
-		if (inputLock == true) {
-			return true;
-		}
-#endif // !COMBAT_DEBUG
-		playerChoice = PlayerChoice::Even;
-		diceAnimation->stop();
-		CompareChoice();
-		resultDelayTimer->set(OddOrEvenConfig::VISIBLE_TIME);
-		resultDelayTimer->start();
-		// 결과가 나오는 동안 입력을 잠근다. 
-		inputLock = true;
-		return true;
+		return InputChoice(PlayerChoice::Even);
 		});
 
 	diceAnimation->start();
+}
+
+bool OddOrEven::InputChoice(PlayerChoice choice) {
+#ifndef COMBAT_DEBUG
+	// 입력 불가능 상태라면 입력받지 않는다. 
+	if (inputLock == true) {
+		return true;
+	}
+#endif // !COMBAT_DEBUG
+	playerChoice = choice;
+	diceAnimation->stop();
+	CompareChoice();
+	resultDelayTimer->set(OddOrEvenConfig::VISIBLE_TIME);
+	resultDelayTimer->start();
+	// 결과가 나오는 동안 입력을 잠근다. 
+	inputLock = true;
+	return true;
 }
 
 void OddOrEven::ChangeDiceNumRandomly(int* value, ObjectPtr object) {

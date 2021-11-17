@@ -1,11 +1,5 @@
 #include "RockPaperScissor.h"
 
-std::string RPSBattleBackground[] = {
-	CombatResource::BACKGROUND1,
-	CombatResource::BACKGROUND2,
-	CombatResource::BACKGROUND3
-};
-
 RockPaperScissor::RockPaperScissor(ScenePtr previousScene, BlockBreakHandler& blockBreakHandler, std::function<void(BlockBreakHandler&)> gameOverFunc)
 	: inputLock(false), blockBreakHandler(blockBreakHandler), gameOverFunc(gameOverFunc) {
 
@@ -56,54 +50,34 @@ void RockPaperScissor::EnterBattle() {
 
 	// 바위 선택
 	rock->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
-#ifndef COMBAT_DEBUG
-		// 입력 불가능 상태라면 입력받지 않는다. 
-		if (inputLock == true) {
-			return true;
-		}
-#endif // !COMBAT_DEBUG
-		playerChoice = HandType::Rock;
-		computerChoice = MakeComputerChoice();
-		ShowChoices(playerChoice, computerChoice);
-		CompareChoices();
-		// 결과가 나오는 동안 입력을 잠근다. 
-		inputLock = true;
-		return true;
+		return InputChoice(HandType::Rock);
 		});
 
 	// 보 선택
 	paper->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
-#ifndef COMBAT_DEBUG
-		// 입력 불가능 상태라면 입력받지 않는다. 
-		if (inputLock == true) {
-			return true;
-		}
-#endif // !COMBAT_DEBUG
-		playerChoice = HandType::Paper;
-		computerChoice = MakeComputerChoice();
-		ShowChoices(playerChoice, computerChoice);
-		CompareChoices();
-		// 결과가 나오는 동안 입력을 잠근다. 
-		inputLock = true;
-		return true;
+		return InputChoice(HandType::Paper);
 	});
 
 	// 가위 선택
 	scissor->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
-#ifndef COMBAT_DEBUG
-		// 입력 불가능 상태라면 입력받지 않는다. 
-		if (inputLock == true) {
-			return true;
-		}
-#endif // !COMBAT_DEBUG
-		playerChoice = HandType::Scissors;
-		computerChoice = MakeComputerChoice();
-		ShowChoices(playerChoice, computerChoice);
-		CompareChoices();
-		// 결과가 나오는 동안 입력을 잠근다. 
-		inputLock = true;
-		return true;
+		return InputChoice(HandType::Scissors);
 		});
+}
+
+bool RockPaperScissor::InputChoice(HandType handType) {
+#ifndef COMBAT_DEBUG
+	// 입력 불가능 상태라면 입력받지 않는다. 
+	if (inputLock == true) {
+		return true;
+	}
+#endif // !COMBAT_DEBUG
+	playerChoice = handType;
+	computerChoice = MakeComputerChoice();
+	ShowChoices(playerChoice, computerChoice);
+	CompareChoices();
+	// 결과가 나오는 동안 입력을 잠근다. 
+	inputLock = true;
+	return true;
 }
 
 HandType RockPaperScissor::MakeComputerChoice(){

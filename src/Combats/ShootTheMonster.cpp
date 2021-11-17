@@ -58,45 +58,29 @@ void ShootTheMonster::EnterBattle() {
 		});
 
 	leftShoot->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
-#ifndef COMBAT_DEBUG
-		// 입력 불가능 상태라면 입력받지 않는다. 
-		if (inputLock == true) {
-			return true;
-		}
-#endif // !COMBAT_DEBUG
-		playerShootDir = Direction::Left;
-		CompareDirection(playerShootDir, monsterPosition);
-		// 결과가 나오는 동안 입력을 잠근다. 
-		inputLock = true;
-		return true;
-		});
+		return InputChoice(Direction::Left);
+	});
 	centerShoot->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
-#ifndef COMBAT_DEBUG
-		// 입력 불가능 상태라면 입력받지 않는다. 
-		if (inputLock == true) {
-			return true;
-		}
-#endif // !COMBAT_DEBUG
-		playerShootDir = Direction::Center;
-		CompareDirection(playerShootDir, monsterPosition);
-		// 결과가 나오는 동안 입력을 잠근다. 
-		inputLock = true;
-		return true;
-		});
+		return InputChoice(Direction::Center);
+	});
 	rightShoot->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
-#ifndef COMBAT_DEBUG
-		// 입력 불가능 상태라면 입력받지 않는다. 
-		if (inputLock == true) {
-			return true;
-		}
-#endif // !COMBAT_DEBUG
-		playerShootDir = Direction::Right;
-		CompareDirection(playerShootDir, monsterPosition);
-		// 결과가 나오는 동안 입력을 잠근다. 
-		inputLock = true;
-		return true;
-		});
+		return InputChoice(Direction::Right);
+	});
 	monsterShowTimer->start();
+}
+
+bool ShootTheMonster::InputChoice(Direction direction) {
+#ifndef COMBAT_DEBUG
+	// 입력 불가능 상태라면 입력받지 않는다. 
+	if (inputLock == true) {
+		return true;
+	}
+#endif // !COMBAT_DEBUG
+	playerShootDir = direction;
+	CompareDirection(playerShootDir, monsterPosition);
+	// 결과가 나오는 동안 입력을 잠근다. 
+	inputLock = true;
+	return true;
 }
 
 void ShootTheMonster::ShowMonsterRandomly() {
@@ -189,13 +173,13 @@ void ShootTheMonster::ChangeMonsterToExplode(Direction direction) {
 
 	if (monsterPosition == direction) {
 		switch (monsterPosition) {
-		case Left:
+		case Direction::Left:
 			dirNum = 0;
 			break;
-		case Center:
+		case Direction::Center:
 			dirNum = 1;
 			break;
-		case Right:
+		case Direction::Right:
 			dirNum = 2;
 			break;
 		default:

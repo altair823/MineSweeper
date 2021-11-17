@@ -68,6 +68,11 @@ private:
 	std::function<void(BlockBreakHandler&)> gameOverFunc;
 	BlockBreakHandler& blockBreakHandler;
 
+	/*
+	* 플레이어의 선택을 처리하는 함수
+	*/
+	bool InputChoice(HandType handType);
+
 public:
 	RockPaperScissor(ScenePtr previousScene, BlockBreakHandler& blockBreakHandler, std::function<void(BlockBreakHandler&)> gameOverFunc);
 
