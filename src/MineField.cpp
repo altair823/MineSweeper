@@ -76,9 +76,9 @@ void MineField::Resize(int newRow, int newCol) {
         fieldData.push_back(rowData);
     }
 
-    // 지뢰의 개수는 전체 칸수의 1/4
+    // 지뢰의 개수는 전체 칸수의 1/6
     // 필요하다면 변경가능
-    mineCount = newRow * newCol / 4;
+    mineCount = newRow * newCol / 6;
 }
 
 void MineField::MountMine() {
