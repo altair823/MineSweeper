@@ -11,26 +11,38 @@
 namespace BoardResource {
 	// 1280*720 화면 크기 테스트용 배경 화면
 	constexpr auto BACKGROUND = "image/Background_example3.png";
+
+
+	constexpr auto BACKGROUND1 = "image/Background/Background1.png";
+	constexpr auto BACKGROUND2 = "image/Background/Background2.png";
+	constexpr auto BACKGROUND3 = "image/Background/Background3.png";
 }
 
 namespace CellResource {
-	constexpr auto MINE = "image/CellMine.png";
-	constexpr auto ESCAPE = "image/CellEscape.png";
+	constexpr auto MINE = "image/Cell/Mine.png";
+	constexpr auto ESCAPE = "image/Cell/Escape.png";
 
-	constexpr auto EMPTY = "image/CellEmpty.png";
-	constexpr auto ONE = "image/Cell1.png";
-	constexpr auto TWO = "image/Cell2.png";
-	constexpr auto THREE = "image/Cell3.png";
-	constexpr auto FOUR = "image/Cell4.png";
-	constexpr auto FIVE = "image/Cell5.png";
-	constexpr auto SIX = "image/Cell6.png";
-	constexpr auto SEVEN = "image/Cell7.png";
-	constexpr auto EIGHT = "image/Cell8.png";
+	constexpr auto EMPTY = "image/Cell/Empty.png";
+	constexpr auto ONE = "image/Cell/1.png";
+	constexpr auto TWO = "image/Cell/2.png";
+	constexpr auto THREE = "image/Cell/3.png";
+	constexpr auto FOUR = "image/Cell/4.png";
+	constexpr auto FIVE = "image/Cell/5.png";
+	constexpr auto SIX = "image/Cell/6.png";
+	constexpr auto SEVEN = "image/Cell/7.png";
+	constexpr auto EIGHT = "image/Cell/8.png";
 }
 
 namespace BlockResource {
 	constexpr auto BLOCK = "image/BlockEmpty_2.png";
 	constexpr auto FLAG = "image/BlockFlag_2.png";
+
+	constexpr auto BLOCK1 = "image/Block/BlockEmpty_1.png";
+	constexpr auto FLAG1 = "image/Block/BlockFlag_1.png";
+	constexpr auto BLOCK2 = "image/Block/BlockEmpty_2.png";
+	constexpr auto FLAG2 = "image/Block/BlockFlag_2.png";
+	constexpr auto BLOCK3 = "image/Block/BlockEmpty_3.png";
+	constexpr auto FLAG3 = "image/Block/BlockFlag_3.png";
 }
 
 namespace ItemResource {
