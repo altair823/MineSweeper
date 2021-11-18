@@ -22,4 +22,5 @@ public:
 	*/
 	virtual void EnterBattle() = 0;
 
+	virtual ~Combat() { };
 };
