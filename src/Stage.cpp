@@ -55,6 +55,7 @@ void Stage::EventHandler() {
 		}
 		// Claer -> 다음 스테이지
 		if (board->getBoardStatus() == BoardStatus::Clear) {
+			escapeButton->hide();
 			NextStage();
 		}
 		// GameOver -> 보드 초기화?
