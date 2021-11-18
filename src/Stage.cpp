@@ -2,7 +2,7 @@
 
 Stage::Stage() {
 	// 게임 타이틀 및 스테이지 별 스크립트를 보이기 위한 방탈 장면
-	frontground = Scene::create("시작 화면", CombatResource::BACKGROUND1);
+	frontground = Scene::create("시작 화면", frontgroundImage[currentStageLevel]);
 
 	// 게임이 실행되는 방탈 장면
 	background = Scene::create("배경", BoardResource::BACKGROUND);
@@ -12,10 +12,15 @@ Stage::Stage() {
 	board->GenerateNewBoard(INIT_BOARD_SIZE, INIT_BOARD_SIZE);
 
 	// frontground에서 보여줄 게임 타이틀 및 스테이지 별 스크립트
-	// frontground가 보여줄 스크립트가 끝나면 backround로 입장한다.
-	script = Object::create(CombatResource::MONSTER1, frontground, 0, 0);
+	// frontground가 보여줄 스크립트가 끝나면 backround로 입장하거나 게임을 종료한다.
+	script = Object::create(scriptImage[currentStageLevel], frontground, 480, 10);
 	script->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
-		background->enter();
+		if (currentStageLevel == STAGE_COUNT) {
+			endGame();
+		}
+		else {
+			background->enter();
+		}
 		return true;
 	});
 
@@ -70,27 +75,18 @@ void Stage::NextStage() {
 	// 스테이지 레벨을 갱신한다.
 	currentStageLevel++;
 
-	// 정해진 스테이지를 모두 클리어했다면 게임을 클리어한 것이다.
-	if (currentStageLevel == STAGE_COUNT) {
-		// ** 디버그용 ** 게임 종료
-		std::cout << "Game Clear!";
-		endGame();
-	}
+	// 스테이지 클리어 시 보여줄 스크립트를 갱신한다.
+	frontground->setImage(frontgroundImage[currentStageLevel]);
+	script->setImage(scriptImage[currentStageLevel]);
 
-	// 아직 클리어할 스테이지가 남았다면 게임을 진행한다.
-	else {
-		// 다음 스테이지로 넘어갈 때 보여줄 스크립트를 갱신한다.
-		// script->setImage();
+	// 스크립트를 가지고 있는 front 장면으로 입장한다.
+	frontground->enter();
 
-		// 스크립트를 가지고 있는 front 장면으로 입장한다.
-		frontground->enter();
+	// 다음 지뢰찾기 보드로 갱신한다.
+	int row = board->getRow();
+	int col = board->getCol();
+	board->RefreshBoard(row + 2, col + 4);
 
-		// 다음 지뢰찾기 보드로 갱신한다.
-		int row = board->getRow();
-		int col = board->getCol();
-		board->RefreshBoard(row + 2, col + 4);
-
-		// 다음 지뢰찾기 보드의 배경을 갱신한다.
-	}
+	// 다음 지뢰찾기 보드의 배경을 갱신한다.
 }
 

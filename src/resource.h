@@ -116,3 +116,15 @@ namespace CombatResource {
 		constexpr auto Six = "image/Dice6.png";
 	}
 }
+
+namespace StageResource {
+	constexpr auto FG_IMAGE_0 = "image/script/title.PNG";
+	constexpr auto FG_IMAGE_1 = "image/script/stage1_clear.PNG";
+	constexpr auto FG_IMAGE_2 = "image/script/stage2_clear.PNG";
+	constexpr auto FG_IMAGE_3 = "image/script/stage3_clear.PNG";
+
+	constexpr auto SCRIPT_IMAGE_0 = "image/script/stage1_start.png";
+	constexpr auto SCRIPT_IMAGE_1 = "image/script/stage2_start.png";
+	constexpr auto SCRIPT_IMAGE_2 = "image/script/stage3_start.png";
+	constexpr auto SCRIPT_IMAGE_3 = "image/script/end.png";
+}

@@ -8,6 +8,7 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 #include <bangtal>
 #include "Board.h"
 
@@ -24,8 +25,14 @@ private:
 	// 게임 타이틀 및 스테이지 별 스크립트를 보이기 위한 방탈 장면
 	ScenePtr frontground;
 
+	// frontground의 스테이지 별 이미지를 저장하고 있는 벡터
+	std::vector<std::string> frontgroundImage = {StageResource::FG_IMAGE_0, StageResource::FG_IMAGE_1, StageResource::FG_IMAGE_2, StageResource::FG_IMAGE_3};
+
 	// 게임 타이틀 및 스테이지 별 스크립트를 나타내는 방탈 오브젝트
 	ObjectPtr script;
+
+	// script의 스테이지 별 이미지를 저장하고 있는 벡터
+	std::vector<std::string> scriptImage = { StageResource::SCRIPT_IMAGE_0, StageResource::SCRIPT_IMAGE_1, StageResource::SCRIPT_IMAGE_2, StageResource::SCRIPT_IMAGE_3 };
 
 	// 탈출하기 버튼을 나타내는 방탈 오브젝트
 	ObjectPtr escapeButton;
