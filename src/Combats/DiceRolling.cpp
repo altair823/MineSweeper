@@ -71,8 +71,10 @@ void DiceRolling::EnterBattle() {
 	
 	resultDelayTimer = Timer::create(DiceRollingConfig::VISIBLE_TIME);
 	resultDelayTimer->setOnTimerCallback([&](auto)->bool {
-		computerDiceAnimation->start();
-		playerDiceAnimation->start();
+		if (computerDiceAnimation != nullptr && playerDiceAnimation != nullptr) {
+			computerDiceAnimation->start();
+			playerDiceAnimation->start();
+		}
 		// 결과가 나오면 입력 잠금을 푼다. 
 		inputLock = false;
 		return true;
@@ -142,7 +144,9 @@ void DiceRolling::CompareDice() {
 		if (monsters.size() == 0) {
 			showMessage("몬스터들을 물리쳤습니다!");
 			computerDiceAnimation->stop();
+			computerDiceAnimation.reset();
 			playerDiceAnimation->stop();
+			playerDiceAnimation.reset();
 			this->previousScene->enter();
 		}
 		else {

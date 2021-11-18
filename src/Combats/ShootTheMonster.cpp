@@ -147,6 +147,7 @@ void ShootTheMonster::CompareDirection(Direction playerDir, Direction monsterDir
 		if (monsterRemainCount == 0) {
 			showMessage("몬스터들을 모두 물리쳤습니다!");
 			monsterShowTimer->stop();
+			monsterShowTimer.reset();
 			this->previousScene->enter();
 		}
 		else {
@@ -155,11 +156,13 @@ void ShootTheMonster::CompareDirection(Direction playerDir, Direction monsterDir
 	}
 	else if (opportunity.size() < monsterRemainCount) {
 		monsterShowTimer->stop();
+		monsterShowTimer.reset();
 		gameOverFunc(blockBreakHandler);
 	}
 	else {
 		if (opportunity.size() == 0) {
 			monsterShowTimer->stop();
+			monsterShowTimer.reset();
 			gameOverFunc(blockBreakHandler);
 		}
 		else {
@@ -191,8 +194,10 @@ void ShootTheMonster::ChangeMonsterToExplode(Direction direction) {
 	}
 
 	monsterExplodeTimer->setOnTimerCallback([&](auto)->bool {
-		monsters[dirNum]->setImage(CombatResource::MONSTER3);
-		monsterShowTimer->start();
+		if (monsterShowTimer != nullptr) {
+			monsters[dirNum]->setImage(CombatResource::MONSTER3);
+			monsterShowTimer->start();
+		}
 		return true;
 		});
 }

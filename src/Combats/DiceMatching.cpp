@@ -53,7 +53,9 @@ void DiceMatching::EnterBattle(){
 
 	resultDelayTimer = Timer::create(DiceMatchingConfig::VISIBLE_TIME);
 	resultDelayTimer->setOnTimerCallback([&](auto)->bool {
-		diceAnimation->start();
+		if (diceAnimation != nullptr) {
+			diceAnimation->start();
+		}
 		// 결과가 나오면 입력 잠금을 푼다. 
 		inputLock = false;
 		return true;
@@ -150,7 +152,7 @@ void DiceMatching::CompareChoice() {
 		monsters.pop_back();
 		if (monsters.size() == 0) {
 			showMessage("몬스터들을 물리쳤습니다!");
-			diceAnimation->stop();
+			diceAnimation.reset();
 			this->previousScene->enter();
 		}
 		else {
