@@ -65,6 +65,7 @@ private:
 
 public:
 	DiceRolling(ScenePtr previousScene, BlockBreakHandler& blockBreakHandler, std::function<void(BlockBreakHandler&)> gameOverFunc);
+	~DiceRolling();
 
 	/*
 	* 전투에 진입하는 함수

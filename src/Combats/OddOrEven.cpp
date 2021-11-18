@@ -139,7 +139,6 @@ void OddOrEven::CompareChoice() {
 		monsters.pop_back();
 		if (monsters.size() == 0) {
 			showMessage("몬스터들을 물리쳤습니다!");
-			diceAnimation.reset();
 			this->previousScene->enter();
 		}
 		else {
@@ -158,4 +157,11 @@ void OddOrEven::CompareChoice() {
 			showMessage("몬스터가 이겼습니다...");
 		}
 	}
+}
+
+OddOrEven::~OddOrEven() {
+	diceAnimation->stop();
+	diceAnimation.reset();
+	resultDelayTimer->stop();
+	resultDelayTimer.reset();
 }
