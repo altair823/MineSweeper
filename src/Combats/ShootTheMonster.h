@@ -85,6 +85,7 @@ private:
 
 public:
 	ShootTheMonster(ScenePtr previousScene, BlockBreakHandler& blockBreakHandler, std::function<void(BlockBreakHandler&)> gameOverFunc);
+	~ShootTheMonster();
 
 	/*
 	* 전투에 진입하는 함수
