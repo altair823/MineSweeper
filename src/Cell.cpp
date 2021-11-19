@@ -1,12 +1,12 @@
 #include "Cell.h"
 
-std::shared_ptr<_cell> Cell::Create(ScenePtr bg, FieldData fieldData, int x, int y) {
+std::shared_ptr<_cell> Cell::Create(ScenePtr bg, FieldData fieldData, int x, int y, int stageNum) {
 	// 새로운 칸 객체 생성
-	std::shared_ptr<_cell> newCell(new _cell(bg, fieldData, x, y));
+	std::shared_ptr<_cell> newCell(new _cell(bg, fieldData, x, y, stageNum));
 	return newCell;
 }
 
-_cell::_cell(ScenePtr bg, FieldData fieldData, int x, int y) {
+_cell::_cell(ScenePtr bg, FieldData fieldData, int x, int y, int stageNum) {
 	cellObject = Object::create(CellResource::EMPTY, bg, x, y);
 	// 지뢰 또는 숫자에 따라 이미지 변경
 	ChangeNumImage(fieldData);
@@ -34,7 +34,7 @@ _cell::_cell(ScenePtr bg, FieldData fieldData, int x, int y) {
 	}
 
 	//각각의 칸의 위를 덮을 블럭 객체 생성
-	block = Block::Create(bg, x, y);
+	block = Block::Create(bg, x, y, stageNum);
 }
 
 void _cell::ChangeNumImage(FieldData fieldData) {

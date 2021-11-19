@@ -32,7 +32,7 @@ OddOrEven::OddOrEven(ScenePtr previousScene, BlockBreakHandler& blockBreakHandle
 	// 기회 표시
 	opportunity.resize(OddOrEvenConfig::OPPORTUNITY);
 	for (int i = 0; i < OddOrEvenConfig::OPPORTUNITY; i++) {
-		opportunity[i] = Object::create(CombatResource::OddOrEven::Opportunity, background, 660, 0 + (70 * i));
+		opportunity[i] = Object::create(CombatResource::OddOrEven::OPPERTUNITY, background, 660, 0 + (70 * i));
 	}
 }
 
@@ -41,7 +41,7 @@ void OddOrEven::EnterBattle() {
 	showMessage("몬스터가 등장했습니다!\n몬스터와 홀짝게임을 해서 " + std::to_string(OddOrEvenConfig::MONSTER_COUNT) + "번 이겨야 탈출할 수 있습니다.\n기회는 "
 		+ std::to_string(OddOrEvenConfig::OPPORTUNITY) + "번 뿐입니다!");
 
-	dice = Object::create(CombatResource::OddOrEven::One, background, 270, 150);
+	dice = Object::create(CombatResource::OddOrEven::ONE, background, 270, 150);
 
 	diceAnimation = Timer::create(OddOrEvenConfig::DICE_ROLL_SPEED);
 	diceAnimation->setOnTimerCallback([&](auto)->bool {
@@ -61,8 +61,8 @@ void OddOrEven::EnterBattle() {
 		return true;
 		});
 
-	OddButton = Object::create(CombatResource::OddOrEven::OddButton, background, 100, -100);
-	EvenButton = Object::create(CombatResource::OddOrEven::EvenButton, background, 380, -100);
+	OddButton = Object::create(CombatResource::OddOrEven::ODD_BUTTON, background, 100, -100);
+	EvenButton = Object::create(CombatResource::OddOrEven::EVEN_BUTTON, background, 380, -100);
 
 	OddButton->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
 		return InputChoice(PlayerChoice::Odd);
@@ -108,22 +108,22 @@ void OddOrEven::ChangeDiceNumRandomly(int* value, ObjectPtr object) {
 
 	switch (*value) {
 	case 1:
-		object->setImage(CombatResource::OddOrEven::One);
+		object->setImage(CombatResource::OddOrEven::ONE);
 		break;
 	case 2:
-		object->setImage(CombatResource::OddOrEven::Two);
+		object->setImage(CombatResource::OddOrEven::TWO);
 		break;
 	case 3:
-		object->setImage(CombatResource::OddOrEven::Three);
+		object->setImage(CombatResource::OddOrEven::THREE);
 		break;
 	case 4:
-		object->setImage(CombatResource::OddOrEven::Four);
+		object->setImage(CombatResource::OddOrEven::FOUR);
 		break;
 	case 5:
-		object->setImage(CombatResource::OddOrEven::Five);
+		object->setImage(CombatResource::OddOrEven::FIVE);
 		break;
 	case 6:
-		object->setImage(CombatResource::OddOrEven::Six);
+		object->setImage(CombatResource::OddOrEven::SIX);
 		break;
 	default:
 		break;

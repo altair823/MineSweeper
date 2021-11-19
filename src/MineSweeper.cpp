@@ -21,6 +21,5 @@ int main()
 	setGameOption(GameOption::GAME_OPTION_ROOM_TITLE, false);
 
 	Stage stage;
-
-	startGame(stage.getTitle());
+	stage.StartGame();
 }

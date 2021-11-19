@@ -26,9 +26,6 @@ constexpr auto LIFE_COUNT = 100;
 // 셀 하나 한 변의 픽셀 길이
 constexpr auto CELL_SIZE = 30;
 
-// 보드의 가로 세로 크기
-constexpr auto INIT_BOARD_SIZE = 10;
-
 /*
 * 지뢰찾기를 진행할 판 클래스
 */
@@ -57,12 +54,12 @@ private:
 
 
 public:
-	Board(ScenePtr bg);
+	Board(ScenePtr bg, int initLifeCount);
 
 	/*
 	* 보드를 주어진 크기로 초기화하고 생성하는 함수
 	*/ 
-	void RefreshBoard(int newRow, int newCol);
+	void RefreshBoard(int newRow, int newCol, int stageNum);
 
 	/*
 	* 현재 보드를 초기화하는 함수
@@ -72,7 +69,12 @@ public:
 	/*
 	* 보드를 주어진 크기로 새로 생성하는 함수
 	*/ 
-	void GenerateNewBoard(int newRow, int newCol);
+	void GenerateNewBoard(int newRow, int newCol, int stageNum);
+
+	/*
+	* 아이템 초기화 함수
+	*/
+	void InitItem(int initLifeCount);
 
 	/*
 	* 보드의 상태를 반환하는 함수

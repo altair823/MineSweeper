@@ -1,6 +1,6 @@
 #include "Board.h"
 
-Board::Board(ScenePtr bg) {
+Board::Board(ScenePtr bg, int initLifeCount) {
 	// 보드는 오직 하나의 객체만 허용가능하다. 
 	if (boardCount != 0) {
 		std::cout << "싱글톤 보드 클래스의 또 다른 객체가 생성되었습니다!" << std::endl;
@@ -10,12 +10,11 @@ Board::Board(ScenePtr bg) {
 	background = bg;
 	row = 0, col = 0;
 
-	// 아이템 클래스의 아이템 객체
-	item = std::make_shared<Item>(background, 3);
+	InitItem(initLifeCount);
 }
 
 
-void Board::RefreshBoard(int newRow, int newCol) {
+void Board::RefreshBoard(int newRow, int newCol, int stageNum) {
 	// 반드시 클리어 시에만 이 함수를 호출할 것!
 	if (status == BoardStatus::Playing) {
 		std::cout << "클리어되지 못한 보드의 초기화가 발생했습니다." << std::endl;
@@ -26,7 +25,7 @@ void Board::RefreshBoard(int newRow, int newCol) {
 		exit(1);
 	}
 	Clear();
-	GenerateNewBoard(newRow, newCol);
+	GenerateNewBoard(newRow, newCol, stageNum);
 }
 
 void Board::Clear() {
@@ -46,9 +45,9 @@ void Board::Clear() {
 	OnBlockBreak.reset();
 }
 
-void Board::GenerateNewBoard(int newRow, int newCol) {
+void Board::GenerateNewBoard(int newRow, int newCol, int stageNum) {
 	if (row != 0 || col != 0) {
-		std::cout << "보드에 이미 데이터가 존재합니다!" << std::endl;
+		std::cout << "A regeneration of the board that did not clear data has occurred!" << std::endl;
 		exit(1);
 	}
 
@@ -71,7 +70,7 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 			// cell의 x, y 좌표 계산. 
 			int x = (640 - col / 2 * CELL_SIZE) + j * CELL_SIZE;
 			int y = (360 + row / 2 * CELL_SIZE) - (i + 1) * CELL_SIZE;
-			CellPtr cell = Cell::Create(background, field[i][j], x, y);
+			CellPtr cell = Cell::Create(background, field[i][j], x, y, stageNum);
 			
 
 			// 현재 hand에 따라서 다른 작동을 한다. 
@@ -104,6 +103,14 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 
 	// 새 보드 생성이 완료되면 이벤트 핸들러의 루프 시작
 	OnBlockBreak->CheckNewCellOpened();
+}
+
+void Board::InitItem(int initLifeCount) {
+	if (item != nullptr) {
+		item.reset();
+	}
+	// 새로운 아이템 객체 생성
+	item = std::make_shared<Item>(background, initLifeCount);
 }
 
 BoardStatus Board::getBoardStatus() {

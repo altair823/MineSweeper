@@ -39,7 +39,7 @@ DiceRolling::DiceRolling(ScenePtr previousScene, BlockBreakHandler& blockBreakHa
 	// 기회 표시
 	opportunity.resize(DiceRollingConfig::OPPORTUNITY);
 	for (int i = 0; i < DiceRollingConfig::OPPORTUNITY; i++) {
-		opportunity[i] = Object::create(CombatResource::DiceRolling::Opportunity, background, 650, 0 + (80 * i));
+		opportunity[i] = Object::create(CombatResource::DiceRolling::OPPERTUNITY, background, 650, 0 + (80 * i));
 	}
 }
 
@@ -48,10 +48,10 @@ void DiceRolling::EnterBattle() {
 	showMessage("몬스터가 등장했습니다!\n주사위 게임을 세 번 이겨야 탈출할 수 있습니다.\n기회는 " + std::to_string(DiceRollingConfig::OPPORTUNITY) + "번 뿐입니다!");
 
 	// 주사위를 굴리는 버튼 생성
-	stopButton = Object::create(CombatResource::DiceRolling::Button, background, 260, -120);
+	stopButton = Object::create(CombatResource::DiceRolling::BUTTON, background, 260, -120);
 
-	computerDice = Object::create(CombatResource::DiceRolling::One, background, 270, 150);
-	playerDice = Object::create(CombatResource::DiceRolling::One, background, 270, 30);
+	computerDice = Object::create(CombatResource::DiceRolling::ONE, background, 270, 150);
+	playerDice = Object::create(CombatResource::DiceRolling::ONE, background, 270, 30);
 
 	computerDiceAnimation = Timer::create(0.2f);
 	computerDiceAnimation->setOnTimerCallback([&](auto)->bool {
@@ -114,22 +114,22 @@ void DiceRolling::ChangeDiceNumRandomly(int* value, ObjectPtr object) {
 
 	switch (*value) {
 	case 1:
-		object->setImage(CombatResource::DiceRolling::One);
+		object->setImage(CombatResource::DiceRolling::ONE);
 		break;
 	case 2:
-		object->setImage(CombatResource::DiceRolling::Two);
+		object->setImage(CombatResource::DiceRolling::TWO);
 		break;
 	case 3:
-		object->setImage(CombatResource::DiceRolling::Three);
+		object->setImage(CombatResource::DiceRolling::THREE);
 		break;
 	case 4:
-		object->setImage(CombatResource::DiceRolling::Four);
+		object->setImage(CombatResource::DiceRolling::FOUR);
 		break;
 	case 5:
-		object->setImage(CombatResource::DiceRolling::Five);
+		object->setImage(CombatResource::DiceRolling::FIVE);
 		break;
 	case 6:
-		object->setImage(CombatResource::DiceRolling::Six);
+		object->setImage(CombatResource::DiceRolling::SIX);
 		break;
 	default:
 		break;
