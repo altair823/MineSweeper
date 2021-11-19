@@ -32,7 +32,7 @@ OddOrEven::OddOrEven(ScenePtr previousScene, BlockBreakHandler& blockBreakHandle
 	// 기회 표시
 	opportunity.resize(OddOrEvenConfig::OPPORTUNITY);
 	for (int i = 0; i < OddOrEvenConfig::OPPORTUNITY; i++) {
-		opportunity[i] = Object::create(CombatResource::OddOrEven::OPPERTUNITY, background, 660, 0 + (70 * i));
+		opportunity[i] = Object::create(CombatResource::OddOrEven::OPPORTUNITY, background, 660, 0 + (70 * i));
 	}
 }
 
