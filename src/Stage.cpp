@@ -68,7 +68,7 @@ void Stage::ShowScript(int stageNum) {
 }
 
 void Stage::CreateBoard() {
-	board->GenerateNewBoard(STAGE1_ROW, STAGE1_COL);
+	board->GenerateNewBoard(STAGE1_ROW, STAGE1_COL, stageNum);
 
 	// 탈출하기 선택지
 	// 탈출구를 발견하면 보이게 한다. 
@@ -135,7 +135,7 @@ void Stage::EnterNextStage() {
 	stageNum++;
 
 	// 마지막 스테이지를 클리어한 경우 스테이지의 이벤트 핸들러를 멈추고 엔딩 장면으로 진입한다
-	if (stageNum == NUM_OF_STAGE_TO_BE_CLEARED) {
+	if (stageNum >= NUM_OF_STAGE_TO_BE_CLEARED) {
 		boardStatusChecker->stop();
 		EnterEnding();
 	}
@@ -160,7 +160,7 @@ void Stage::EnterNextStage() {
 		}
 
 		// 다음 지뢰찾기 보드로 갱신한다.
-		board->RefreshBoard(board->getRow() + 2, board->getCol() + 4);
+		board->RefreshBoard(board->getRow() + 2, board->getCol() + 4, stageNum);
 	}
 }
 

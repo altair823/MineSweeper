@@ -14,7 +14,7 @@ Board::Board(ScenePtr bg, int initLifeCount) {
 }
 
 
-void Board::RefreshBoard(int newRow, int newCol) {
+void Board::RefreshBoard(int newRow, int newCol, int stageNum) {
 	// 반드시 클리어 시에만 이 함수를 호출할 것!
 	if (status == BoardStatus::Playing) {
 		std::cout << "클리어되지 못한 보드의 초기화가 발생했습니다." << std::endl;
@@ -25,7 +25,7 @@ void Board::RefreshBoard(int newRow, int newCol) {
 		exit(1);
 	}
 	Clear();
-	GenerateNewBoard(newRow, newCol);
+	GenerateNewBoard(newRow, newCol, stageNum);
 }
 
 void Board::Clear() {
@@ -45,7 +45,7 @@ void Board::Clear() {
 	OnBlockBreak.reset();
 }
 
-void Board::GenerateNewBoard(int newRow, int newCol) {
+void Board::GenerateNewBoard(int newRow, int newCol, int stageNum) {
 	if (row != 0 || col != 0) {
 		std::cout << "A regeneration of the board that did not clear data has occurred!" << std::endl;
 		exit(1);
@@ -70,7 +70,7 @@ void Board::GenerateNewBoard(int newRow, int newCol) {
 			// cell의 x, y 좌표 계산. 
 			int x = (640 - col / 2 * CELL_SIZE) + j * CELL_SIZE;
 			int y = (360 + row / 2 * CELL_SIZE) - (i + 1) * CELL_SIZE;
-			CellPtr cell = Cell::Create(background, field[i][j], x, y);
+			CellPtr cell = Cell::Create(background, field[i][j], x, y, stageNum);
 			
 
 			// 현재 hand에 따라서 다른 작동을 한다. 

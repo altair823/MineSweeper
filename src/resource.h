@@ -50,9 +50,6 @@ namespace CellResource {
 }
 
 namespace BlockResource {
-	constexpr auto BLOCK = "image/BlockEmpty_2.png";
-	constexpr auto FLAG = "image/BlockFlag_2.png";
-
 	constexpr auto BLOCK1 = "image/Block/BlockEmpty_1.png";
 	constexpr auto FLAG1 = "image/Block/BlockFlag_1.png";
 	constexpr auto BLOCK2 = "image/Block/BlockEmpty_2.png";
