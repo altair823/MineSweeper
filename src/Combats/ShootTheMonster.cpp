@@ -32,7 +32,7 @@ ShootTheMonster::ShootTheMonster(ScenePtr previousScene, BlockBreakHandler& bloc
 	// 기회 표시
 	opportunity.resize(ShootTheMonsterConfig::OPPORTUNITY);
 	for (int i = 0; i < ShootTheMonsterConfig::OPPORTUNITY; i++) {
-		opportunity[i] = Object::create(CombatResource::ShootTheMonster::OPPERTUNITY, background, 660, 0 + (70 * i));
+		opportunity[i] = Object::create(CombatResource::ShootTheMonster::OPPORTUNITY, background, 660, 0 + (70 * i));
 	}
 }
 

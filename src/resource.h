@@ -101,7 +101,7 @@ namespace CombatResource {
 
 	namespace DiceRolling {
 		constexpr auto BUTTON = "image/DiceRollButton.png";
-		constexpr auto OPPERTUNITY = "image/Heart.png";
+		constexpr auto OPPORTUNITY = "image/Heart.png";
 
 		constexpr auto ONE = "image/Dice1.png";
 		constexpr auto TWO = "image/Dice2.png";
@@ -111,7 +111,7 @@ namespace CombatResource {
 		constexpr auto SIX = "image/Dice6.png";
 	}
 	namespace OddOrEven {
-		constexpr auto OPPERTUNITY = "image/Heart.png";
+		constexpr auto OPPORTUNITY = "image/Heart.png";
 
 		constexpr auto ONE = "image/Dice1.png";
 		constexpr auto TWO = "image/Dice2.png";
@@ -126,12 +126,12 @@ namespace CombatResource {
 
 	namespace ShootTheMonster {
 		constexpr auto PISTOL = "image/Pistol.png";
-		constexpr auto OPPERTUNITY = "image/Bullet.png";
+		constexpr auto OPPORTUNITY = "image/Bullet.png";
 		constexpr auto EXPLODE = "image/Explode.png";
 	}
 
 	namespace DiceMatching {
-		constexpr auto OPPERTUNITY = "image/Heart.png";
+		constexpr auto OPPORTUNITY = "image/Heart.png";
 
 		constexpr auto ONE = "image/Dice1.png";
 		constexpr auto TWO = "image/Dice2.png";

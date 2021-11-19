@@ -39,7 +39,7 @@ DiceRolling::DiceRolling(ScenePtr previousScene, BlockBreakHandler& blockBreakHa
 	// 기회 표시
 	opportunity.resize(DiceRollingConfig::OPPORTUNITY);
 	for (int i = 0; i < DiceRollingConfig::OPPORTUNITY; i++) {
-		opportunity[i] = Object::create(CombatResource::DiceRolling::OPPERTUNITY, background, 650, 0 + (80 * i));
+		opportunity[i] = Object::create(CombatResource::DiceRolling::OPPORTUNITY, background, 650, 0 + (80 * i));
 	}
 }
 

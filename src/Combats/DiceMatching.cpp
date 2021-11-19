@@ -32,7 +32,7 @@ DiceMatching::DiceMatching(ScenePtr previousScene, BlockBreakHandler& blockBreak
 	// 기회 표시
 	opportunity.resize(DiceMatchingConfig::OPPORTUNITY);
 	for (int i = 0; i < DiceMatchingConfig::OPPORTUNITY; i++) {
-		opportunity[i] = Object::create(CombatResource::DiceMatching::OPPERTUNITY, background, 660, 0 + (70 * i));
+		opportunity[i] = Object::create(CombatResource::DiceMatching::OPPORTUNITY, background, 660, 0 + (70 * i));
 	}
 }
 
