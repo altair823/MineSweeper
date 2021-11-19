@@ -115,8 +115,8 @@ void BlockBreakHandler::ExpandBorder(int curRow, int curCol) {
 					if (j < 0 || j >= col) {
 						continue;
 					}
-					// 아직 열리지 않은 칸이고 빈칸 또는 숫자 칸이라면 연다.
-					else if (cells[i][j]->getIsOpened() == false && field[i][j].cellValue == CellValue::Empty) {
+					// 아직 열리지 않은 칸이고 지뢰가 아닌 칸이라면 연다.
+					else if (cells[i][j]->getIsOpened() == false && field[i][j].cellValue != CellValue::Mine) {
 						cells[i][j]->BreakBlock();
 						CheckIsItemExist(i, j);
 					}
