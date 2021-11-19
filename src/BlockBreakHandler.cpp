@@ -103,8 +103,7 @@ void BlockBreakHandler::looseCombat() {
 	}
 }
 void BlockBreakHandler::ExpandBorder(int curRow, int curCol) {
-	// itemValue와 관련된 조건 추가 필요!
-	// 새로 열린 칸이 빈칸이라면, 그 주위 칸이 빈칸 또는 숫자칸인지 확인한다. 
+	// 새로 열린 칸이 빈칸이라면, 그 주위 칸이 확장될 수 있는지 확인한다.
 	if (field[curRow][curCol].cellValue == CellValue::Empty && field[curRow][curCol].num == 0) {
 		for (int i = curRow - 1; i <= curRow + 1; i++) {
 			if (i < 0 || i >= row) {
@@ -115,8 +114,8 @@ void BlockBreakHandler::ExpandBorder(int curRow, int curCol) {
 					if (j < 0 || j >= col) {
 						continue;
 					}
-					// 아직 열리지 않은 칸이고 빈칸 또는 숫자 칸이라면 연다.
-					else if (cells[i][j]->getIsOpened() == false && field[i][j].cellValue == CellValue::Empty) {
+					// 아직 열리지 않은 칸이고 지뢰가 아닌 칸이라면 연다.
+					else if (cells[i][j]->getIsOpened() == false && field[i][j].cellValue != CellValue::Mine) {
 						cells[i][j]->BreakBlock();
 						CheckIsItemExist(i, j);
 					}
