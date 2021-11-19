@@ -1,12 +1,12 @@
 ﻿/*
 * MineSweeper.cpp
-* 
-* main 함수가 있는 파일. 
-* 
-* 게임에 필요한 모든 요소들을 종합하여 적절히 배치하고 
-* 게임을 작동시키는 역할을 한다. 
-* 
-* 이 파일에서 정의된 그 어떤 요소도 다른 파일에서 참조해서는 안된다. 
+*
+* main 함수가 있는 파일.
+*
+* 게임에 필요한 모든 요소들을 종합하여 적절히 배치하고
+* 게임을 작동시키는 역할을 한다.
+*
+* 이 파일에서 정의된 그 어떤 요소도 다른 파일에서 참조해서는 안된다.
 */
 
 #include <iostream>
@@ -22,5 +22,5 @@ int main()
 
 	Stage stage;
 
-	startGame(stage.getFrontground());
+	startGame(stage.getTitle());
 }

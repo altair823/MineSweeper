@@ -1,18 +1,14 @@
 /*
 * resource.h
-* 
-* 게임 내에서 사용할 모든 외부 리소스들을 게임 내부의 변수와 연결하는 헤더. 
+*
+* 게임 내에서 사용할 모든 외부 리소스들을 게임 내부의 변수와 연결하는 헤더.
 * 코드 내에서는 오직 아래에 새로 정의된 변수 명을 사용해야 하고
-* 외부의 리소스를 가리켜서는 안된다. 
+* 외부의 리소스를 가리켜서는 안된다.
 */
 
 #pragma once
 
 namespace BoardResource {
-	// 1280*720 화면 크기 테스트용 배경 화면
-	constexpr auto BACKGROUND = "image/Background_example3.png";
-
-
 	constexpr auto BACKGROUND1 = "image/Background/Background1.png";
 	constexpr auto BACKGROUND2 = "image/Background/Background2.png";
 	constexpr auto BACKGROUND3 = "image/Background/Background3.png";
@@ -130,13 +126,21 @@ namespace CombatResource {
 }
 
 namespace StageResource {
-	constexpr auto FG_IMAGE_0 = "image/script/title.PNG";
-	constexpr auto FG_IMAGE_1 = "image/script/stage1_clear.PNG";
-	constexpr auto FG_IMAGE_2 = "image/script/stage2_clear.PNG";
-	constexpr auto FG_IMAGE_3 = "image/script/stage3_clear.PNG";
+	constexpr auto SCRIPT_BACKGROUND_1 = "image/script/stage1_clear.PNG";
+	constexpr auto SCRIPT_BACKGROUND_2 = "image/script/stage2_clear.PNG";
+	constexpr auto SCRIPT_BACKGROUND_3 = "image/script/stage3_clear.PNG";
 
-	constexpr auto SCRIPT_IMAGE_0 = "image/script/stage1_start.png";
-	constexpr auto SCRIPT_IMAGE_1 = "image/script/stage2_start.png";
-	constexpr auto SCRIPT_IMAGE_2 = "image/script/stage3_start.png";
-	constexpr auto SCRIPT_IMAGE_3 = "image/script/end.png";
+	constexpr auto SCRIPT_IMAGE_1 = "image/script/stage1_start.png";
+	constexpr auto SCRIPT_IMAGE_2 = "image/script/stage2_start.png";
+	constexpr auto SCRIPT_IMAGE_3 = "image/script/stage3_start.png";
+}
+
+namespace TitleResource {
+	constexpr auto Title = "image/Background/Title.png";
+	constexpr auto StartButton = "image/script/stage1_start.png";
+}
+
+namespace EndingResource {
+	constexpr auto Ending = "image/Background/Title.png";
+	constexpr auto endButton = "image/script/end.png";
 }
