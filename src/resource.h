@@ -8,6 +8,26 @@
 
 #pragma once
 
+namespace TitleResource {
+	constexpr auto TITLE = "image/Background/Title.png";
+	constexpr auto START_BUTTON = "image/script/stage1_start.png";
+}
+
+namespace EndingResource {
+	constexpr auto ENDING = "image/Background/Title.png";
+	constexpr auto END_BUTTON = "image/script/end.png";
+}
+
+namespace ScriptResource {
+	constexpr auto SCRIPT_BACKGROUND_1 = "image/script/stage1_clear.PNG";
+	constexpr auto SCRIPT_BACKGROUND_2 = "image/script/stage2_clear.PNG";
+	constexpr auto SCRIPT_BACKGROUND_3 = "image/script/stage3_clear.PNG";
+
+	constexpr auto SCRIPT_IMAGE_1 = "image/script/stage1_start.png";
+	constexpr auto SCRIPT_IMAGE_2 = "image/script/stage2_start.png";
+	constexpr auto SCRIPT_IMAGE_3 = "image/script/stage3_start.png";
+}
+
 namespace BoardResource {
 	constexpr auto BACKGROUND1 = "image/Background/Background1.png";
 	constexpr auto BACKGROUND2 = "image/Background/Background2.png";
@@ -76,71 +96,54 @@ namespace CombatResource {
 	constexpr auto MONSTER6 = "image/Monster6.png";
 
 	namespace RockPaperScissor {
-		constexpr auto Rock = "image/Rock.png";
-		constexpr auto Paper = "image/Paper.png";
-		constexpr auto Scissor = "image/Scissors.png";
-		constexpr auto Opportunity = "image/Heart.png";
+		constexpr auto ROCK = "image/Rock.png";
+		constexpr auto PAPER = "image/Paper.png";
+		constexpr auto SCISSOR = "image/Scissors.png";
+		constexpr auto OPPORTUNITY = "image/Heart.png";
 	}
 
 	namespace DiceRolling {
-		constexpr auto Button = "image/DiceRollButton.png";
-		constexpr auto Opportunity = "image/Heart.png";
+		constexpr auto BUTTON = "image/DiceRollButton.png";
+		constexpr auto OPPERTUNITY = "image/Heart.png";
 
-		constexpr auto One = "image/Dice1.png";
-		constexpr auto Two = "image/Dice2.png";
-		constexpr auto Three = "image/Dice3.png";
-		constexpr auto Four = "image/Dice4.png";
-		constexpr auto Five = "image/Dice5.png";
-		constexpr auto Six = "image/Dice6.png";
+		constexpr auto ONE = "image/Dice1.png";
+		constexpr auto TWO = "image/Dice2.png";
+		constexpr auto THREE = "image/Dice3.png";
+		constexpr auto FOUR = "image/Dice4.png";
+		constexpr auto FIVE = "image/Dice5.png";
+		constexpr auto SIX = "image/Dice6.png";
 	}
 	namespace OddOrEven {
-		constexpr auto Opportunity = "image/Heart.png";
+		constexpr auto OPPERTUNITY = "image/Heart.png";
 
-		constexpr auto One = "image/Dice1.png";
-		constexpr auto Two = "image/Dice2.png";
-		constexpr auto Three = "image/Dice3.png";
-		constexpr auto Four = "image/Dice4.png";
-		constexpr auto Five = "image/Dice5.png";
-		constexpr auto Six = "image/Dice6.png";
+		constexpr auto ONE = "image/Dice1.png";
+		constexpr auto TWO = "image/Dice2.png";
+		constexpr auto THREE = "image/Dice3.png";
+		constexpr auto FOUR = "image/Dice4.png";
+		constexpr auto FIVE = "image/Dice5.png";
+		constexpr auto SIX = "image/Dice6.png";
 
-		constexpr auto OddButton = "image/OddButton.png";
-		constexpr auto EvenButton = "image/EvenButton.png";
+		constexpr auto ODD_BUTTON = "image/OddButton.png";
+		constexpr auto EVEN_BUTTON = "image/EvenButton.png";
 	}
 
 	namespace ShootTheMonster {
-		constexpr auto Pistol = "image/Pistol.png";
-		constexpr auto Opportunity = "image/Bullet.png";
-		constexpr auto Explode = "image/Explode.png";
+		constexpr auto PISTOL = "image/Pistol.png";
+		constexpr auto OPPERTUNITY = "image/Bullet.png";
+		constexpr auto EXPLODE = "image/Explode.png";
 	}
 
 	namespace DiceMatching {
-		constexpr auto Opportunity = "image/Heart.png";
+		constexpr auto OPPERTUNITY = "image/Heart.png";
 
-		constexpr auto One = "image/Dice1.png";
-		constexpr auto Two = "image/Dice2.png";
-		constexpr auto Three = "image/Dice3.png";
-		constexpr auto Four = "image/Dice4.png";
-		constexpr auto Five = "image/Dice5.png";
-		constexpr auto Six = "image/Dice6.png";
+		constexpr auto ONE = "image/Dice1.png";
+		constexpr auto TWO = "image/Dice2.png";
+		constexpr auto THREE = "image/Dice3.png";
+		constexpr auto FOUR = "image/Dice4.png";
+		constexpr auto FIVE = "image/Dice5.png";
+		constexpr auto SIX = "image/Dice6.png";
 	}
 }
 
-namespace StageResource {
-	constexpr auto SCRIPT_BACKGROUND_1 = "image/script/stage1_clear.PNG";
-	constexpr auto SCRIPT_BACKGROUND_2 = "image/script/stage2_clear.PNG";
-	constexpr auto SCRIPT_BACKGROUND_3 = "image/script/stage3_clear.PNG";
 
-	constexpr auto SCRIPT_IMAGE_1 = "image/script/stage1_start.png";
-	constexpr auto SCRIPT_IMAGE_2 = "image/script/stage2_start.png";
-	constexpr auto SCRIPT_IMAGE_3 = "image/script/stage3_start.png";
-}
 
-namespace TitleResource {
-	constexpr auto Title = "image/Background/Title.png";
-	constexpr auto StartButton = "image/script/stage1_start.png";
-}
-
-namespace EndingResource {
-	constexpr auto Ending = "image/Background/Title.png";
-	constexpr auto endButton = "image/script/end.png";
-}

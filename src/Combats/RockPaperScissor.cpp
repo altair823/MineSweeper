@@ -33,7 +33,7 @@ RockPaperScissor::RockPaperScissor(ScenePtr previousScene, BlockBreakHandler& bl
 	// 기회 표시
 	opportunity.resize(RockPaperScissorConfig::OPPORTUNITY);
 	for (int i = 0; i < RockPaperScissorConfig::OPPORTUNITY; i++) {
-		opportunity[i] = Object::create(CombatResource::RockPaperScissor::Opportunity, background, 650, 0 + (80 * i));
+		opportunity[i] = Object::create(CombatResource::RockPaperScissor::OPPORTUNITY, background, 650, 0 + (80 * i));
 	}
 }
 
@@ -41,11 +41,11 @@ void RockPaperScissor::EnterBattle() {
 	background->enter();
 	showMessage("몬스터가 등장했습니다!\n가위바위보를 세 번 이겨야 탈출할 수 있습니다.\n기회는 "+std::to_string(RockPaperScissorConfig::OPPORTUNITY)+"번 뿐입니다!");
 
-	rock = Object::create(CombatResource::RockPaperScissor::Rock, background, 100, -100);
+	rock = Object::create(CombatResource::RockPaperScissor::ROCK, background, 100, -100);
 	rock->setScale(0.2f);
-	paper = Object::create(CombatResource::RockPaperScissor::Paper, background, 300, -100);
+	paper = Object::create(CombatResource::RockPaperScissor::PAPER, background, 300, -100);
 	paper->setScale(0.2f);
-	scissor = Object::create(CombatResource::RockPaperScissor::Scissor, background, 500, -100);
+	scissor = Object::create(CombatResource::RockPaperScissor::SCISSOR, background, 500, -100);
 	scissor->setScale(0.2f);
 
 	// 바위 선택
@@ -144,13 +144,13 @@ void RockPaperScissor::ShowChoices(HandType playerChoice, HandType computerChoic
 
 	switch (computerChoice)	{
 	case HandType::Rock:
-		computerHandType = CombatResource::RockPaperScissor::Rock;
+		computerHandType = CombatResource::RockPaperScissor::ROCK;
 		break;
 	case HandType::Paper:
-		computerHandType = CombatResource::RockPaperScissor::Paper;
+		computerHandType = CombatResource::RockPaperScissor::PAPER;
 		break;
 	case HandType::Scissors:
-		computerHandType = CombatResource::RockPaperScissor::Scissor;
+		computerHandType = CombatResource::RockPaperScissor::SCISSOR;
 		break;
 	default:
 		break;
@@ -158,13 +158,13 @@ void RockPaperScissor::ShowChoices(HandType playerChoice, HandType computerChoic
 
 	switch (playerChoice) {
 	case HandType::Rock:
-		playerHandType = CombatResource::RockPaperScissor::Rock;
+		playerHandType = CombatResource::RockPaperScissor::ROCK;
 		break;
 	case HandType::Paper:
-		playerHandType = CombatResource::RockPaperScissor::Paper;
+		playerHandType = CombatResource::RockPaperScissor::PAPER;
 		break;
 	case HandType::Scissors:
-		playerHandType = CombatResource::RockPaperScissor::Scissor;
+		playerHandType = CombatResource::RockPaperScissor::SCISSOR;
 		break;
 	default:
 		break;

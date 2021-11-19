@@ -66,7 +66,7 @@ void BlockBreakHandler::EnterRandomCombat(int curRow, int curCol) {
 	}
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<int> dis(0, 4);
+	std::uniform_int_distribution<int> dis(1, 1);
 
 	// 동적 바인딩을 이용해 무작위로 전투상황 진입
 	switch (dis(gen)) {

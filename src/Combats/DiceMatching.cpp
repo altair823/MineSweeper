@@ -32,7 +32,7 @@ DiceMatching::DiceMatching(ScenePtr previousScene, BlockBreakHandler& blockBreak
 	// 기회 표시
 	opportunity.resize(DiceMatchingConfig::OPPORTUNITY);
 	for (int i = 0; i < DiceMatchingConfig::OPPORTUNITY; i++) {
-		opportunity[i] = Object::create(CombatResource::DiceMatching::Opportunity, background, 660, 0 + (70 * i));
+		opportunity[i] = Object::create(CombatResource::DiceMatching::OPPERTUNITY, background, 660, 0 + (70 * i));
 	}
 }
 
@@ -41,7 +41,7 @@ void DiceMatching::EnterBattle(){
 	showMessage("몬스터가 등장했습니다!\n몬스터의 주사위 눈을 " + std::to_string(DiceMatchingConfig::MONSTER_COUNT) + "번 맞춰야 탈출할 수 있습니다.\n기회는 "
 		+ std::to_string(DiceMatchingConfig::OPPORTUNITY) + "번 뿐입니다!");
 
-	dice = Object::create(CombatResource::DiceMatching::One, background, 270, 150);
+	dice = Object::create(CombatResource::DiceMatching::ONE, background, 270, 150);
 
 	diceAnimation = Timer::create(DiceMatchingConfig::DICE_ROLL_SPEED);
 	diceAnimation->setOnTimerCallback([&](auto)->bool {
@@ -62,12 +62,12 @@ void DiceMatching::EnterBattle(){
 		});
 
 	// 주사위 눈 선택 버튼 생성
-	oneButton = Object::create(CombatResource::DiceMatching::One, background, 0, -100);
-	twoButton = Object::create(CombatResource::DiceMatching::Two, background, 110, -100);
-	threeButton = Object::create(CombatResource::DiceMatching::Three, background, 220, -100);
-	fourButton = Object::create(CombatResource::DiceMatching::Four, background, 330, -100);
-	fiveButton = Object::create(CombatResource::DiceMatching::Five, background, 440, -100);
-	sixButton = Object::create(CombatResource::DiceMatching::Six, background, 550, -100);
+	oneButton = Object::create(CombatResource::DiceMatching::ONE, background, 0, -100);
+	twoButton = Object::create(CombatResource::DiceMatching::TWO, background, 110, -100);
+	threeButton = Object::create(CombatResource::DiceMatching::THREE, background, 220, -100);
+	fourButton = Object::create(CombatResource::DiceMatching::FOUR, background, 330, -100);
+	fiveButton = Object::create(CombatResource::DiceMatching::FIVE, background, 440, -100);
+	sixButton = Object::create(CombatResource::DiceMatching::SIX, background, 550, -100);
 
 	oneButton->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
 		return InputPlayerChoice(1);
@@ -107,22 +107,22 @@ void DiceMatching::ChangeDiceNumRandomly() {
 
 	switch (diceValue) {
 	case 1:
-		dice->setImage(CombatResource::DiceMatching::One);
+		dice->setImage(CombatResource::DiceMatching::ONE);
 		break;
 	case 2:
-		dice->setImage(CombatResource::DiceMatching::Two);
+		dice->setImage(CombatResource::DiceMatching::TWO);
 		break;
 	case 3:
-		dice->setImage(CombatResource::DiceMatching::Three);
+		dice->setImage(CombatResource::DiceMatching::THREE);
 		break;
 	case 4:
-		dice->setImage(CombatResource::DiceMatching::Four);
+		dice->setImage(CombatResource::DiceMatching::FOUR);
 		break;
 	case 5:
-		dice->setImage(CombatResource::DiceMatching::Five);
+		dice->setImage(CombatResource::DiceMatching::FIVE);
 		break;
 	case 6:
-		dice->setImage(CombatResource::DiceMatching::Six);
+		dice->setImage(CombatResource::DiceMatching::SIX);
 		break;
 	default:
 		break;

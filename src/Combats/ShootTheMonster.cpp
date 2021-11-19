@@ -32,7 +32,7 @@ ShootTheMonster::ShootTheMonster(ScenePtr previousScene, BlockBreakHandler& bloc
 	// 기회 표시
 	opportunity.resize(ShootTheMonsterConfig::OPPORTUNITY);
 	for (int i = 0; i < ShootTheMonsterConfig::OPPORTUNITY; i++) {
-		opportunity[i] = Object::create(CombatResource::ShootTheMonster::Opportunity, background, 660, 0 + (70 * i));
+		opportunity[i] = Object::create(CombatResource::ShootTheMonster::OPPERTUNITY, background, 660, 0 + (70 * i));
 	}
 }
 
@@ -41,9 +41,9 @@ void ShootTheMonster::EnterBattle() {
 	showMessage("몬스터가 등장했습니다!\n몬스터를 "+std::to_string(ShootTheMonsterConfig::MONSTER_COUNT)+"번 쏘아야 탈출할 수 있습니다.\n기회는 " 
 		+ std::to_string(ShootTheMonsterConfig::OPPORTUNITY) + "번 뿐입니다!");
 
-	leftShoot = Object::create(CombatResource::ShootTheMonster::Pistol, background, 80, -100);
-	centerShoot = Object::create(CombatResource::ShootTheMonster::Pistol, background, 280, -100);
-	rightShoot = Object::create(CombatResource::ShootTheMonster::Pistol, background, 480, -100);
+	leftShoot = Object::create(CombatResource::ShootTheMonster::PISTOL, background, 80, -100);
+	centerShoot = Object::create(CombatResource::ShootTheMonster::PISTOL, background, 280, -100);
+	rightShoot = Object::create(CombatResource::ShootTheMonster::PISTOL, background, 480, -100);
 
 	monsterShowTimer = Timer::create(ShootTheMonsterConfig::VISIBLE_TIME);
 	monsterShowTimer->setOnTimerCallback([&](auto)->bool {
@@ -183,7 +183,7 @@ void ShootTheMonster::ChangeMonsterToExplode(Direction direction) {
 			break;
 		}
 		monsterShowTimer->stop();
-		monsters[dirNum]->setImage(CombatResource::ShootTheMonster::Explode);
+		monsters[dirNum]->setImage(CombatResource::ShootTheMonster::EXPLODE);
 		monsterExplodeTimer->start();
 	}
 
