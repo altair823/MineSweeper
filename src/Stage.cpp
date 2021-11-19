@@ -13,6 +13,7 @@ void Stage::StartGame() {
 	// 게임 시작 버튼
 	ObjectPtr startButton = Object::create(TitleResource::START_BUTTON, title, 480, 100);
 	startButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
+		// 맨 첫 스크립트 출력
 		ShowScript(0);
 		CreateBoard();
 		scriptBackground->enter();
@@ -22,7 +23,11 @@ void Stage::StartGame() {
 	// 게임 방법 버튼
 	ObjectPtr howToPlayButton = Object::create(EndingResource::END_BUTTON, title, 480, 10);
 	howToPlayButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
-		// ** 디버그용 **
+		/*
+		* 
+		* TODO 도움말 이미지 삽입
+		* 
+		*/
 		return true;
 		});
 
@@ -50,7 +55,11 @@ void Stage::ShowScript(int stageNum) {
 
 	nextButton = Object::create(ScriptResource::SCRIPT_IMAGE_1, scriptBackground, 480, 10);
 	nextButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
-		// ~ 정해진 개수의 스트립트를 보이기 위해 이미지를 변경하는 코드가 필요할 수도 있음 ~
+		/*
+		* 
+		* TODO 스크립트가 여러장일 경우 여기서 넘길 것. 
+		* 
+		*/
 		boardBackground->enter();
 		return true;
 		});
