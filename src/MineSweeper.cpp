@@ -19,7 +19,8 @@ int main()
 	setGameOption(GameOption::GAME_OPTION_INVENTORY_BUTTON, false);
 	setGameOption(GameOption::GAME_OPTION_MESSAGE_BOX_BUTTON, false);
 	setGameOption(GameOption::GAME_OPTION_ROOM_TITLE, false);
-
+	auto titleMusic = Sound::create("music/Stage3Board.mp3");
+	titleMusic->play();
 	Stage stage;
 	stage.StartGame();
 }

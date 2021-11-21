@@ -11,11 +11,16 @@
 namespace TitleResource {
 	constexpr auto TITLE = "image/Background/Title.png";
 	constexpr auto START_BUTTON = "image/script/stage1_start.png";
+
+	constexpr auto TITLE_MUSIC = "music/Title.mp3";
 }
 
 namespace EndingResource {
 	constexpr auto ENDING = "image/Background/Title.png";
 	constexpr auto END_BUTTON = "image/script/end.png";
+
+	constexpr auto HAPPY_END_MUSIC = "music/HappyEndi9ng.mp3";
+	constexpr auto BAD_END_MUSIC = "music/BadEnding.mp3";
 }
 
 namespace ScriptResource {
@@ -26,12 +31,24 @@ namespace ScriptResource {
 	constexpr auto SCRIPT_IMAGE_1 = "image/script/stage1_start.png";
 	constexpr auto SCRIPT_IMAGE_2 = "image/script/stage2_start.png";
 	constexpr auto SCRIPT_IMAGE_3 = "image/script/stage3_start.png";
+
+	constexpr auto SCRIPT_MUSIC_1 = "music/Stage1Script.mp3";
+	constexpr auto SCRIPT_MUSIC_2 = "music/Stage2Script.mp3";
+	constexpr auto SCRIPT_MUSIC_3 = "music/Stage3Script.mp3";
 }
 
 namespace BoardResource {
 	constexpr auto BACKGROUND1 = "image/Background/Background1.png";
 	constexpr auto BACKGROUND2 = "image/Background/Background2.png";
 	constexpr auto BACKGROUND3 = "image/Background/Background3.png";
+
+	constexpr auto MUTE_BUTTON = "image/Item_Flag.png";
+	constexpr auto UNMUTE_BUTTON = "image/Heart.png";
+
+	constexpr auto BOARD_MUSIC_1 = "music/Stage1Board.mp3";
+	constexpr auto BOARD_MUSIC_2 = "music/Stage2Board.mp3";
+	constexpr auto BOARD_MUSIC_3 = "music/Stage3Board.mp3";
+	constexpr auto CLEAR_MUSIC = "music/Clear.mp3";
 }
 
 namespace CellResource {
@@ -56,6 +73,8 @@ namespace BlockResource {
 	constexpr auto FLAG2 = "image/Block/BlockFlag_2.png";
 	constexpr auto BLOCK3 = "image/Block/BlockEmpty_3.png";
 	constexpr auto FLAG3 = "image/Block/BlockFlag_3.png";
+
+	constexpr auto BREAK_SOUND = "music/BreakingBlock.mp3";
 }
 
 namespace ItemResource {
@@ -77,6 +96,8 @@ namespace ItemResource {
 	constexpr auto SIX = "image/Item_number/6.png";
 	constexpr auto SEVEN = "image/Item_number/7.png";
 	constexpr auto EIGHT = "image/Item_number/8.png";
+
+	constexpr auto CHANGE_SOUND = "music/ChangingItem.mp3";
 }
 
 
