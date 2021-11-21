@@ -2,7 +2,7 @@
 
 BlockBreakHandler::BlockBreakHandler(int& newRow, int& newCol, MineField& newField, std::vector<std::vector<CellPtr>>& newCells, 
 	std::shared_ptr<Item> item, ScenePtr boardBackground, BoardStatus& status)
-	: row(newRow), col(newCol), field(newField), cells(newCells), item(item), boardBackground(boardBackground), status(status) {
+	: row(newRow), col(newCol), field(newField), cells(newCells), item(item), boardBackground(boardBackground), status(status), combatCount(0){
 
 	// 모든 isCellOpen을 닫힘(false)로 초기화
 	isCellOpen.resize(row);
@@ -16,6 +16,10 @@ BlockBreakHandler::BlockBreakHandler(int& newRow, int& newCol, MineField& newFie
 
 void BlockBreakHandler::setStatus(BoardStatus status) {
 	this->status = status;
+}
+
+int BlockBreakHandler::getCombatCount() {
+	return combatCount;
 }
 
 void BlockBreakHandler::CheckNewCellOpened() {
@@ -64,6 +68,7 @@ void BlockBreakHandler::EnterRandomCombat(int curRow, int curCol) {
 		showMessage("스프레이의 효과로 몬스터를 피했습니다!");
 		return;
 	}
+
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<int> dis(0, 4);
@@ -89,6 +94,7 @@ void BlockBreakHandler::EnterRandomCombat(int curRow, int curCol) {
 		break;
 	}
 	if (newCombat != nullptr) {
+		combatCount++;
 		newCombat->EnterBattle();
 	}
 }

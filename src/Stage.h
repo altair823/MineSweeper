@@ -26,14 +26,18 @@ constexpr auto STAGE1_ROW = 10, STAGE1_COL = 10;
 // 초기 목숨 개수
 constexpr auto INIT_LIFE_COUNT = 3;
 
+// 해피 엔딩에 진입하기 위한 최대 전투 횟수
+constexpr auto COMBAT_COUNT_FOR_HAPPY_ENDING = 8;
+
 
 class Stage {
 private:
-	// 게임 타이틀
-	ScenePtr titleBackground;
 
-	// 스테이지 별 스크립트를 보이기 위한 방탈 장면
+	// 각 화면을 위한 배경
+	ScenePtr titleBackground;
 	ScenePtr scriptBackground;
+	ScenePtr boardBackground;
+	ScenePtr endingBackground;
 
 	// 스테이지 별 스크립트
 	ObjectPtr script;
@@ -51,13 +55,7 @@ private:
 	SoundPtr boardMusic;
 	SoundPtr endingMusic;
 
-	/*
-	** Background **
-	*/
-	// 지뢰찾기 게임이 진행되는 방탈 장면
-	ScenePtr boardBackground;
-
-	// 탈출하기 버튼을 나타내는 방탈 오브젝트
+	// 탈출하기 버튼
 	ObjectPtr escapeButton;
 
 	// 지뢰찾기 보드
@@ -69,13 +67,7 @@ private:
 	// 보드 진행 상황을 체크할 타이머
 	TimerPtr boardStatusChecker;
 
-	/*
-	** Ending **
-	*/
-	// 엔딩 화면을 보이기 위한 방탈 장면
-	ScenePtr ending;
-
-	// 엔딩 스트립트를 위한 방탈 오브젝트
+	// 엔딩 스트립트
 	ObjectPtr endingScript;
 
 public:

@@ -102,7 +102,7 @@ void Stage::CreateBoard() {
 
 	// 탈출하기 선택지
 	// 탈출구를 발견하면 보이게 한다. 
-	escapeButton = Object::create(BoardResource::ESCAPE_BUTTON, boardBackground, 0, 690, false);
+	escapeButton = Object::create(BoardResource::ESCAPE_BUTTON, boardBackground, 0, 690);
 	escapeButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		board->setBoardStatus(BoardStatus::Clear);
 		return true;
@@ -114,19 +114,35 @@ void Stage::CreateBoard() {
 }
 
 void Stage::EnterEnding() {
-	// 엔딩 화면을 보이기 위한 방탈 장면
-	ending = Scene::create("엔딩 배경", EndingResource::ENDING);
+	// 해피 엔딩
+	if (board->getCombatCount() <= COMBAT_COUNT_FOR_HAPPY_ENDING) {
+		// 엔딩 화면을 보이기 위한 방탈 장면
+		endingBackground = Scene::create("엔딩 배경", EndingResource::HAPPY_END);
 
-	// 엔딩 화면에 표시되는 스크립트
-	endingScript = Object::create(EndingResource::END_BUTTON, ending, 480, 10);
-	endingScript->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
-		endGame();
-		return true;
-		});
+		// 엔딩 화면에 표시되는 스크립트
+		endingScript = Object::create(EndingResource::END_BUTTON, endingBackground, 480, 10);
+		endingScript->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
+			endGame();
+			return true;
+			});
 
-	endingMusic = Sound::create(EndingResource::HAPPY_END_MUSIC);
+		endingMusic = Sound::create(EndingResource::HAPPY_END_MUSIC);
+	}
+	// 배드 엔딩
+	else {
+		endingBackground = Scene::create("엔딩 배경", EndingResource::BAD_END);
 
-	ending->enter();
+		endingScript = Object::create(EndingResource::END_BUTTON, endingBackground, 480, 10);
+		endingScript->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
+			endGame();
+			return true;
+			});
+
+		endingMusic = Sound::create(EndingResource::BAD_END_MUSIC);
+	}
+
+	CreateMuteButton(endingBackground, endingMusic);
+	endingBackground->enter();
 }
 
 void Stage::StartStatusHandler() {
@@ -143,9 +159,10 @@ void Stage::StartStatusHandler() {
 
 		// Claer -> 다음 스테이지로 이동
 		if (board->getBoardStatus() == BoardStatus::Clear) {
-			escapeButton->hide();
+			//escapeButton->hide();
 			boardMusic->stop();
 			EnterNextStage();
+			return true;
 		}
 
 		// GameOver -> 재시작
@@ -153,6 +170,8 @@ void Stage::StartStatusHandler() {
 			RestartGame();
 			boardMusic->stop();
 			showMessage("남은 목숨이 없어 게임 오버되었습니다.\n다시 도전해보세요.");
+			
+			// 엔딩을 위해 스테이지가 넘어가면 타이머를 중단
 			return true;
 		}
 
@@ -173,7 +192,6 @@ void Stage::EnterNextStage() {
 
 	// 마지막 스테이지를 클리어한 경우 스테이지의 이벤트 핸들러를 멈추고 엔딩 장면으로 진입한다
 	if (stageNum >= NUM_OF_STAGE_TO_BE_CLEARED) {
-		boardStatusChecker->stop();
 		boardMusic->stop();
 		EnterEnding();
 	}
@@ -199,6 +217,9 @@ void Stage::EnterNextStage() {
 
 		// 다음 지뢰찾기 보드로 갱신한다.
 		board->RefreshBoard(board->getRow() + 2, board->getCol() + 4, stageNum);
+
+		// 엔딩이 아니라면 보드 상태를 다시 체크해야함
+		StartStatusHandler();
 	}
 }
 

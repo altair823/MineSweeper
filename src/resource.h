@@ -16,7 +16,9 @@ namespace TitleResource {
 }
 
 namespace EndingResource {
-	constexpr auto ENDING = "image/Background/Title.png";
+	constexpr auto HAPPY_END = "image/Background/Ending1.png";
+	constexpr auto BAD_END = "image/Background/Ending2.png";
+
 	constexpr auto END_BUTTON = "image/script/end.png";
 
 	constexpr auto HAPPY_END_MUSIC = "music/HappyEnding.mp3";

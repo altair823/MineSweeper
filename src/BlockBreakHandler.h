@@ -73,6 +73,9 @@ private:
 	// 지뢰를 밟을 때 진입할 전투 상황 포인터
 	Combat* newCombat = nullptr;
 
+	// 몬스터를 만난 횟수
+	int combatCount;
+
 public:
 	BlockBreakHandler(int& newRow, int& newCol, MineField& newField, std::vector<std::vector<CellPtr>>& newCells, 
 		std::shared_ptr<Item> item, ScenePtr boardBackground, BoardStatus& status);
@@ -120,5 +123,10 @@ public:
 	* 보드의 상태를 갱신하는 함수
 	*/
 	void setStatus(BoardStatus stat);
+
+	/*
+	* 몬스터와 만난 횟수를 반환하는 함수
+	*/
+	int getCombatCount();
 };
 

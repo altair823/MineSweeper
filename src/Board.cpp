@@ -42,6 +42,8 @@ void Board::Clear() {
 
 	// 보드가 초기화될 때마다 이벤트 핸들러 루프 정지
 	OnBlockBreak->StopCheckNewCellOpened();
+	// 이번 보드의 몬스터 조우 회수를 반환
+	combatCount += OnBlockBreak->getCombatCount();
 	// 보드가 초기화될 때마다 이벤트 핸들러 객체 제거
 	OnBlockBreak.reset();
 }
@@ -128,5 +130,9 @@ int Board::getCol() {
 
 void Board::setBoardStatus(BoardStatus status) {
 	this->status = status;
+}
+
+int Board::getCombatCount() {
+	return combatCount;
 }
 
