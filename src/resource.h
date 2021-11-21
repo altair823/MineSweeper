@@ -87,7 +87,7 @@ namespace ItemResource {
 	constexpr auto SPRAY = "image/Item_Spray.png";
 	constexpr auto ADD_LIFE = "image/Item_Heartplus.png";
 
-	constexpr auto EMPTY = "image/CellEmpty.png";
+	constexpr auto EMPTY = "image/Cell/Empty.png";
 	constexpr auto ONE = "image/Item_number/1.png";
 	constexpr auto TWO = "image/Item_number/2.png";
 	constexpr auto THREE = "image/Item_number/3.png";
