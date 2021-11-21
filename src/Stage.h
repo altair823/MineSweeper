@@ -15,7 +15,7 @@
 #include <bangtal>
 #include "Board.h"
 
-#define DEBUG
+//#define DEBUG
 
 using namespace bangtal;
 
