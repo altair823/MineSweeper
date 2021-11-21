@@ -92,19 +92,7 @@ void Stage::CreateBoard() {
 		});
 
 	// 보드 배경음악과 뮤트 버튼 생성
-	switch (stageNum) {
-	case 0:
-		boardMusic = Sound::create(BoardResource::BOARD_MUSIC_1);
-		break;
-	case 1:
-		boardMusic = Sound::create(BoardResource::BOARD_MUSIC_2);
-		break;
-	case 2:
-		boardMusic = Sound::create(BoardResource::BOARD_MUSIC_3);
-		break;
-	default:
-		break;
-	}
+	boardMusic = Sound::create(BoardResource::BOARD_MUSIC_1);
 	CreateMuteButton(boardBackground, boardMusic);
 
 	// 보드의 상태를 처리할 핸들러 루프 시작
@@ -140,12 +128,14 @@ void Stage::StartStatusHandler() {
 		// Claer -> 다음 스테이지로 이동
 		if (board->getBoardStatus() == BoardStatus::Clear) {
 			escapeButton->hide();
+			boardMusic->stop();
 			EnterNextStage();
 		}
 
 		// GameOver -> 재시작
 		if (board->getBoardStatus() == BoardStatus::GameOver) {
 			RestartGame();
+			boardMusic->stop();
 			showMessage("남은 목숨이 없어 게임 오버되었습니다.\n다시 도전해보세요.");
 			return true;
 		}
@@ -191,7 +181,24 @@ void Stage::EnterNextStage() {
 		}
 
 		// 다음 지뢰찾기 보드로 갱신한다.
-		board->RefreshBoard(board->getRow() + 2, board->getCol() + 4, stageNum);
+		board->RefreshBoard(board->getRow() + 2, board->getCol() + 4, stageNum); 
+
+		// 배경음악을 갱신한다. 
+		switch (stageNum) {
+		case 0:
+			boardMusic = Sound::create(BoardResource::BOARD_MUSIC_1);
+			break;
+		case 1:
+			boardMusic = Sound::create(BoardResource::BOARD_MUSIC_2);
+			break;
+		case 2:
+			boardMusic = Sound::create(BoardResource::BOARD_MUSIC_3);
+			break;
+		default:
+			break;
+		}
+		CreateMuteButton(boardBackground, boardMusic);
+		boardMusic->stop();
 	}
 }
 
