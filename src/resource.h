@@ -42,8 +42,10 @@ namespace BoardResource {
 	constexpr auto BACKGROUND2 = "image/Background/Background2.png";
 	constexpr auto BACKGROUND3 = "image/Background/Background3.png";
 
-	constexpr auto MUTE_BUTTON = "image/Item_Flag.png";
-	constexpr auto UNMUTE_BUTTON = "image/Heart.png";
+	constexpr auto ESCAPE_BUTTON = "image/ButtonUI/ExcapeButton.png";
+
+	constexpr auto MUTE_BUTTON = "image/ButtonUI/Sound_Off.png";
+	constexpr auto UNMUTE_BUTTON = "image/ButtonUI/Sound_On.png";
 
 	constexpr auto BOARD_MUSIC_1 = "music/Stage1Board.mp3";
 	constexpr auto BOARD_MUSIC_2 = "music/Stage2Board.mp3";

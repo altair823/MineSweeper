@@ -9,6 +9,7 @@ Board::Board(ScenePtr bg, int initLifeCount) {
 	boardCount++;
 	background = bg;
 	row = 0, col = 0;
+	combatCount = 0;
 
 	InitItem(initLifeCount);
 }

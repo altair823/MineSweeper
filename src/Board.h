@@ -52,6 +52,9 @@ private:
 	// 현재 보드의 상태
 	BoardStatus status = BoardStatus::Playing;
 
+	// 몬스터를 만난 횟수
+	int combatCount;
+
 
 public:
 	Board(ScenePtr bg, int initLifeCount);

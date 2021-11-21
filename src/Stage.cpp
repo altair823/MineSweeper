@@ -1,6 +1,6 @@
 #include "Stage.h"
 
-Stage::Stage() : isMusicMute(false) {
+Stage::Stage() : isMusicMute(false), stageNum(0) {
 	// Board의 Scene
 	boardBackground = Scene::create("보드 배경", BoardResource::BACKGROUND1);
 	board = new Board(boardBackground, INIT_LIFE_COUNT);
@@ -17,9 +17,6 @@ void Stage::StartGame() {
 		ShowScript(0);
 		titleMusic->stop();
 
-		// 첫 보드를 생성
-		CreateBoard();
-		boardMusic->stop();
 		scriptBackground->enter();
 		return true;
 		});
@@ -63,14 +60,34 @@ void Stage::ShowScript(int stageNum) {
 	}
 
 	nextButton = Object::create(ScriptResource::SCRIPT_IMAGE_1, scriptBackground, 480, 10);
-	nextButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
+	nextButton->setOnMouseCallback([=](auto object, int x, int y, auto action)->bool {
 		/*
 		* 
 		* TODO 스크립트가 여러장일 경우 여기서 넘길 것. 
 		* 
 		*/
+
+		// 맨 처음일 경우 보드를 새로 생성
+		if (stageNum == 0) {
+			CreateBoard();
+		}
 		scriptMusic->stop();
-		boardMusic->play(true);
+		// 배경음악을 갱신한다. 
+		switch (stageNum) {
+		case 0:
+			boardMusic = Sound::create(BoardResource::BOARD_MUSIC_1);
+			break;
+		case 1:
+			boardMusic = Sound::create(BoardResource::BOARD_MUSIC_2);
+			break;
+		case 2:
+			boardMusic = Sound::create(BoardResource::BOARD_MUSIC_3);
+			break;
+		default:
+			break;
+		}
+		// 뮤트 버튼 생성
+		CreateMuteButton(boardBackground, boardMusic);
 		boardBackground->enter();
 		return true;
 		});
@@ -85,15 +102,12 @@ void Stage::CreateBoard() {
 
 	// 탈출하기 선택지
 	// 탈출구를 발견하면 보이게 한다. 
-	escapeButton = Object::create(CellResource::EMPTY, boardBackground, 0, 690, false);
+	escapeButton = Object::create(BoardResource::ESCAPE_BUTTON, boardBackground, 0, 690, false);
 	escapeButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		board->setBoardStatus(BoardStatus::Clear);
 		return true;
 		});
 
-	// 보드 배경음악과 뮤트 버튼 생성
-	boardMusic = Sound::create(BoardResource::BOARD_MUSIC_1);
-	CreateMuteButton(boardBackground, boardMusic);
 
 	// 보드의 상태를 처리할 핸들러 루프 시작
 	StartStatusHandler();
@@ -109,6 +123,8 @@ void Stage::EnterEnding() {
 		endGame();
 		return true;
 		});
+
+	endingMusic = Sound::create(EndingResource::HAPPY_END_MUSIC);
 
 	ending->enter();
 }
@@ -158,6 +174,7 @@ void Stage::EnterNextStage() {
 	// 마지막 스테이지를 클리어한 경우 스테이지의 이벤트 핸들러를 멈추고 엔딩 장면으로 진입한다
 	if (stageNum >= NUM_OF_STAGE_TO_BE_CLEARED) {
 		boardStatusChecker->stop();
+		boardMusic->stop();
 		EnterEnding();
 	}
 
@@ -181,45 +198,25 @@ void Stage::EnterNextStage() {
 		}
 
 		// 다음 지뢰찾기 보드로 갱신한다.
-		board->RefreshBoard(board->getRow() + 2, board->getCol() + 4, stageNum); 
-
-		// 배경음악을 갱신한다. 
-		switch (stageNum) {
-		case 0:
-			boardMusic = Sound::create(BoardResource::BOARD_MUSIC_1);
-			break;
-		case 1:
-			boardMusic = Sound::create(BoardResource::BOARD_MUSIC_2);
-			break;
-		case 2:
-			boardMusic = Sound::create(BoardResource::BOARD_MUSIC_3);
-			break;
-		default:
-			break;
-		}
-		CreateMuteButton(boardBackground, boardMusic);
-		boardMusic->stop();
+		board->RefreshBoard(board->getRow() + 2, board->getCol() + 4, stageNum);
 	}
 }
 
 void Stage::CreateMuteButton(ScenePtr background, SoundPtr music) {
-	if (muteButton != nullptr) {
-		muteButton->hide();
-	}
 
 	// 음소거 여부 유지
 	if (isMusicMute) {
-		muteButton = Object::create(BoardResource::UNMUTE_BUTTON, background, 50, 630);
+		muteButton = Object::create(BoardResource::UNMUTE_BUTTON, background, 20, 630);
 	}
 	else {
-		muteButton = Object::create(BoardResource::MUTE_BUTTON, background, 50, 630);
+		muteButton = Object::create(BoardResource::MUTE_BUTTON, background, 20, 630);
 		music->play(true);
 	}
 	muteButton->setOnMouseCallback([=](auto, auto, auto, auto)->bool {
 		// 음소거 상태였다면
 		if (isMusicMute) {
 			isMusicMute = false;
-			music->play();
+			music->play(true);
 			muteButton->setImage(BoardResource::MUTE_BUTTON);
 		}
 		// 소리가 나는 상태였다면
