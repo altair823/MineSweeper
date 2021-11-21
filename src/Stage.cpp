@@ -11,7 +11,7 @@ void Stage::StartGame() {
 	titleBackground = Scene::create("타이틀", TitleResource::TITLE);
 
 	// 게임 시작 버튼
-	ObjectPtr startButton = Object::create(TitleResource::START_BUTTON, titleBackground, 480, 100);
+	ObjectPtr startButton = Object::create(TitleResource::START_BUTTON, titleBackground, 500, 120);
 	startButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		// 맨 첫 스크립트 출력
 		ShowScript(0);
@@ -22,7 +22,7 @@ void Stage::StartGame() {
 		});
 
 	// 게임 방법 버튼
-	ObjectPtr howToPlayButton = Object::create(EndingResource::END_BUTTON, titleBackground, 480, 10);
+	ObjectPtr howToPlayButton = Object::create(TitleResource::HOW_TO_BUTTON, titleBackground, 500, 30);
 	howToPlayButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		/*
 		* 
@@ -41,25 +41,22 @@ void Stage::ShowScript(int stageNum) {
 	// 스테이지 별 스크립트 배경과 배경음악 생성
 	switch (stageNum) {
 	case 0:
-		scriptBackground = Scene::create("스크립트 배경", ScriptResource::SCRIPT_BACKGROUND_1);
-		script = Object::create(ScriptResource::SCRIPT_IMAGE_1, scriptBackground, 480, 200);
+		scriptBackground = Scene::create("스크립트 배경", ScriptResource::BACKGROUND_1);
 		scriptMusic = Sound::create(ScriptResource::SCRIPT_MUSIC_1);
 		break;
 	case 1:
-		scriptBackground = Scene::create("스크립트 배경", ScriptResource::SCRIPT_BACKGROUND_2);
-		script = Object::create(ScriptResource::SCRIPT_IMAGE_2, scriptBackground, 480, 200);
+		scriptBackground = Scene::create("스크립트 배경", ScriptResource::BACKGROUND_2);
 		scriptMusic = Sound::create(ScriptResource::SCRIPT_MUSIC_2);
 		break;
 	case 2:
-		scriptBackground = Scene::create("스크립트 배경", ScriptResource::SCRIPT_BACKGROUND_3);
-		script = Object::create(ScriptResource::SCRIPT_IMAGE_3, scriptBackground, 480, 200);
+		scriptBackground = Scene::create("스크립트 배경", ScriptResource::BACKGROUND_3);
 		scriptMusic = Sound::create(ScriptResource::SCRIPT_MUSIC_3);
 		break;
 	default:
 		break;
 	}
 
-	nextButton = Object::create(ScriptResource::SCRIPT_IMAGE_1, scriptBackground, 480, 10);
+	nextButton = Object::create(ScriptResource::NEXT_BUTTON, scriptBackground, 950, 280);
 	nextButton->setOnMouseCallback([=](auto object, int x, int y, auto action)->bool {
 		/*
 		* 
@@ -238,10 +235,10 @@ void Stage::CreateMuteButton(ScenePtr background, SoundPtr music) {
 
 	// 음소거 여부 유지
 	if (isMusicMute) {
-		muteButton = Object::create(BoardResource::MUTE_BUTTON, background, 20, 630);
+		muteButton = Object::create(BoardResource::UNMUTE_BUTTON, background, 20, 630);
 	}
 	else {
-		muteButton = Object::create(BoardResource::UNMUTE_BUTTON, background, 20, 630);
+		muteButton = Object::create(BoardResource::MUTE_BUTTON, background, 20, 630);
 		music->play(true);
 	}
 	muteButton->setOnMouseCallback([=](auto, auto, auto, auto)->bool {
@@ -249,13 +246,13 @@ void Stage::CreateMuteButton(ScenePtr background, SoundPtr music) {
 		if (isMusicMute) {
 			isMusicMute = false;
 			music->play(true);
-			muteButton->setImage(BoardResource::UNMUTE_BUTTON);
+			muteButton->setImage(BoardResource::MUTE_BUTTON);
 		}
 		// 소리가 나는 상태였다면
 		else {
 			isMusicMute = true;
 			music->stop();
-			muteButton->setImage(BoardResource::MUTE_BUTTON);
+			muteButton->setImage(BoardResource::UNMUTE_BUTTON);
 		}
 		return true;
 		});
