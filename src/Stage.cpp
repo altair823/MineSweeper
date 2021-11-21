@@ -1,6 +1,6 @@
 #include "Stage.h"
 
-Stage::Stage() {
+Stage::Stage() : isMusicMute(false) {
 	// Board의 Scene
 	boardBackground = Scene::create("보드 배경", BoardResource::BACKGROUND1);
 	board = new Board(boardBackground, INIT_LIFE_COUNT);
@@ -8,20 +8,24 @@ Stage::Stage() {
 
 void Stage::StartGame() {
 	// 타이틀 화면 및 타이틀 화면이 가지는 방탈 오브젝트 생성
-	title = Scene::create("타이틀", TitleResource::TITLE);
+	titleBackground = Scene::create("타이틀", TitleResource::TITLE);
 
 	// 게임 시작 버튼
-	ObjectPtr startButton = Object::create(TitleResource::START_BUTTON, title, 480, 100);
+	ObjectPtr startButton = Object::create(TitleResource::START_BUTTON, titleBackground, 480, 100);
 	startButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		// 맨 첫 스크립트 출력
 		ShowScript(0);
+		titleMusic->stop();
+
+		// 첫 보드를 생성
 		CreateBoard();
+		boardMusic->stop();
 		scriptBackground->enter();
 		return true;
 		});
 
 	// 게임 방법 버튼
-	ObjectPtr howToPlayButton = Object::create(EndingResource::END_BUTTON, title, 480, 10);
+	ObjectPtr howToPlayButton = Object::create(EndingResource::END_BUTTON, titleBackground, 480, 10);
 	howToPlayButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		/*
 		* 
@@ -31,23 +35,28 @@ void Stage::StartGame() {
 		return true;
 		});
 
-	startGame(title);
+	titleMusic = Sound::create(TitleResource::TITLE_MUSIC);
+	CreateMuteButton(titleBackground, titleMusic);
+	startGame(titleBackground);
 }
 
 void Stage::ShowScript(int stageNum) {
-	// 스테이지 별 스크립트 배경 생성
+	// 스테이지 별 스크립트 배경과 배경음악 생성
 	switch (stageNum) {
 	case 0:
 		scriptBackground = Scene::create("스크립트 배경", ScriptResource::SCRIPT_BACKGROUND_1);
 		script = Object::create(ScriptResource::SCRIPT_IMAGE_1, scriptBackground, 480, 200);
+		scriptMusic = Sound::create(ScriptResource::SCRIPT_MUSIC_1);
 		break;
 	case 1:
-		scriptBackground->setImage(ScriptResource::SCRIPT_BACKGROUND_2);
-		script->setImage(ScriptResource::SCRIPT_IMAGE_2);
+		scriptBackground = Scene::create("스크립트 배경", ScriptResource::SCRIPT_BACKGROUND_2);
+		script = Object::create(ScriptResource::SCRIPT_IMAGE_2, scriptBackground, 480, 200);
+		scriptMusic = Sound::create(ScriptResource::SCRIPT_MUSIC_2);
 		break;
 	case 2:
-		scriptBackground->setImage(ScriptResource::SCRIPT_BACKGROUND_3);
-		script->setImage(ScriptResource::SCRIPT_IMAGE_3);
+		scriptBackground = Scene::create("스크립트 배경", ScriptResource::SCRIPT_BACKGROUND_3);
+		script = Object::create(ScriptResource::SCRIPT_IMAGE_3, scriptBackground, 480, 200);
+		scriptMusic = Sound::create(ScriptResource::SCRIPT_MUSIC_3);
 		break;
 	default:
 		break;
@@ -60,9 +69,13 @@ void Stage::ShowScript(int stageNum) {
 		* TODO 스크립트가 여러장일 경우 여기서 넘길 것. 
 		* 
 		*/
+		scriptMusic->stop();
+		boardMusic->play(true);
 		boardBackground->enter();
 		return true;
 		});
+
+	CreateMuteButton(scriptBackground, scriptMusic);
 
 	scriptBackground->enter();
 }
@@ -77,6 +90,22 @@ void Stage::CreateBoard() {
 		board->setBoardStatus(BoardStatus::Clear);
 		return true;
 		});
+
+	// 보드 배경음악과 뮤트 버튼 생성
+	switch (stageNum) {
+	case 0:
+		boardMusic = Sound::create(BoardResource::BOARD_MUSIC_1);
+		break;
+	case 1:
+		boardMusic = Sound::create(BoardResource::BOARD_MUSIC_2);
+		break;
+	case 2:
+		boardMusic = Sound::create(BoardResource::BOARD_MUSIC_3);
+		break;
+	default:
+		break;
+	}
+	CreateMuteButton(boardBackground, boardMusic);
 
 	// 보드의 상태를 처리할 핸들러 루프 시작
 	StartStatusHandler();
@@ -131,6 +160,8 @@ void Stage::StartStatusHandler() {
 }
 
 void Stage::EnterNextStage() {
+	boardMusic->stop();
+
 	// 스테이지 레벨을 갱신한다.
 	stageNum++;
 
@@ -164,9 +195,40 @@ void Stage::EnterNextStage() {
 	}
 }
 
+void Stage::CreateMuteButton(ScenePtr background, SoundPtr music) {
+	if (muteButton != nullptr) {
+		muteButton->hide();
+	}
+
+	// 음소거 여부 유지
+	if (isMusicMute) {
+		muteButton = Object::create(BoardResource::UNMUTE_BUTTON, background, 50, 630);
+	}
+	else {
+		muteButton = Object::create(BoardResource::MUTE_BUTTON, background, 50, 630);
+		music->play(true);
+	}
+	muteButton->setOnMouseCallback([=](auto, auto, auto, auto)->bool {
+		// 음소거 상태였다면
+		if (isMusicMute) {
+			isMusicMute = false;
+			music->play();
+			muteButton->setImage(BoardResource::MUTE_BUTTON);
+		}
+		// 소리가 나는 상태였다면
+		else {
+			isMusicMute = true;
+			music->stop();
+			muteButton->setImage(BoardResource::UNMUTE_BUTTON);
+		}
+		return true;
+		});
+
+}
+
 void Stage::RestartGame() {
 	board->Clear();
 	board->InitItem(INIT_LIFE_COUNT);
-	title->enter();
+	titleBackground->enter();
 }
 

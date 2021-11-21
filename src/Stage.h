@@ -30,7 +30,7 @@ constexpr auto INIT_LIFE_COUNT = 3;
 class Stage {
 private:
 	// 게임 타이틀
-	ScenePtr title;
+	ScenePtr titleBackground;
 
 	// 스테이지 별 스크립트를 보이기 위한 방탈 장면
 	ScenePtr scriptBackground;
@@ -40,6 +40,16 @@ private:
 
 	// 스크립트 화면을 넘기는 버튼
 	ObjectPtr nextButton;
+
+	// 음소거 버튼과 음소거 여부 변수
+	ObjectPtr muteButton;
+	bool isMusicMute;
+
+	// 각 장면의 배경음악
+	SoundPtr titleMusic;
+	SoundPtr scriptMusic;
+	SoundPtr boardMusic;
+	SoundPtr endingMusic;
 
 	/*
 	** Background **
@@ -88,6 +98,11 @@ public:
 
 	// 보드 클리어 시 다음 스테이지로 넘어가는 함수
 	void EnterNextStage();
+
+	/*
+	* 음소거 버튼을 생성하는 함수
+	*/
+	void CreateMuteButton(ScenePtr background, SoundPtr music);
 
 	/*
 	* 게임을 재시작하는 함수
