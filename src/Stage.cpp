@@ -15,8 +15,11 @@ void Stage::StartGame() {
 	startButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		// 맨 첫 스크립트 출력
 		ShowScript(0);
-		CreateBoard();
 		titleMusic->stop();
+
+		// 첫 보드를 생성
+		CreateBoard();
+		boardMusic->stop();
 		scriptBackground->enter();
 		return true;
 		});
@@ -43,17 +46,17 @@ void Stage::ShowScript(int stageNum) {
 	case 0:
 		scriptBackground = Scene::create("스크립트 배경", ScriptResource::SCRIPT_BACKGROUND_1);
 		script = Object::create(ScriptResource::SCRIPT_IMAGE_1, scriptBackground, 480, 200);
-		ScriptMusic = Sound::create(ScriptResource::SCRIPT_MUSIC_1);
+		scriptMusic = Sound::create(ScriptResource::SCRIPT_MUSIC_1);
 		break;
 	case 1:
 		scriptBackground = Scene::create("스크립트 배경", ScriptResource::SCRIPT_BACKGROUND_2);
 		script = Object::create(ScriptResource::SCRIPT_IMAGE_2, scriptBackground, 480, 200);
-		ScriptMusic = Sound::create(ScriptResource::SCRIPT_MUSIC_2);
+		scriptMusic = Sound::create(ScriptResource::SCRIPT_MUSIC_2);
 		break;
 	case 2:
 		scriptBackground = Scene::create("스크립트 배경", ScriptResource::SCRIPT_BACKGROUND_3);
 		script = Object::create(ScriptResource::SCRIPT_IMAGE_3, scriptBackground, 480, 200);
-		ScriptMusic = Sound::create(ScriptResource::SCRIPT_MUSIC_3);
+		scriptMusic = Sound::create(ScriptResource::SCRIPT_MUSIC_3);
 		break;
 	default:
 		break;
@@ -66,12 +69,13 @@ void Stage::ShowScript(int stageNum) {
 		* TODO 스크립트가 여러장일 경우 여기서 넘길 것. 
 		* 
 		*/
-		ScriptMusic->stop();
+		scriptMusic->stop();
+		boardMusic->play(true);
 		boardBackground->enter();
 		return true;
 		});
 
-	CreateMuteButton(scriptBackground, ScriptMusic);
+	CreateMuteButton(scriptBackground, scriptMusic);
 
 	scriptBackground->enter();
 }
@@ -86,6 +90,22 @@ void Stage::CreateBoard() {
 		board->setBoardStatus(BoardStatus::Clear);
 		return true;
 		});
+
+	// 보드 배경음악과 뮤트 버튼 생성
+	switch (stageNum) {
+	case 0:
+		boardMusic = Sound::create(BoardResource::BOARD_MUSIC_1);
+		break;
+	case 1:
+		boardMusic = Sound::create(BoardResource::BOARD_MUSIC_2);
+		break;
+	case 2:
+		boardMusic = Sound::create(BoardResource::BOARD_MUSIC_3);
+		break;
+	default:
+		break;
+	}
+	CreateMuteButton(boardBackground, boardMusic);
 
 	// 보드의 상태를 처리할 핸들러 루프 시작
 	StartStatusHandler();
@@ -140,6 +160,8 @@ void Stage::StartStatusHandler() {
 }
 
 void Stage::EnterNextStage() {
+	boardMusic->stop();
+
 	// 스테이지 레벨을 갱신한다.
 	stageNum++;
 
@@ -184,7 +206,7 @@ void Stage::CreateMuteButton(ScenePtr background, SoundPtr music) {
 	}
 	else {
 		muteButton = Object::create(BoardResource::MUTE_BUTTON, background, 50, 630);
-		music->play();
+		music->play(true);
 	}
 	muteButton->setOnMouseCallback([=](auto, auto, auto, auto)->bool {
 		// 음소거 상태였다면

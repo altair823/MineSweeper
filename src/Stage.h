@@ -47,9 +47,9 @@ private:
 
 	// 각 장면의 배경음악
 	SoundPtr titleMusic;
-	SoundPtr ScriptMusic;
-	SoundPtr BoardMusic;
-	SoundPtr EndingMusic;
+	SoundPtr scriptMusic;
+	SoundPtr boardMusic;
+	SoundPtr endingMusic;
 
 	/*
 	** Background **
