@@ -15,6 +15,8 @@
 #include <bangtal>
 #include "Board.h"
 
+//#define DEBUG
+
 using namespace bangtal;
 
 // 스테이지 갯수

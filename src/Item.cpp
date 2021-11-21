@@ -1,6 +1,6 @@
 #include "Item.h"
 
-Item::Item(ScenePtr bg, int initLifeCount): background(bg) {
+Item::Item(ScenePtr bg, int initLifeCount, bool& isGameMute): background(bg), isGameMute(isGameMute) {
 
 	// 목숨 이미지 생성
 	lifeObject.resize(initLifeCount);
@@ -107,6 +107,12 @@ void Item::ChangeHandByIndex(int index) {
 		break;
 	default:
 		break;
+	}
+
+	// 아이템을 바꾸는 효과음 재생
+	if (!isGameMute) {
+		SoundPtr changeSound = Sound::create(ItemResource::CHANGE_SOUND);
+		changeSound->play();
 	}
 }
 

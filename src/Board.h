@@ -55,8 +55,11 @@ private:
 	// 몬스터를 만난 횟수
 	int combatCount;
 
+	// 음소거 여부를 참조하는 포인터
+	bool& isGameMute;
+
 public:
-	Board(ScenePtr bg, int initLifeCount);
+	Board(ScenePtr bg, int initLifeCount, bool& isGameMute);
 
 	/*
 	* 보드를 주어진 크기로 초기화하고 생성하는 함수

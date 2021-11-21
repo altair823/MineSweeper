@@ -3,7 +3,7 @@
 Stage::Stage() : isMusicMute(false), stageNum(0) {
 	// Board의 Scene
 	boardBackground = Scene::create("보드 배경", BoardResource::BACKGROUND1);
-	board = new Board(boardBackground, INIT_LIFE_COUNT);
+	board = new Board(boardBackground, INIT_LIFE_COUNT, isMusicMute);
 }
 
 void Stage::StartGame() {
@@ -102,7 +102,12 @@ void Stage::CreateBoard() {
 
 	// 탈출하기 선택지
 	// 탈출구를 발견하면 보이게 한다. 
-	escapeButton = Object::create(BoardResource::ESCAPE_BUTTON, boardBackground, 0, 690);
+#ifndef DEBUG
+	escapeButton = Object::create(BoardResource::ESCAPE_BUTTON, boardBackground, 30, 30, false);
+#else
+	escapeButton = Object::create(BoardResource::ESCAPE_BUTTON, boardBackground, 30, 30);
+#endif
+
 	escapeButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		board->setBoardStatus(BoardStatus::Clear);
 		return true;
@@ -154,12 +159,18 @@ void Stage::StartStatusHandler() {
 			// 바로 탈출하지 않는 경우를 위해 보드 상태를 변경
 			board->setBoardStatus(BoardStatus::Playing);
 			escapeButton->show();
+			// 클리어 사운드 재생
+			SoundPtr clearSound = Sound::create(BoardResource::CLEAR_MUSIC);
+			clearSound->play();
 			showMessage("탈출구를 찾았습니다! 스테이지를 벗어나고 싶으면 탈출하기 버튼을 누르세요.\n지금 탈출하지 않고 남아있는 아이템을 획득하기 위해 게임을 계속 진행할 수 있습니다.");
 		}
 
 		// Claer -> 다음 스테이지로 이동
 		if (board->getBoardStatus() == BoardStatus::Clear) {
-			//escapeButton->hide();
+#ifndef DEBUG
+			escapeButton->hide();
+#endif // !DEBUG
+
 			boardMusic->stop();
 			EnterNextStage();
 			return true;
@@ -227,10 +238,10 @@ void Stage::CreateMuteButton(ScenePtr background, SoundPtr music) {
 
 	// 음소거 여부 유지
 	if (isMusicMute) {
-		muteButton = Object::create(BoardResource::UNMUTE_BUTTON, background, 20, 630);
+		muteButton = Object::create(BoardResource::MUTE_BUTTON, background, 20, 630);
 	}
 	else {
-		muteButton = Object::create(BoardResource::MUTE_BUTTON, background, 20, 630);
+		muteButton = Object::create(BoardResource::UNMUTE_BUTTON, background, 20, 630);
 		music->play(true);
 	}
 	muteButton->setOnMouseCallback([=](auto, auto, auto, auto)->bool {
@@ -238,13 +249,13 @@ void Stage::CreateMuteButton(ScenePtr background, SoundPtr music) {
 		if (isMusicMute) {
 			isMusicMute = false;
 			music->play(true);
-			muteButton->setImage(BoardResource::MUTE_BUTTON);
+			muteButton->setImage(BoardResource::UNMUTE_BUTTON);
 		}
 		// 소리가 나는 상태였다면
 		else {
 			isMusicMute = true;
 			music->stop();
-			muteButton->setImage(BoardResource::UNMUTE_BUTTON);
+			muteButton->setImage(BoardResource::MUTE_BUTTON);
 		}
 		return true;
 		});
