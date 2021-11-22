@@ -67,6 +67,9 @@ private:
 	ObjectPtr sprayUsedIndicator;
 	bool isSprayUsed = false;
 
+	// 게임의 음소거 여부
+	bool& isGameMute;
+
 	/*
 	* 해당 아이템의 itemCount 값에 따라 Item개수 이미지를 변경하는 함수
 	*/
@@ -78,7 +81,7 @@ private:
 	int getItemIndex(Hand hand);
 
 public:
-	Item(ScenePtr bg, int initLifeCount);
+	Item(ScenePtr bg, int initLifeCount, bool& isGameMute);
 
 	/*
 	* 현재 핸드를 확인하는 함수

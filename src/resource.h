@@ -10,13 +10,16 @@
 
 namespace TitleResource {
 	constexpr auto TITLE = "image/Background/Title.png";
-	constexpr auto START_BUTTON = "image/script/stage1_start.png";
+	constexpr auto START_BUTTON = "image/ButtonUI/StartGame.png";
+	constexpr auto HOW_TO_BUTTON = "image/ButtonUI/HowToPlay.png";
 
 	constexpr auto TITLE_MUSIC = "music/Title.mp3";
 }
 
 namespace EndingResource {
-	constexpr auto ENDING = "image/Background/Title.png";
+	constexpr auto HAPPY_END = "image/Background/Ending1.png";
+	constexpr auto BAD_END = "image/Background/Ending2.png";
+
 	constexpr auto END_BUTTON = "image/script/end.png";
 
 	constexpr auto HAPPY_END_MUSIC = "music/HappyEnding.mp3";
@@ -24,13 +27,15 @@ namespace EndingResource {
 }
 
 namespace ScriptResource {
-	constexpr auto SCRIPT_BACKGROUND_1 = "image/script/stage1_clear.PNG";
-	constexpr auto SCRIPT_BACKGROUND_2 = "image/script/stage2_clear.PNG";
-	constexpr auto SCRIPT_BACKGROUND_3 = "image/script/stage3_clear.PNG";
+	constexpr auto BACKGROUND_1 = "image/script/Script1.png";
+	constexpr auto BACKGROUND_2 = "image/script/Script2.png";
+	constexpr auto BACKGROUND_3 = "image/script/Script3.png";
 
 	constexpr auto SCRIPT_IMAGE_1 = "image/script/stage1_start.png";
 	constexpr auto SCRIPT_IMAGE_2 = "image/script/stage2_start.png";
 	constexpr auto SCRIPT_IMAGE_3 = "image/script/stage3_start.png";
+
+	constexpr auto NEXT_BUTTON = "image/ButtonUI/GoToStage.png";
 
 	constexpr auto SCRIPT_MUSIC_1 = "music/Stage1Script.mp3";
 	constexpr auto SCRIPT_MUSIC_2 = "music/Stage2Script.mp3";
@@ -42,8 +47,10 @@ namespace BoardResource {
 	constexpr auto BACKGROUND2 = "image/Background/Background2.png";
 	constexpr auto BACKGROUND3 = "image/Background/Background3.png";
 
-	constexpr auto MUTE_BUTTON = "image/Item_Flag.png";
-	constexpr auto UNMUTE_BUTTON = "image/Heart.png";
+	constexpr auto ESCAPE_BUTTON = "image/ButtonUI/ExcapeButton.png";
+
+	constexpr auto MUTE_BUTTON = "image/ButtonUI/Sound_On.png";
+	constexpr auto UNMUTE_BUTTON = "image/ButtonUI/Sound_Off.png";
 
 	constexpr auto BOARD_MUSIC_1 = "music/Stage1Board.mp3";
 	constexpr auto BOARD_MUSIC_2 = "music/Stage2Board.mp3";

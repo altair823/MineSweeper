@@ -1,6 +1,6 @@
 #include "Board.h"
 
-Board::Board(ScenePtr bg, int initLifeCount) {
+Board::Board(ScenePtr bg, int initLifeCount, bool& isGameMute) : isGameMute(isGameMute) {
 	// 보드는 오직 하나의 객체만 허용가능하다. 
 	if (boardCount != 0) {
 		std::cout << "싱글톤 보드 클래스의 또 다른 객체가 생성되었습니다!" << std::endl;
@@ -9,6 +9,7 @@ Board::Board(ScenePtr bg, int initLifeCount) {
 	boardCount++;
 	background = bg;
 	row = 0, col = 0;
+	combatCount = 0;
 
 	InitItem(initLifeCount);
 }
@@ -41,6 +42,8 @@ void Board::Clear() {
 
 	// 보드가 초기화될 때마다 이벤트 핸들러 루프 정지
 	OnBlockBreak->StopCheckNewCellOpened();
+	// 이번 보드의 몬스터 조우 회수를 반환
+	combatCount += OnBlockBreak->getCombatCount();
 	// 보드가 초기화될 때마다 이벤트 핸들러 객체 제거
 	OnBlockBreak.reset();
 }
@@ -62,7 +65,7 @@ void Board::GenerateNewBoard(int newRow, int newCol, int stageNum) {
 	field.MountMine();
 	field.setAdjacentNum();
 	field.Print();
-
+	
 	// cells에 새 데이터 저장
 	for (int i = 0; i < row; i++) {
 		std::vector<CellPtr> cellRow;
@@ -72,11 +75,16 @@ void Board::GenerateNewBoard(int newRow, int newCol, int stageNum) {
 			int y = (360 + row / 2 * CELL_SIZE) - (i + 1) * CELL_SIZE;
 			CellPtr cell = Cell::Create(background, field[i][j], x, y, stageNum);
 			
-
+			
 			// 현재 hand에 따라서 다른 작동을 한다. 
 			cell->getBlock()->setClickCallback([=](auto object, int x, int y, auto action)->bool {
+				SoundPtr breakSound = Sound::create(BlockResource::BREAK_SOUND);
 				switch (item->getCurrentHand()) {
 				case Hand::Pickax:
+					// 블럭이 깨질 때 소리 재생
+					if (!isGameMute) {
+						breakSound->play();
+					}
 					cell->BreakBlock();
 					break;
 				case Hand::Flag:
@@ -110,7 +118,7 @@ void Board::InitItem(int initLifeCount) {
 		item.reset();
 	}
 	// 새로운 아이템 객체 생성
-	item = std::make_shared<Item>(background, initLifeCount);
+	item = std::make_shared<Item>(background, initLifeCount, isGameMute);
 }
 
 BoardStatus Board::getBoardStatus() {
@@ -127,5 +135,9 @@ int Board::getCol() {
 
 void Board::setBoardStatus(BoardStatus status) {
 	this->status = status;
+}
+
+int Board::getCombatCount() {
+	return combatCount;
 }
 

@@ -1,9 +1,9 @@
 #include "Stage.h"
 
-Stage::Stage() : isMusicMute(false) {
+Stage::Stage() : isMusicMute(false), stageNum(0) {
 	// Board의 Scene
 	boardBackground = Scene::create("보드 배경", BoardResource::BACKGROUND1);
-	board = new Board(boardBackground, INIT_LIFE_COUNT);
+	board = new Board(boardBackground, INIT_LIFE_COUNT, isMusicMute);
 }
 
 void Stage::StartGame() {
@@ -11,21 +11,18 @@ void Stage::StartGame() {
 	titleBackground = Scene::create("타이틀", TitleResource::TITLE);
 
 	// 게임 시작 버튼
-	ObjectPtr startButton = Object::create(TitleResource::START_BUTTON, titleBackground, 480, 100);
+	ObjectPtr startButton = Object::create(TitleResource::START_BUTTON, titleBackground, 500, 120);
 	startButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		// 맨 첫 스크립트 출력
 		ShowScript(0);
 		titleMusic->stop();
 
-		// 첫 보드를 생성
-		CreateBoard();
-		boardMusic->stop();
 		scriptBackground->enter();
 		return true;
 		});
 
 	// 게임 방법 버튼
-	ObjectPtr howToPlayButton = Object::create(EndingResource::END_BUTTON, titleBackground, 480, 10);
+	ObjectPtr howToPlayButton = Object::create(TitleResource::HOW_TO_BUTTON, titleBackground, 500, 30);
 	howToPlayButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		/*
 		* 
@@ -44,33 +41,50 @@ void Stage::ShowScript(int stageNum) {
 	// 스테이지 별 스크립트 배경과 배경음악 생성
 	switch (stageNum) {
 	case 0:
-		scriptBackground = Scene::create("스크립트 배경", ScriptResource::SCRIPT_BACKGROUND_1);
-		script = Object::create(ScriptResource::SCRIPT_IMAGE_1, scriptBackground, 480, 200);
+		scriptBackground = Scene::create("스크립트 배경", ScriptResource::BACKGROUND_1);
 		scriptMusic = Sound::create(ScriptResource::SCRIPT_MUSIC_1);
 		break;
 	case 1:
-		scriptBackground = Scene::create("스크립트 배경", ScriptResource::SCRIPT_BACKGROUND_2);
-		script = Object::create(ScriptResource::SCRIPT_IMAGE_2, scriptBackground, 480, 200);
+		scriptBackground = Scene::create("스크립트 배경", ScriptResource::BACKGROUND_2);
 		scriptMusic = Sound::create(ScriptResource::SCRIPT_MUSIC_2);
 		break;
 	case 2:
-		scriptBackground = Scene::create("스크립트 배경", ScriptResource::SCRIPT_BACKGROUND_3);
-		script = Object::create(ScriptResource::SCRIPT_IMAGE_3, scriptBackground, 480, 200);
+		scriptBackground = Scene::create("스크립트 배경", ScriptResource::BACKGROUND_3);
 		scriptMusic = Sound::create(ScriptResource::SCRIPT_MUSIC_3);
 		break;
 	default:
 		break;
 	}
 
-	nextButton = Object::create(ScriptResource::SCRIPT_IMAGE_1, scriptBackground, 480, 10);
-	nextButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
+	nextButton = Object::create(ScriptResource::NEXT_BUTTON, scriptBackground, 950, 280);
+	nextButton->setOnMouseCallback([=](auto object, int x, int y, auto action)->bool {
 		/*
 		* 
 		* TODO 스크립트가 여러장일 경우 여기서 넘길 것. 
 		* 
 		*/
+
+		// 맨 처음일 경우 보드를 새로 생성
+		if (stageNum == 0) {
+			CreateBoard();
+		}
 		scriptMusic->stop();
-		boardMusic->play(true);
+		// 배경음악을 갱신한다. 
+		switch (stageNum) {
+		case 0:
+			boardMusic = Sound::create(BoardResource::BOARD_MUSIC_1);
+			break;
+		case 1:
+			boardMusic = Sound::create(BoardResource::BOARD_MUSIC_2);
+			break;
+		case 2:
+			boardMusic = Sound::create(BoardResource::BOARD_MUSIC_3);
+			break;
+		default:
+			break;
+		}
+		// 뮤트 버튼 생성
+		CreateMuteButton(boardBackground, boardMusic);
 		boardBackground->enter();
 		return true;
 		});
@@ -85,44 +99,52 @@ void Stage::CreateBoard() {
 
 	// 탈출하기 선택지
 	// 탈출구를 발견하면 보이게 한다. 
-	escapeButton = Object::create(CellResource::EMPTY, boardBackground, 0, 690, false);
+#ifndef DEBUG
+	escapeButton = Object::create(BoardResource::ESCAPE_BUTTON, boardBackground, 30, 30, false);
+#else
+	escapeButton = Object::create(BoardResource::ESCAPE_BUTTON, boardBackground, 30, 30);
+#endif
+
 	escapeButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		board->setBoardStatus(BoardStatus::Clear);
 		return true;
 		});
 
-	// 보드 배경음악과 뮤트 버튼 생성
-	switch (stageNum) {
-	case 0:
-		boardMusic = Sound::create(BoardResource::BOARD_MUSIC_1);
-		break;
-	case 1:
-		boardMusic = Sound::create(BoardResource::BOARD_MUSIC_2);
-		break;
-	case 2:
-		boardMusic = Sound::create(BoardResource::BOARD_MUSIC_3);
-		break;
-	default:
-		break;
-	}
-	CreateMuteButton(boardBackground, boardMusic);
 
 	// 보드의 상태를 처리할 핸들러 루프 시작
 	StartStatusHandler();
 }
 
 void Stage::EnterEnding() {
-	// 엔딩 화면을 보이기 위한 방탈 장면
-	ending = Scene::create("엔딩 배경", EndingResource::ENDING);
+	// 해피 엔딩
+	if (board->getCombatCount() <= COMBAT_COUNT_FOR_HAPPY_ENDING) {
+		// 엔딩 화면을 보이기 위한 방탈 장면
+		endingBackground = Scene::create("엔딩 배경", EndingResource::HAPPY_END);
 
-	// 엔딩 화면에 표시되는 스크립트
-	endingScript = Object::create(EndingResource::END_BUTTON, ending, 480, 10);
-	endingScript->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
-		endGame();
-		return true;
-		});
+		// 엔딩 화면에 표시되는 스크립트
+		endingScript = Object::create(EndingResource::END_BUTTON, endingBackground, 480, 10);
+		endingScript->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
+			endGame();
+			return true;
+			});
 
-	ending->enter();
+		endingMusic = Sound::create(EndingResource::HAPPY_END_MUSIC);
+	}
+	// 배드 엔딩
+	else {
+		endingBackground = Scene::create("엔딩 배경", EndingResource::BAD_END);
+
+		endingScript = Object::create(EndingResource::END_BUTTON, endingBackground, 480, 10);
+		endingScript->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
+			endGame();
+			return true;
+			});
+
+		endingMusic = Sound::create(EndingResource::BAD_END_MUSIC);
+	}
+
+	CreateMuteButton(endingBackground, endingMusic);
+	endingBackground->enter();
 }
 
 void Stage::StartStatusHandler() {
@@ -134,19 +156,30 @@ void Stage::StartStatusHandler() {
 			// 바로 탈출하지 않는 경우를 위해 보드 상태를 변경
 			board->setBoardStatus(BoardStatus::Playing);
 			escapeButton->show();
+			// 클리어 사운드 재생
+			SoundPtr clearSound = Sound::create(BoardResource::CLEAR_MUSIC);
+			clearSound->play();
 			showMessage("탈출구를 찾았습니다! 스테이지를 벗어나고 싶으면 탈출하기 버튼을 누르세요.\n지금 탈출하지 않고 남아있는 아이템을 획득하기 위해 게임을 계속 진행할 수 있습니다.");
 		}
 
 		// Claer -> 다음 스테이지로 이동
 		if (board->getBoardStatus() == BoardStatus::Clear) {
+#ifndef DEBUG
 			escapeButton->hide();
+#endif // !DEBUG
+
+			boardMusic->stop();
 			EnterNextStage();
+			return true;
 		}
 
 		// GameOver -> 재시작
 		if (board->getBoardStatus() == BoardStatus::GameOver) {
 			RestartGame();
+			boardMusic->stop();
 			showMessage("남은 목숨이 없어 게임 오버되었습니다.\n다시 도전해보세요.");
+			
+			// 엔딩을 위해 스테이지가 넘어가면 타이머를 중단
 			return true;
 		}
 
@@ -167,7 +200,7 @@ void Stage::EnterNextStage() {
 
 	// 마지막 스테이지를 클리어한 경우 스테이지의 이벤트 핸들러를 멈추고 엔딩 장면으로 진입한다
 	if (stageNum >= NUM_OF_STAGE_TO_BE_CLEARED) {
-		boardStatusChecker->stop();
+		boardMusic->stop();
 		EnterEnding();
 	}
 
@@ -192,27 +225,27 @@ void Stage::EnterNextStage() {
 
 		// 다음 지뢰찾기 보드로 갱신한다.
 		board->RefreshBoard(board->getRow() + 2, board->getCol() + 4, stageNum);
+
+		// 엔딩이 아니라면 보드 상태를 다시 체크해야함
+		StartStatusHandler();
 	}
 }
 
 void Stage::CreateMuteButton(ScenePtr background, SoundPtr music) {
-	if (muteButton != nullptr) {
-		muteButton->hide();
-	}
 
 	// 음소거 여부 유지
 	if (isMusicMute) {
-		muteButton = Object::create(BoardResource::UNMUTE_BUTTON, background, 50, 630);
+		muteButton = Object::create(BoardResource::UNMUTE_BUTTON, background, 20, 630);
 	}
 	else {
-		muteButton = Object::create(BoardResource::MUTE_BUTTON, background, 50, 630);
+		muteButton = Object::create(BoardResource::MUTE_BUTTON, background, 20, 630);
 		music->play(true);
 	}
 	muteButton->setOnMouseCallback([=](auto, auto, auto, auto)->bool {
 		// 음소거 상태였다면
 		if (isMusicMute) {
 			isMusicMute = false;
-			music->play();
+			music->play(true);
 			muteButton->setImage(BoardResource::MUTE_BUTTON);
 		}
 		// 소리가 나는 상태였다면

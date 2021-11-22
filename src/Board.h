@@ -51,10 +51,15 @@ private:
 
 	// 현재 보드의 상태
 	BoardStatus status = BoardStatus::Playing;
+	
+	// 몬스터를 만난 횟수
+	int combatCount;
 
+	// 음소거 여부를 참조하는 포인터
+	bool& isGameMute;
 
 public:
-	Board(ScenePtr bg, int initLifeCount);
+	Board(ScenePtr bg, int initLifeCount, bool& isGameMute);
 
 	/*
 	* 보드를 주어진 크기로 초기화하고 생성하는 함수
@@ -95,4 +100,9 @@ public:
 	* 보드의 상태를 설정하는 함수
 	*/
 	void setBoardStatus(BoardStatus status);
+
+	/*
+	* 몬스터와 만난 전체 횟수를 반환하는 함수
+	*/
+	int getCombatCount();
 };
