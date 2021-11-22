@@ -1,9 +1,9 @@
 #include "Stage.h"
 
-Stage::Stage() : isMusicMute(false), stageNum(0) {
+Stage::Stage() : isGameMute(false), stageNum(0) {
 	// Board의 Scene
 	boardBackground = Scene::create("보드 배경", BoardResource::BACKGROUND1);
-	board = std::make_shared<Board>(boardBackground, INIT_LIFE_COUNT, isMusicMute);
+	board = std::make_shared<Board>(boardBackground, INIT_LIFE_COUNT, isGameMute);
 }
 
 void Stage::StartGame() {
@@ -26,11 +26,19 @@ void Stage::MakeTitle() {
 	// 게임 방법 버튼
 	ObjectPtr howToPlayButton = Object::create(TitleResource::HOW_TO_BUTTON, titleBackground, 500, 30);
 	howToPlayButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
-		/*
-		* 
-		* TODO 도움말 이미지 삽입
-		* 
-		*/
+		gameGuide = std::make_shared<GameGuide>(titleBackground, titleMusic, isGameMute);
+		gameGuide->EnterGuide();
+		return true;
+		});
+
+	// 게임 방법 화면에서 돌아오면 음소거 여부에 따라 음소거 버튼을 갱신한다. 
+	titleBackground->setOnEnterCallback([&](auto)->bool {
+		if (isGameMute) {
+			muteButton->setImage(BoardResource::UNMUTE_BUTTON);
+		}
+		else {
+			muteButton->setImage(BoardResource::MUTE_BUTTON);
+		}
 		return true;
 		});
 
@@ -59,12 +67,6 @@ void Stage::ShowScript(int stageNum) {
 
 	nextButton = Object::create(ScriptResource::NEXT_BUTTON, scriptBackground, 950, 280);
 	nextButton->setOnMouseCallback([=](auto object, int x, int y, auto action)->bool {
-		/*
-		* 
-		* TODO 스크립트가 여러장일 경우 여기서 넘길 것. 
-		* 
-		*/
-
 		// 맨 처음일 경우 보드를 새로 생성
 		if (stageNum == 0) {
 			CreateBoard();
@@ -127,13 +129,13 @@ void Stage::EnterEnding() {
 		endingBackground = Scene::create("엔딩 배경", EndingResource::BAD_END);
 		endingMusic = Sound::create(EndingResource::BAD_END_MUSIC);
 	}
-	goToTitleButton = Object::create(EndingResource::GO_TO_TITLE_BUTTON, endingBackground, 970, 450);
+	goToTitleButton = Object::create(EndingResource::GO_TO_TITLE_BUTTON, endingBackground, 950, 660);
 	goToTitleButton->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
 		endingMusic->stop();
 		RestartGame();
 		return true;
 		});
-	gameEndButton = Object::create(EndingResource::END_BUTTON, endingBackground, 970, 350);
+	gameEndButton = Object::create(EndingResource::END_BUTTON, endingBackground, 1050, 600);
 	gameEndButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		endGame();
 		return true;
@@ -151,7 +153,7 @@ void Stage::StartStatusHandler() {
 			// 바로 탈출하지 않는 경우를 위해 보드 상태를 변경
 			board->setBoardStatus(BoardStatus::Playing);
 			escapeButton->show();
-			if (!isMusicMute) {
+			if (!isGameMute) {
 				// 클리어 사운드 재생
 				SoundPtr clearSound = Sound::create(BoardResource::CLEAR_MUSIC);
 				clearSound->play();
@@ -229,9 +231,8 @@ void Stage::EnterNextStage() {
 }
 
 void Stage::CreateMuteButton(ScenePtr background, SoundPtr music) {
-
 	// 음소거 여부 유지
-	if (isMusicMute) {
+	if (isGameMute) {
 		muteButton = Object::create(BoardResource::UNMUTE_BUTTON, background, 20, 630);
 	}
 	else {
@@ -240,20 +241,19 @@ void Stage::CreateMuteButton(ScenePtr background, SoundPtr music) {
 	}
 	muteButton->setOnMouseCallback([=](auto, auto, auto, auto)->bool {
 		// 음소거 상태였다면
-		if (isMusicMute) {
-			isMusicMute = false;
+		if (isGameMute) {
+			isGameMute = false;
 			music->play(true);
 			muteButton->setImage(BoardResource::MUTE_BUTTON);
 		}
 		// 소리가 나는 상태였다면
 		else {
-			isMusicMute = true;
+			isGameMute = true;
 			music->stop();
 			muteButton->setImage(BoardResource::UNMUTE_BUTTON);
 		}
 		return true;
 		});
-
 }
 
 void Stage::RestartGame() {
@@ -273,7 +273,7 @@ void Stage::RestartGame() {
 
 	// 타이틀 화면부터 다시 생성한다. 
 	boardBackground = Scene::create("보드 배경", BoardResource::BACKGROUND1);
-	board = std::make_shared<Board>(boardBackground, INIT_LIFE_COUNT, isMusicMute);
+	board = std::make_shared<Board>(boardBackground, INIT_LIFE_COUNT, isGameMute);
 	MakeTitle();
 	titleBackground->enter();
 }

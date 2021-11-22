@@ -16,11 +16,23 @@ namespace TitleResource {
 	constexpr auto TITLE_MUSIC = "music/Title.mp3";
 }
 
+namespace GuideResource {
+	constexpr auto BACKGROUND = "image/Background/GuideBackground.png";
+
+	constexpr auto GUIDE_PAGE_1 = "image/HowToPlay/HowToPlay1.png";
+	constexpr auto GUIDE_PAGE_2 = "image/HowToPlay/HowToPlay2.png";
+	constexpr auto GUIDE_PAGE_3 = "image/HowToPlay/HowToPlay3.png";
+
+	constexpr auto PREVIOUS_PAGE = "image/ButtonUI/howtoplay_left.png";
+	constexpr auto NEXT_PAGE = "image/ButtonUI/howtoplay_right.png";
+	constexpr auto CLOSE_GUIDE = "image/ButtonUI/howtoplay_exit.png";
+}
+
 namespace EndingResource {
 	constexpr auto HAPPY_END = "image/Background/Ending1.png";
 	constexpr auto BAD_END = "image/Background/Ending2.png";
 
-	constexpr auto END_BUTTON = "image/ButtonUI/ExitGame.png";
+	constexpr auto END_BUTTON = "image/ButtonUI/GoToExit.png";
 	constexpr auto GO_TO_TITLE_BUTTON = "image/ButtonUI/GoToTitle.png";
 
 	constexpr auto HAPPY_END_MUSIC = "music/HappyEnding.mp3";
@@ -86,14 +98,14 @@ namespace BlockResource {
 }
 
 namespace ItemResource {
-	constexpr auto LIFE = "image/Item_Heart.png";
-	constexpr auto INDICATOR = "image/ItemBox_using.png";
-	constexpr auto ITEM_BAR = "image/ItemBox.png";
-	constexpr auto PICKAX = "image/Item_Pickax.png";
-	constexpr auto FLAG = "image/Item_Flag.png";
-	constexpr auto DETECTOR = "image/MineDetector.png";
-	constexpr auto SPRAY = "image/Item_Spray.png";
-	constexpr auto ADD_LIFE = "image/Item_Heartplus.png";
+	constexpr auto LIFE = "image/Item/Item_Heart.png";
+	constexpr auto INDICATOR = "image/Item/ItemBox_using.png";
+	constexpr auto ITEM_BAR = "image/Item/ItemBox.png";
+	constexpr auto PICKAX = "image/Item/Item_Pickax.png";
+	constexpr auto FLAG = "image/Item/Item_Flag.png";
+	constexpr auto DETECTOR = "image/Item/MineDetector.png";
+	constexpr auto SPRAY = "image/Item/Item_Spray.png";
+	constexpr auto ADD_LIFE = "image/Item/Item_Heartplus.png";
 
 	constexpr auto EMPTY = "image/Cell/Empty.png";
 	constexpr auto ONE = "image/Item_number/1.png";
@@ -110,64 +122,64 @@ namespace ItemResource {
 
 
 namespace CombatResource {
-	constexpr auto BACKGROUND1 = "image/CombatBackground1.jpg";
-	constexpr auto BACKGROUND2 = "image/CombatBackground2.jpg";
-	constexpr auto BACKGROUND3 = "image/CombatBackground3.jpg";
+	constexpr auto BACKGROUND1 = "image/Combat/CombatBackground1.jpg";
+	constexpr auto BACKGROUND2 = "image/Combat/CombatBackground2.jpg";
+	constexpr auto BACKGROUND3 = "image/Combat/CombatBackground3.jpg";
 
-	constexpr auto MONSTER1 = "image/Monster1.png";
-	constexpr auto MONSTER2 = "image/Monster2.png";
-	constexpr auto MONSTER3 = "image/Monster3.png";
-	constexpr auto MONSTER4 = "image/Monster4.png";
-	constexpr auto MONSTER5 = "image/Monster5.png";
-	constexpr auto MONSTER6 = "image/Monster6.png";
+	constexpr auto MONSTER1 = "image/Combat/Monster1.png";
+	constexpr auto MONSTER2 = "image/Combat/Monster2.png";
+	constexpr auto MONSTER3 = "image/Combat/Monster3.png";
+	constexpr auto MONSTER4 = "image/Combat/Monster4.png";
+	constexpr auto MONSTER5 = "image/Combat/Monster5.png";
+	constexpr auto MONSTER6 = "image/Combat/Monster6.png";
 
 	namespace RockPaperScissor {
-		constexpr auto ROCK = "image/Rock.png";
-		constexpr auto PAPER = "image/Paper.png";
-		constexpr auto SCISSOR = "image/Scissors.png";
-		constexpr auto OPPORTUNITY = "image/Heart.png";
+		constexpr auto ROCK = "image/Combat/Rock.png";
+		constexpr auto PAPER = "image/Combat/Paper.png";
+		constexpr auto SCISSOR = "image/Combat/Scissors.png";
+		constexpr auto OPPORTUNITY = "image/Combat/Heart.png";
 	}
 
 	namespace DiceRolling {
-		constexpr auto BUTTON = "image/DiceRollButton.png";
-		constexpr auto OPPORTUNITY = "image/Heart.png";
+		constexpr auto BUTTON = "image/Combat/DiceRollButton.png";
+		constexpr auto OPPORTUNITY = "image/Combat/Heart.png";
 
-		constexpr auto ONE = "image/Dice1.png";
-		constexpr auto TWO = "image/Dice2.png";
-		constexpr auto THREE = "image/Dice3.png";
-		constexpr auto FOUR = "image/Dice4.png";
-		constexpr auto FIVE = "image/Dice5.png";
-		constexpr auto SIX = "image/Dice6.png";
+		constexpr auto ONE = "image/Combat/Dice1.png";
+		constexpr auto TWO = "image/Combat/Dice2.png";
+		constexpr auto THREE = "image/Combat/Dice3.png";
+		constexpr auto FOUR = "image/Combat/Dice4.png";
+		constexpr auto FIVE = "image/Combat/Dice5.png";
+		constexpr auto SIX = "image/Combat/Dice6.png";
 	}
 	namespace OddOrEven {
-		constexpr auto OPPORTUNITY = "image/Heart.png";
+		constexpr auto OPPORTUNITY = "image/Combat/Heart.png";
 
-		constexpr auto ONE = "image/Dice1.png";
-		constexpr auto TWO = "image/Dice2.png";
-		constexpr auto THREE = "image/Dice3.png";
-		constexpr auto FOUR = "image/Dice4.png";
-		constexpr auto FIVE = "image/Dice5.png";
-		constexpr auto SIX = "image/Dice6.png";
+		constexpr auto ONE = "image/Combat/Dice1.png";
+		constexpr auto TWO = "image/Combat/Dice2.png";
+		constexpr auto THREE = "image/Combat/Dice3.png";
+		constexpr auto FOUR = "image/Combat/Dice4.png";
+		constexpr auto FIVE = "image/Combat/Dice5.png";
+		constexpr auto SIX = "image/Combat/Dice6.png";
 
-		constexpr auto ODD_BUTTON = "image/OddButton.png";
-		constexpr auto EVEN_BUTTON = "image/EvenButton.png";
+		constexpr auto ODD_BUTTON = "image/Combat/OddButton.png";
+		constexpr auto EVEN_BUTTON = "image/Combat/EvenButton.png";
 	}
 
 	namespace ShootTheMonster {
-		constexpr auto PISTOL = "image/Pistol.png";
-		constexpr auto OPPORTUNITY = "image/Bullet.png";
-		constexpr auto EXPLODE = "image/Explode.png";
+		constexpr auto PISTOL = "image/Combat/Pistol.png";
+		constexpr auto OPPORTUNITY = "image/Combat/Bullet.png";
+		constexpr auto EXPLODE = "image/Combat/Explode.png";
 	}
 
 	namespace DiceMatching {
-		constexpr auto OPPORTUNITY = "image/Heart.png";
+		constexpr auto OPPORTUNITY = "image/Combat/Heart.png";
 
-		constexpr auto ONE = "image/Dice1.png";
-		constexpr auto TWO = "image/Dice2.png";
-		constexpr auto THREE = "image/Dice3.png";
-		constexpr auto FOUR = "image/Dice4.png";
-		constexpr auto FIVE = "image/Dice5.png";
-		constexpr auto SIX = "image/Dice6.png";
+		constexpr auto ONE = "image/Combat/Dice1.png";
+		constexpr auto TWO = "image/Combat/Dice2.png";
+		constexpr auto THREE = "image/Combat/Dice3.png";
+		constexpr auto FOUR = "image/Combat/Dice4.png";
+		constexpr auto FIVE = "image/Combat/Dice5.png";
+		constexpr auto SIX = "image/Combat/Dice6.png";
 	}
 }
 

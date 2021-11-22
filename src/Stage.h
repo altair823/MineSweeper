@@ -14,8 +14,9 @@
 #include <string>
 #include <bangtal>
 #include "Board.h"
+#include "GameGuide.h"
 
-//#define DEBUG
+#define DEBUG
 
 using namespace bangtal;
 
@@ -41,6 +42,9 @@ private:
 	ScenePtr boardBackground;
 	ScenePtr endingBackground;
 
+	// 게임 설명을 보여주는 가이드 클래스 객체
+ 	std::shared_ptr<GameGuide> gameGuide;
+
 	// 스테이지 별 스크립트
 	ObjectPtr script;
 
@@ -49,7 +53,7 @@ private:
 
 	// 음소거 버튼과 음소거 여부 변수
 	ObjectPtr muteButton;
-	bool isMusicMute;
+	bool isGameMute;
 
 	// 각 장면의 배경음악
 	SoundPtr titleMusic;
