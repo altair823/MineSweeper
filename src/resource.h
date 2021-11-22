@@ -20,7 +20,8 @@ namespace EndingResource {
 	constexpr auto HAPPY_END = "image/Background/Ending1.png";
 	constexpr auto BAD_END = "image/Background/Ending2.png";
 
-	constexpr auto END_BUTTON = "image/script/end.png";
+	constexpr auto END_BUTTON = "image/ButtonUI/ExitGame.png";
+	constexpr auto GO_TO_TITLE_BUTTON = "image/ButtonUI/GoToTitle.png";
 
 	constexpr auto HAPPY_END_MUSIC = "music/HappyEnding.mp3";
 	constexpr auto BAD_END_MUSIC = "music/BadEnding.mp3";

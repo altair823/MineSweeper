@@ -106,6 +106,7 @@ void Item::ChangeHandByIndex(int index) {
 		SelectSpray();
 		break;
 	default:
+		currentHand = Hand::None;
 		break;
 	}
 

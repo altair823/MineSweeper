@@ -14,6 +14,13 @@ Board::Board(ScenePtr bg, int initLifeCount, bool& isGameMute) : isGameMute(isGa
 	InitItem(initLifeCount);
 }
 
+Board::~Board() {
+	OnBlockBreak.reset();
+	boardCount = 0;
+	background.reset();
+	item.reset();
+}
+
 
 void Board::RefreshBoard(int newRow, int newCol, int stageNum) {
 	// 반드시 클리어 시에만 이 함수를 호출할 것!
@@ -50,8 +57,7 @@ void Board::Clear() {
 
 void Board::GenerateNewBoard(int newRow, int newCol, int stageNum) {
 	if (row != 0 || col != 0) {
-		std::cout << "A regeneration of the board that did not clear data has occurred!" << std::endl;
-		exit(1);
+		Clear();
 	}
 
 	row = newRow;
@@ -113,6 +119,12 @@ void Board::GenerateNewBoard(int newRow, int newCol, int stageNum) {
 	OnBlockBreak->CheckNewCellOpened();
 }
 
+void Board::InitBoard(int initLifeCount) {
+	Clear();
+	InitItem(initLifeCount);
+	combatCount = 0;
+}
+
 void Board::InitItem(int initLifeCount) {
 	if (item != nullptr) {
 		item.reset();
@@ -140,4 +152,3 @@ void Board::setBoardStatus(BoardStatus status) {
 int Board::getCombatCount() {
 	return combatCount;
 }
-

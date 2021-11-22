@@ -60,6 +60,7 @@ private:
 
 public:
 	Board(ScenePtr bg, int initLifeCount, bool& isGameMute);
+	~Board();
 
 	/*
 	* 보드를 주어진 크기로 초기화하고 생성하는 함수
@@ -75,6 +76,11 @@ public:
 	* 보드를 주어진 크기로 새로 생성하는 함수
 	*/ 
 	void GenerateNewBoard(int newRow, int newCol, int stageNum);
+
+	/*
+	* 보드의 모든 데이터를 초기화하는 함수
+	*/
+	void InitBoard(int initLifeCount);
 
 	/*
 	* 아이템 초기화 함수
