@@ -61,7 +61,7 @@ private:
 	ObjectPtr escapeButton;
 
 	// 지뢰찾기 보드
-	Board* board;
+	std::shared_ptr<Board> board;
 
 	// 클리어한 스테이지의 개수
 	int stageNum = 0;
@@ -69,14 +69,17 @@ private:
 	// 보드 진행 상황을 체크할 타이머
 	TimerPtr boardStatusChecker;
 
-	// 엔딩 스트립트
-	ObjectPtr endingScript;
+	// 엔딩에서 보여줄 버튼
+	ObjectPtr goToTitleButton;
+	ObjectPtr gameEndButton;
 
 public:
 	Stage();
 
-	// tile 장면과 title 장면이 가지는 방탈 오브젝트들을 초기화하는 함수
 	void StartGame();
+
+	// tile 장면과 title 장면이 가지는 방탈 오브젝트들을 초기화하는 함수
+	void MakeTitle();
 
 	// scriptBackground 장면과 scriptBackground 장면이 가지는 방탈 오브젝트들을 초기화하는 함수
 	void ShowScript(int stageNum);

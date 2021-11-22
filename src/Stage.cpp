@@ -3,10 +3,14 @@
 Stage::Stage() : isMusicMute(false), stageNum(0) {
 	// Board의 Scene
 	boardBackground = Scene::create("보드 배경", BoardResource::BACKGROUND1);
-	board = new Board(boardBackground, INIT_LIFE_COUNT, isMusicMute);
+	board = std::make_shared<Board>(boardBackground, INIT_LIFE_COUNT, isMusicMute);
 }
 
 void Stage::StartGame() {
+	startGame(titleBackground);
+}
+
+void Stage::MakeTitle() {
 	// 타이틀 화면 및 타이틀 화면이 가지는 방탈 오브젝트 생성
 	titleBackground = Scene::create("타이틀", TitleResource::TITLE);
 
@@ -14,10 +18,8 @@ void Stage::StartGame() {
 	ObjectPtr startButton = Object::create(TitleResource::START_BUTTON, titleBackground, 500, 120);
 	startButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		// 맨 첫 스크립트 출력
-		ShowScript(0);
 		titleMusic->stop();
-
-		scriptBackground->enter();
+		ShowScript(stageNum);
 		return true;
 		});
 
@@ -34,7 +36,6 @@ void Stage::StartGame() {
 
 	titleMusic = Sound::create(TitleResource::TITLE_MUSIC);
 	CreateMuteButton(titleBackground, titleMusic);
-	startGame(titleBackground);
 }
 
 void Stage::ShowScript(int stageNum) {
@@ -110,7 +111,6 @@ void Stage::CreateBoard() {
 		return true;
 		});
 
-
 	// 보드의 상태를 처리할 핸들러 루프 시작
 	StartStatusHandler();
 }
@@ -120,29 +120,24 @@ void Stage::EnterEnding() {
 	if (board->getCombatCount() <= COMBAT_COUNT_FOR_HAPPY_ENDING) {
 		// 엔딩 화면을 보이기 위한 방탈 장면
 		endingBackground = Scene::create("엔딩 배경", EndingResource::HAPPY_END);
-
-		// 엔딩 화면에 표시되는 스크립트
-		endingScript = Object::create(EndingResource::END_BUTTON, endingBackground, 480, 10);
-		endingScript->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
-			endGame();
-			return true;
-			});
-
 		endingMusic = Sound::create(EndingResource::HAPPY_END_MUSIC);
 	}
 	// 배드 엔딩
 	else {
 		endingBackground = Scene::create("엔딩 배경", EndingResource::BAD_END);
-
-		endingScript = Object::create(EndingResource::END_BUTTON, endingBackground, 480, 10);
-		endingScript->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
-			endGame();
-			return true;
-			});
-
 		endingMusic = Sound::create(EndingResource::BAD_END_MUSIC);
 	}
-
+	goToTitleButton = Object::create(EndingResource::GO_TO_TITLE_BUTTON, endingBackground, 970, 450);
+	goToTitleButton->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
+		endingMusic->stop();
+		RestartGame();
+		return true;
+		});
+	gameEndButton = Object::create(EndingResource::END_BUTTON, endingBackground, 970, 350);
+	gameEndButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
+		endGame();
+		return true;
+		});
 	CreateMuteButton(endingBackground, endingMusic);
 	endingBackground->enter();
 }
@@ -156,9 +151,11 @@ void Stage::StartStatusHandler() {
 			// 바로 탈출하지 않는 경우를 위해 보드 상태를 변경
 			board->setBoardStatus(BoardStatus::Playing);
 			escapeButton->show();
-			// 클리어 사운드 재생
-			SoundPtr clearSound = Sound::create(BoardResource::CLEAR_MUSIC);
-			clearSound->play();
+			if (!isMusicMute) {
+				// 클리어 사운드 재생
+				SoundPtr clearSound = Sound::create(BoardResource::CLEAR_MUSIC);
+				clearSound->play();
+			}
 			showMessage("탈출구를 찾았습니다! 스테이지를 벗어나고 싶으면 탈출하기 버튼을 누르세요.\n지금 탈출하지 않고 남아있는 아이템을 획득하기 위해 게임을 계속 진행할 수 있습니다.");
 		}
 
@@ -175,8 +172,8 @@ void Stage::StartStatusHandler() {
 
 		// GameOver -> 재시작
 		if (board->getBoardStatus() == BoardStatus::GameOver) {
-			RestartGame();
 			boardMusic->stop();
+			RestartGame();
 			showMessage("남은 목숨이 없어 게임 오버되었습니다.\n다시 도전해보세요.");
 			
 			// 엔딩을 위해 스테이지가 넘어가면 타이머를 중단
@@ -260,8 +257,24 @@ void Stage::CreateMuteButton(ScenePtr background, SoundPtr music) {
 }
 
 void Stage::RestartGame() {
+	// 보드를 포함한 모든 내용을 초기화한다. 
+	stageNum = 0;
+	
 	board->Clear();
-	board->InitItem(INIT_LIFE_COUNT);
+	board.reset();
+	boardBackground.reset();
+	titleBackground.reset();
+	scriptBackground.reset();
+	endingBackground.reset();
+	titleMusic.reset();
+	scriptMusic.reset();
+	boardMusic.reset();
+	endingMusic.reset();
+
+	// 타이틀 화면부터 다시 생성한다. 
+	boardBackground = Scene::create("보드 배경", BoardResource::BACKGROUND1);
+	board = std::make_shared<Board>(boardBackground, INIT_LIFE_COUNT, isMusicMute);
+	MakeTitle();
 	titleBackground->enter();
 }
 

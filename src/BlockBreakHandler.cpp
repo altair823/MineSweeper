@@ -164,7 +164,9 @@ void BlockBreakHandler::RefreshBoardStatus(int curRow, int curCol) {
 }
 
 void BlockBreakHandler::StopCheckNewCellOpened() {
-	refreshTimer->stop();
+	if (this != nullptr && refreshTimer != nullptr) {
+		refreshTimer->stop();
+	}
 }
 
 BlockBreakHandler::~BlockBreakHandler() {

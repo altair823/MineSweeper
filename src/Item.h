@@ -34,6 +34,8 @@ enum class Hand {
 	Detector,
 	//스프레이 (몬스터와의 전투를 1번 회피)
 	Spray,
+	
+	None,
 };
 
 class Item {
