@@ -91,4 +91,8 @@ public:
 	*/
 	void CompareChoice();
 
+	/*
+	* 타이머를 중단하는 함수
+	*/
+	void StopTimerAnimation();
 };

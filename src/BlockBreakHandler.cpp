@@ -167,6 +167,9 @@ void BlockBreakHandler::StopCheckNewCellOpened() {
 	if (this != nullptr && refreshTimer != nullptr) {
 		refreshTimer->stop();
 	}
+	if (newCombat != nullptr) {
+		newCombat->StopTimerAnimation();
+	}
 }
 
 BlockBreakHandler::~BlockBreakHandler() {

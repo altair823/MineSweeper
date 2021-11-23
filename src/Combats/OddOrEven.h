@@ -97,4 +97,9 @@ public:
 	* 결과를 비교하여 승패를 결정하는 함수
 	*/
 	void CompareChoice();
+
+	/*
+	* 타이머를 중단하는 함수
+	*/
+	void StopTimerAnimation();
 };
