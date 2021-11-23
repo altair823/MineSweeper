@@ -172,9 +172,12 @@ void DiceMatching::CompareChoice() {
 	}
 }
 
-DiceMatching::~DiceMatching() {
+void DiceMatching::StopTimerAnimation() {
 	diceAnimation->stop();
-	diceAnimation.reset();
 	resultDelayTimer->stop();
+}
+
+DiceMatching::~DiceMatching() {
+	diceAnimation.reset();
 	resultDelayTimer.reset();
 }

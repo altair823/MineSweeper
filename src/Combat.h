@@ -17,10 +17,15 @@ class Combat {
 public:
 
 	/*
-	* 전투 상황으로 진입하는 함수.
+	* 전투 상황으로 진입하는 함수
 	* 모든 전투 클래스는 이 함수를 사용해 전투 상황에 진입한다. 
 	*/
 	virtual void EnterBattle() = 0;
+
+	/*
+	* 타이머들을 중단하는 함수
+	*/
+	virtual void StopTimerAnimation() { };
 
 	virtual ~Combat() { };
 };

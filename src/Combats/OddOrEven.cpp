@@ -159,9 +159,12 @@ void OddOrEven::CompareChoice() {
 	}
 }
 
-OddOrEven::~OddOrEven() {
+void OddOrEven::StopTimerAnimation() {
 	diceAnimation->stop();
-	diceAnimation.reset();
 	resultDelayTimer->stop();
+}
+
+OddOrEven::~OddOrEven() {
+	diceAnimation.reset();
 	resultDelayTimer.reset();
 }

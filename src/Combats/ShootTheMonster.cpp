@@ -196,7 +196,10 @@ void ShootTheMonster::ChangeMonsterToExplode(Direction direction) {
 		});
 }
 
-ShootTheMonster::~ShootTheMonster() {
+void ShootTheMonster::StopTimerAnimation() {
 	monsterShowTimer->stop();
+}
+
+ShootTheMonster::~ShootTheMonster() {
 	monsterShowTimer.reset();
 }

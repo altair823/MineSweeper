@@ -106,4 +106,9 @@ public:
 	* 주어진 방향에 몬스터가 보인다면 그 몬스터를 폭발 이미지로 바꾸어 보여주는 함수
 	*/
 	void ChangeMonsterToExplode(Direction direction);
+
+	/*
+	* 타이머를 중단하는 함수
+	*/
+	void StopTimerAnimation();
 };

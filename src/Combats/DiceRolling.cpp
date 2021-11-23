@@ -165,11 +165,14 @@ void DiceRolling::CompareDice() {
 	}
 }
 
-DiceRolling::~DiceRolling() {
+void DiceRolling::StopTimerAnimation() {
 	computerDiceAnimation->stop();
-	computerDiceAnimation.reset();
 	playerDiceAnimation->stop();
-	playerDiceAnimation.reset();
 	resultDelayTimer->stop();
+}
+
+DiceRolling::~DiceRolling() {
+	computerDiceAnimation.reset();
+	playerDiceAnimation.reset();
 	resultDelayTimer.reset();
 }
