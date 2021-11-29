@@ -16,8 +16,6 @@
 #include "Board.h"
 #include "GameGuide.h"
 
-#define DEBUG
-
 using namespace bangtal;
 
 // 스테이지 갯수
