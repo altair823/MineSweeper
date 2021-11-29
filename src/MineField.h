@@ -119,9 +119,4 @@ public:
 	* 지뢰 칸 주변 칸들에 숫자를 채워넣는 함수
 	*/
 	void setAdjacentNum();
-
-	/*
-	* ##디버그용## 출력 함수
-	*/
-	void Print();
 };
