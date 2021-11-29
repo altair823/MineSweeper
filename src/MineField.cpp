@@ -148,23 +148,6 @@ void MineField::MountMine() {
     }
 }
 
-void MineField::Print() {
-    for (int i = 0; i < row; i++) {
-        for (int j = 0; j < col; j++) {
-            if (fieldData[i][j].cellValue == CellValue::Mine) {
-                std::cout << "* ";
-            }
-            else if (fieldData[i][j].cellValue == CellValue::Escape) {
-                std::cout << "E ";
-            }
-            else {
-                std::cout << fieldData[i][j].num << " ";
-            }
-        }
-        std::cout << std::endl;
-    }
-}
-
 void MineField::setAdjacentNum() {
     // ¸ðµç ¼¿ ¼øÈ¸
     for (int i = 0; i < row; i++) {

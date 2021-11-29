@@ -102,11 +102,7 @@ void Stage::CreateBoard() {
 
 	// 탈출하기 선택지
 	// 탈출구를 발견하면 보이게 한다. 
-#ifndef DEBUG
 	escapeButton = Object::create(BoardResource::ESCAPE_BUTTON, boardBackground, 30, 30, false);
-#else
-	escapeButton = Object::create(BoardResource::ESCAPE_BUTTON, boardBackground, 30, 30);
-#endif
 
 	escapeButton->setOnMouseCallback([&](auto object, int x, int y, auto action)->bool {
 		board->setBoardStatus(BoardStatus::Clear);

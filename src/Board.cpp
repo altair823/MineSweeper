@@ -70,7 +70,6 @@ void Board::GenerateNewBoard(int newRow, int newCol, int stageNum) {
 	field.Resize(row, col);
 	field.MountMine();
 	field.setAdjacentNum();
-	field.Print();
 	
 	// cells에 새 데이터 저장
 	for (int i = 0; i < row; i++) {
