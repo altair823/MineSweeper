@@ -207,9 +207,8 @@ MineSweeper - Dungeons는 지뢰찾기를 기반으로 한 게임이며, 기존 
 
 #### 김태현 
 
-- Board, Cell, BlockBreakHandler, MineField, Item
+- Board, Cell, BlockBreakHandler, MineField, Item, GameGuide
 - Combat과 이를 상속하는 전투 상황
-- 게임 가이드
 - 디자인 문서
 
 #### 정민경
