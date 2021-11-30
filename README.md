@@ -85,4 +85,4 @@
 
 ***
 README.md는 게임 플레이에 대한 소개만을 포함하고 있습니다.<br>
-코드에 대한 설명은 [DESIGN.md](https://github.com/altair823/MineSweeper/commit/3840672e054bcbc78142fb763e306cd197bf4c80)를 참고해주시기 바랍니다.
+코드에 대한 설명은 [디자인 문서](https://github.com/altair823/MineSweeper/blob/master/Design_Document.md)를 참고해주시기 바랍니다.
